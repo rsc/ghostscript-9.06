@@ -972,7 +972,7 @@ static const char rcsid[] = "$Revision: 5215 $";
 
 /** Default-Transfer-curve */
 
-static const float upd_data_xfer[2] = { 0.0, 1.0 };
+//static const float upd_data_xfer[2] = { 0.0, 1.0 };
 
 /*@ > */
 
@@ -1197,7 +1197,7 @@ upd_print_page(gx_device_printer *pdev, FILE *out)
         gs_parsed_file_name_t parsed;
         const char *fmt;
 
-        if (NULL != udev->fname &&
+        if (/*NULL != udev->fname &&*/
             0 <= gx_parse_output_file_name(&parsed, &fmt, udev->fname,
                                            strlen(udev->fname), udev->memory) &&
             fmt
@@ -1238,7 +1238,7 @@ upd_print_page(gx_device_printer *pdev, FILE *out)
 /**
 "upd_open" is -through the specified table of procedures- called instead
 of the normal open-procedures for printer-devices, that performs quite
-a complex job. Thus it is necessary to call this  `superclass-open´
+a complex job. Thus it is necessary to call this  `superclass-openï¿½
 here.
 
 Besides that, this routine does quite a complex job too, in initializes

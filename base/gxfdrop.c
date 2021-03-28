@@ -175,9 +175,9 @@ static int store_margin(line_list * ll, margin_set * set, int ii0, int ii1)
             }
         }
         me = (m0 == 0 ? set->margin_list : m0->next);
-        if (me == 0)
-            m0 = m0; /* Already set. */
-        else if (me->iend < i0)
+        if (me == 0) {
+            // m0 = m0; /* Already set. */
+        } else if (me->iend < i0)
             m0 = me; /* Insert after me. */
         else if (me->ibeg > i1)
             m0 = me->prev; /* Insert before me. */

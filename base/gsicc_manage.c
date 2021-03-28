@@ -1054,7 +1054,7 @@ gsicc_new_device_profile_array(gs_memory_t *memory)
 }
 
 int
-gsicc_set_device_profile_intent(gx_device *dev, gsicc_profile_types_t intent,
+gsicc_set_device_profile_intent(gx_device *dev, gsicc_rendering_intents_t intent,
                                 gsicc_profile_types_t profile_type)
 {
     int code;

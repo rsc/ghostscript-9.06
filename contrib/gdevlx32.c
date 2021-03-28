@@ -742,7 +742,7 @@ lxm3200_print_page(gx_device_printer *pdev, FILE *prn_stream)
         if(gendata.scanbuf == NULL ||
                  gendata.outdata == NULL)
         {
-                freeresources(pdev);
+                freeresources((gx_device*)pdev);
                 return_error(gs_error_VMerror);
         }
 
@@ -773,7 +773,7 @@ lxm3200_print_page(gx_device_printer *pdev, FILE *prn_stream)
         outputepilogue();
 
         /* Free the allocated resources */
-        freeresources(pdev);
+        freeresources((gx_device*)pdev);
 
         /* Done. Bye bye, see you on next page. */
         return(0);

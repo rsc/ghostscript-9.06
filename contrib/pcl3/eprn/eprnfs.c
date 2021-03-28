@@ -257,7 +257,7 @@ static void split_Gray(eprn_OctetString *line, eprn_OctetString *next_line,
 
     /* Distribute the approximation over the bit planes */
     for (plane = 0; plane < planes; plane++) {
-      *ptr[plane] = (*ptr[plane] << 1) | approx & 0x01;
+      *ptr[plane] = (*ptr[plane] << 1) | (approx & 0x01);
       approx >>= 1;
     }
 

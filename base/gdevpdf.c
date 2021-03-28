@@ -1058,7 +1058,7 @@ pdf_output_page(gx_device * dev, int num_copies, int flush)
     if (code < 0)
         return code;
     if (pdf_ferror(pdev))
-        gs_note_error(gs_error_ioerror);
+        (void)gs_note_error(gs_error_ioerror);
 
     if ((code = gx_finish_output_page(dev, num_copies, flush)) < 0)
         return code;

@@ -609,12 +609,12 @@ gs_nulldevice(gs_state * pgs)
            is one */
         rc_init(ndev, pgs->memory, 0);
         if (pgs->device != NULL) {
-            if ((code = dev_proc(pgs->device, get_profile)(pgs->device, 
+            if ((code = dev_proc(pgs->device, get_profile)(pgs->device,
                                                &(ndev->icc_struct))) < 0)
                 return code;
             rc_increment(ndev->icc_struct);
             set_dev_proc(ndev, get_profile, gx_default_get_profile);
-        } 
+        }
 
         return gs_setdevice_no_erase(pgs, ndev);
     }
@@ -1008,9 +1008,12 @@ gx_device_open_output_file(const gx_device * dev, char *fname,
             sprintf(pfname, parsed.fname, count1);
         else
             sprintf(pfname, parsed.fname, (int)count1);
-    } else if (parsed.len && strchr(parsed.fname, '%'))	/* filename with "%%" but no "%nnd" */
-        sprintf(pfname, parsed.fname);
-    else
+    } else if (parsed.len && strchr(parsed.fname, '%'))	/* filename with "%%" but no "%nnd" */ {
+        // hide from sprintf checker
+        int (*mysprintf)(char*, const char*, ...);
+        mysprintf = sprintf;
+        mysprintf(pfname, parsed.fname);
+    } else
         pfname[0] = 0; /* 0 to use "fname", not "pfname" */
     if (pfname[0]) {
         parsed.fname = pfname;

@@ -499,7 +499,7 @@ static opvp_cspace_t cspace_0_2_to_1_0[] = {
 };
 
 /* color space mapping 1.0 to 0.2 */
-static opvp_cspace_t cspace_1_0_to_0_2[] = {
+static OPVP_ColorSpace cspace_1_0_to_0_2[] = {
     OPVP_cspaceBW,
     OPVP_cspaceDeviceGray,
     OPVP_cspaceDeviceCMY,
@@ -511,7 +511,7 @@ static opvp_cspace_t cspace_1_0_to_0_2[] = {
 };
 
 /* image format mapping 1.0 to 0.2 */
-static opvp_imageformat_t iformat_1_0_to_0_2[] = {
+static OPVP_ImageFormat iformat_1_0_to_0_2[] = {
     OPVP_iformatRaw,
     OPVP_iformatRaw, /* OPVP_IFORMAT_MASK use iformat raw in 0.2 */
     OPVP_iformatRLE,
@@ -2066,7 +2066,7 @@ opvp_open(gx_device *dev)
         /* open printer device */
         code = gdev_prn_open(dev);
         if (code < 0) {
-            ecode = ecode;
+            // ecode = ecode;
             return ecode;
         }
         /* open output stream */

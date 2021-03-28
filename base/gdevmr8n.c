@@ -116,7 +116,7 @@ mem_gray8_rgb24_strip_copy_rop(gx_device * dev,
          */
         gx_color_index bw_pixel;
 
-        switch (rop) {
+        switch ((int)rop) {
         case rop3_0:
             bw_pixel = gx_device_black(dev);
             goto bw;

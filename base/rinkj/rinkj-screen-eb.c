@@ -83,7 +83,7 @@ rinkj_screen_eb_init (RinkjDevice *self, const RinkjDeviceParams *params)
   int strengths4[] = { 128, 50, 50, 10 };
   int strengths6[] = { 128, 50, 50, 25, 25, 10 };
   int strengths7[] = { 128, 80, 50, 50, 25, 26, 10 };
-  int *strengths;
+  int *strengths = 0;
 
   RinkjDeviceParams out_params;
 
@@ -175,15 +175,15 @@ rinkj_screen_eb_write (RinkjDevice *self, const char **data)
     {
       out_data[i] = malloc (xsb);
       out_buf[i] = malloc (xs);
-      data_permuted[i] = data[permutation[i]];
+      data_permuted[i] = (uchar*)data[permutation[i]];
     }
 
   status = 0;
   for (; status >= 0 && z->yrem < z->height_out; z->yrem += z->height_in)
     {
       even_better_line (z->dither,
-                        (unsigned char *)out_buf,
-                        (unsigned char *)data_permuted);
+                        out_buf,
+                        (void*)data_permuted);
 
       for (i = 0; i < n_planes; i++)
         {

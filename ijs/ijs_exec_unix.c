@@ -57,7 +57,7 @@ ijs_exec_server(const char *server_cmd, int *pfd_to, int *pfd_from,
   if (child_pid == 0)
     {
       int status;
-      char *argv[8];
+      const char *argv[8];
       int i = 0;
 
       close (fds_to[1]);
@@ -75,7 +75,7 @@ ijs_exec_server(const char *server_cmd, int *pfd_to, int *pfd_from,
 
       argv[i++] = (char *)server_cmd;
       argv[i++] = NULL;
-      status = execvp (argv[0], argv);
+      status = execvp (argv[0], (char**)argv);
       if (status < 0)
         exit (1);
     }

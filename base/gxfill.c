@@ -294,7 +294,7 @@ gx_general_fill_path(gx_device * pdev, const gs_imager_state * pis,
     gx_path *pfpath;
     int code;
     int max_fill_band = dev->max_fill_band;
-#define NO_BAND_MASK ((fixed)(-1) << (sizeof(fixed) * 8 - 1))
+#define NO_BAND_MASK ((fixed)(-(1 << (sizeof(fixed) * 8 - 1))))
     const bool is_character = params->adjust.x == -1; /* See gxistate.h */
     bool fill_by_trapezoids;
     bool pseudo_rasterization;

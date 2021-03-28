@@ -537,12 +537,12 @@ gx_image_enum_begin(gx_device * dev, const gs_imager_state * pis,
            is not yet set, go ahead and handle that now.  It may already
            be done due to the above init_colors which may go through remap. */
         if (gs_color_space_is_PSCIE(pcs) && pcs->icc_equivalent == NULL) {
-            gs_colorspace_set_icc_equivalent(pcs, &(penum->icc_setup.is_lab),
+            gs_colorspace_set_icc_equivalent((gs_color_space*)pcs, &(penum->icc_setup.is_lab),
                                                 pis->memory);
             if (penum->icc_setup.is_lab) {
                 /* Free what ever profile was created and use the icc manager's
                    cielab profile */
-                gs_color_space *curr_pcs = pcs;
+                gs_color_space *curr_pcs = (gs_color_space*)pcs;
                 rc_decrement(curr_pcs->icc_equivalent,"gx_image_enum_begin");
                 rc_decrement(curr_pcs->cmm_icc_profile_data,"gx_image_enum_begin");
                 curr_pcs->cmm_icc_profile_data = pis->icc_manager->lab_profile;
@@ -930,11 +930,11 @@ decode_range_needed(gx_image_enum *penum)
     bool scale = true;
 
     if (penum->map[0].decoding == sd_compute) {
-        if (!(gs_color_space_is_ICC(penum->pcs) || 
+        if (!(gs_color_space_is_ICC(penum->pcs) ||
             gs_color_space_is_PSCIE(penum->pcs))) {
             scale = false;
-        } 
-    } 
+        }
+    }
     return scale;
 }
 
@@ -1087,7 +1087,7 @@ image_init_color_cache(gx_image_enum * penum, int bps, int spp)
                     /* Use the index table directly. */
                     gs_free_object(penum->memory, temp_buffer, "image_init_color_cache");
                     free_temp_buffer = false;
-                    temp_buffer = penum->pcs->params.indexed.lookup.table.data;
+                    temp_buffer = (byte*)penum->pcs->params.indexed.lookup.table.data;
                 }
             } else {
                 /* CM only */
@@ -1102,8 +1102,8 @@ image_init_color_cache(gx_image_enum * penum, int bps, int spp)
         gsicc_init_buffer(&output_buff_desc, num_des_comp, 1, false, false, false,
                           0, num_entries * num_des_comp,
                       1, num_entries);
-        (penum->icc_link->procs.map_buffer)(penum->dev, penum->icc_link, 
-                                            &input_buff_desc, &output_buff_desc, 
+        (penum->icc_link->procs.map_buffer)(penum->dev, penum->icc_link,
+                                            &input_buff_desc, &output_buff_desc,
                                             (void*) temp_buffer,
                                             (void*) penum->color_cache->device_contone);
         /* Check if we need to apply any transfer functions.  If so then do it now */

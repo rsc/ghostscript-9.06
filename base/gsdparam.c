@@ -26,9 +26,11 @@
 #include "gsicc_manage.h"
 
 
+#ifdef UNUSED
 static const char *const std_intent_keys[] = {
         GSICC_STANDARD_INTENT_KEYS
     };
+#endif
 
 /* Define whether we accept PageSize as a synonym for MediaSize. */
 /* This is for backward compatibility only. */
@@ -133,21 +135,21 @@ gx_default_get_params(gx_device * dev, gs_param_list * plist)
        set up yet then we are not going to do anything yet */
     if (dev->procs.get_profile != NULL) {
         code = dev_proc(dev, get_profile)(dev,  &dev_profile);
-        if (dev_profile == NULL) { 
+        if (dev_profile == NULL) {
             code = gsicc_init_device_profile_struct(dev, NULL, 0);
             code = dev_proc(dev, get_profile)(dev,  &dev_profile);
-        } 
-        /* It is possible that the current device profile name is NULL if we 
-           have a pdf14 device in line with a transparency group that is in a 
-           color space specified from a source defined ICC profile. Check for 
+        }
+        /* It is possible that the current device profile name is NULL if we
+           have a pdf14 device in line with a transparency group that is in a
+           color space specified from a source defined ICC profile. Check for
            that here to avoid any access violations.  Bug 692558 */
         for (k = 0; k < NUM_DEVICE_PROFILES; k++) {
-            if (dev_profile->device_profile[k] == NULL 
+            if (dev_profile->device_profile[k] == NULL
                 || dev_profile->device_profile[k]->name == NULL) {
                 param_string_from_string(profile_array[k], null_str);
                 profile_intents[k] = gsPERCEPTUAL;
             } else {
-                param_string_from_string(profile_array[k], 
+                param_string_from_string(profile_array[k],
                     dev_profile->device_profile[k]->name);
                 profile_intents[k] = dev_profile->intent[k];
             }
@@ -156,13 +158,13 @@ gx_default_get_params(gx_device * dev, gs_param_list * plist)
         if (dev_profile->proof_profile == NULL) {
             param_string_from_string(proof_profile, null_str);
         } else {
-            param_string_from_string(proof_profile, 
+            param_string_from_string(proof_profile,
                                      dev_profile->proof_profile->name);
         }
         if (dev_profile->link_profile == NULL) {
             param_string_from_string(link_profile, null_str);
         } else {
-            param_string_from_string(link_profile, 
+            param_string_from_string(link_profile,
                                      dev_profile->link_profile->name);
         }
         devicegraytok = dev_profile->devicegraytok;
@@ -481,19 +483,19 @@ gs_putdeviceparams(gx_device * dev, gs_param_list * plist)
     code = (*dev_proc(dev, put_params)) (dev, plist);
     return (code < 0 ? code : was_open && !dev->is_open ? 1 : code);
 }
-  
+
 static void
-gx_default_put_graytok(bool graytok, gx_device * dev) 
+gx_default_put_graytok(bool graytok, gx_device * dev)
 {
     int code;
     cmm_dev_profile_t *profile_struct;
 
     if (dev->procs.get_profile == NULL) {
-        /* This is an odd case where the device has not yet fully been 
+        /* This is an odd case where the device has not yet fully been
            set up with its procedures yet.  We want to make sure that
-           we catch this so we assume here that we are dealing with 
+           we catch this so we assume here that we are dealing with
            the target device.  For now allocate the profile structure
-           but do not intialize the profile yet as the color info 
+           but do not intialize the profile yet as the color info
            may not be fully set up at this time.  */
         if (dev->icc_struct == NULL) {
             /* Allocate at this time the structure */
@@ -512,17 +514,17 @@ gx_default_put_graytok(bool graytok, gx_device * dev)
 }
 
 static void
-gx_default_put_usefastcolor(bool fastcolor, gx_device * dev) 
+gx_default_put_usefastcolor(bool fastcolor, gx_device * dev)
 {
     int code;
     cmm_dev_profile_t *profile_struct;
 
     if (dev->procs.get_profile == NULL) {
-        /* This is an odd case where the device has not yet fully been 
+        /* This is an odd case where the device has not yet fully been
            set up with its procedures yet.  We want to make sure that
-           we catch this so we assume here that we are dealing with 
+           we catch this so we assume here that we are dealing with
            the target device.  For now allocate the profile structure
-           but do not intialize the profile yet as the color info 
+           but do not intialize the profile yet as the color info
            may not be fully set up at this time.  */
         if (dev->icc_struct == NULL) {
             /* Allocate at this time the structure */
@@ -542,35 +544,35 @@ gx_default_put_usefastcolor(bool fastcolor, gx_device * dev)
 
 
 static void
-gx_default_put_intent(gsicc_profile_types_t icc_intent, gx_device * dev,  
-                   gsicc_profile_types_t index) 
+gx_default_put_intent(gsicc_profile_types_t icc_intent, gx_device * dev,
+                   gsicc_profile_types_t index)
 {
     int code;
     cmm_dev_profile_t *profile_struct;
 
     if (dev->procs.get_profile == NULL) {
-        /* This is an odd case where the device has not yet fully been 
+        /* This is an odd case where the device has not yet fully been
            set up with its procedures yet.  We want to make sure that
-           we catch this so we assume here that we are dealing with 
+           we catch this so we assume here that we are dealing with
            the target device */
         if (dev->icc_struct == NULL) {
             /* Intializes the device structure.  Not the profile though for index */
             dev->icc_struct = gsicc_new_device_profile_array(dev->memory);
         }
-        code = gsicc_set_device_profile_intent(dev, icc_intent, index);
+        code = gsicc_set_device_profile_intent(dev, (gsicc_rendering_intents_t)icc_intent, index);
     } else {
         code = dev_proc(dev, get_profile)(dev,  &profile_struct);
         if (profile_struct == NULL) {
             /* Create now  */
             dev->icc_struct = gsicc_new_device_profile_array(dev->memory);
         }
-        code = gsicc_set_device_profile_intent(dev, icc_intent, index);
+        code = gsicc_set_device_profile_intent(dev, (gsicc_rendering_intents_t)icc_intent, index);
     }
 }
 
 static void
-gx_default_put_icc(gs_param_string *icc_pro, gx_device * dev,  
-                   gsicc_profile_types_t index) 
+gx_default_put_icc(gs_param_string *icc_pro, gx_device * dev,
+                   gsicc_profile_types_t index)
 {
     char *tempstr;
     int code;
@@ -584,7 +586,7 @@ gx_default_put_icc(gs_param_string *icc_pro, gx_device * dev,
        exercise to the device start-up experts */
     fill_dev_proc(dev, get_profile, gx_default_get_profile);
     if (icc_pro->size < gp_file_name_sizeof) {
-        tempstr = (char *) gs_alloc_bytes(dev->memory, icc_pro->size+1, 
+        tempstr = (char *) gs_alloc_bytes(dev->memory, icc_pro->size+1,
                                           "gx_default_put_icc");
         memcpy(tempstr, icc_pro->data, icc_pro->size);
         /* Set last position to NULL. */
@@ -822,51 +824,51 @@ nce:
     }
     /* Set the directory first */
     if ((code = param_read_string(plist, "OutputICCProfile", &icc_pro)) != 1) {
-        gx_default_put_icc(&icc_pro, dev, gsDEFAULTPROFILE); 
+        gx_default_put_icc(&icc_pro, dev, gsDEFAULTPROFILE);
     }
     /* Note, if a change is made to NUM_DEVICE_PROFILES we need to update
        this with the name of the profile */
     if ((code = param_read_string(plist, "GraphicICCProfile", &icc_pro)) != 1) {
-        gx_default_put_icc(&icc_pro, dev, gsGRAPHICPROFILE); 
+        gx_default_put_icc(&icc_pro, dev, gsGRAPHICPROFILE);
     }
     if ((code = param_read_string(plist, "ImageICCProfile", &icc_pro)) != 1) {
-        gx_default_put_icc(&icc_pro, dev, gsIMAGEPROFILE); 
+        gx_default_put_icc(&icc_pro, dev, gsIMAGEPROFILE);
     }
     if ((code = param_read_string(plist, "TextICCProfile", &icc_pro)) != 1) {
-        gx_default_put_icc(&icc_pro, dev, gsTEXTPROFILE); 
+        gx_default_put_icc(&icc_pro, dev, gsTEXTPROFILE);
     }
     if ((code = param_read_string(plist, "ProofProfile", &icc_pro)) != 1) {
-        gx_default_put_icc(&icc_pro, dev, gsPROOFPROFILE); 
-    }    
-    if ((code = param_read_string(plist, "DeviceLinkProfile", &icc_pro)) != 1) {
-        gx_default_put_icc(&icc_pro, dev, gsLINKPROFILE); 
+        gx_default_put_icc(&icc_pro, dev, gsPROOFPROFILE);
     }
-    if ((code = param_read_int(plist, (param_name = "RenderIntent"), 
+    if ((code = param_read_string(plist, "DeviceLinkProfile", &icc_pro)) != 1) {
+        gx_default_put_icc(&icc_pro, dev, gsLINKPROFILE);
+    }
+    if ((code = param_read_int(plist, (param_name = "RenderIntent"),
                                                     &(rend_intent[0]))) < 0) {
         ecode = code;
         param_signal_error(plist, param_name, ecode);
     }
-    if ((code = param_read_int(plist, (param_name = "GraphicIntent"), 
+    if ((code = param_read_int(plist, (param_name = "GraphicIntent"),
                                                     &(rend_intent[1]))) < 0) {
         ecode = code;
         param_signal_error(plist, param_name, ecode);
     }
-    if ((code = param_read_int(plist, (param_name = "ImageIntent"), 
+    if ((code = param_read_int(plist, (param_name = "ImageIntent"),
                                                     &(rend_intent[2]))) < 0) {
         ecode = code;
         param_signal_error(plist, param_name, ecode);
     }
-    if ((code = param_read_int(plist, (param_name = "TextIntent"), 
+    if ((code = param_read_int(plist, (param_name = "TextIntent"),
                                                     &(rend_intent[3]))) < 0) {
         ecode = code;
         param_signal_error(plist, param_name, ecode);
     }
-    if ((code = param_read_bool(plist, (param_name = "DeviceGrayToK"), 
+    if ((code = param_read_bool(plist, (param_name = "DeviceGrayToK"),
                                                         &devicegraytok)) < 0) {
         ecode = code;
         param_signal_error(plist, param_name, ecode);
     }
-    if ((code = param_read_bool(plist, (param_name = "UseFastColor"), 
+    if ((code = param_read_bool(plist, (param_name = "UseFastColor"),
                                                         &usefastcolor)) < 0) {
         ecode = code;
         param_signal_error(plist, param_name, ecode);
@@ -1066,10 +1068,10 @@ nce:
 
     /* Take care of the rendering intents */
     if (dev->icc_struct != NULL) {
-        gx_default_put_intent(rend_intent[0], dev, gsDEFAULTPROFILE); 
-        gx_default_put_intent(rend_intent[1], dev, gsGRAPHICPROFILE); 
-        gx_default_put_intent(rend_intent[2], dev, gsIMAGEPROFILE); 
-        gx_default_put_intent(rend_intent[3], dev, gsTEXTPROFILE); 
+        gx_default_put_intent(rend_intent[0], dev, gsDEFAULTPROFILE);
+        gx_default_put_intent(rend_intent[1], dev, gsGRAPHICPROFILE);
+        gx_default_put_intent(rend_intent[2], dev, gsIMAGEPROFILE);
+        gx_default_put_intent(rend_intent[3], dev, gsTEXTPROFILE);
     }
     gx_default_put_graytok(devicegraytok, dev);
     gx_default_put_usefastcolor(usefastcolor, dev);

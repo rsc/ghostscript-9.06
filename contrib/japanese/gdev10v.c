@@ -305,7 +305,7 @@ notz:
                             if (bytes > 0)
                                         /* Only false at beginning of line. */
                                         bj10v_output_run(out_beg, bytes / bytes_per_data, bytes,
-                                                                         mode, pdev);
+                                                                         (char*)mode, pdev);
                             /* Tab over to the appropriate position. */
                             {	int skip = x_skip / x_skip_unit;
                                         prn_puts(pdev, "\033\\");
@@ -319,7 +319,7 @@ notz:
                 if (out_end > out_beg) {
                     int bytes = out_end - out_beg;
                     bj10v_output_run(out_beg, bytes / bytes_per_data, bytes,
-                                     mode, pdev);
+                                     (char*)mode, pdev);
                 }
                 prn_putc(pdev, '\r');
                 y_skip = 24;

@@ -99,14 +99,14 @@ sj48_print_page(gx_device_printer *pdev, FILE *prn_stream)
 
         if ( in == 0 || out == 0 )
         {	code = gs_error_VMerror;
-                gs_note_error(code);
+                (void)gs_note_error(code);
                 goto fin;
         }
 
         /* Abort if the requested resolution is unsupported. */
         if ((xres !=180 && xres != 360) || (yres !=180 && yres != 360))
         {	code = gs_error_rangecheck;
-                gs_note_error(code);
+                (void)gs_note_error(code);
                 goto fin;
         }
 

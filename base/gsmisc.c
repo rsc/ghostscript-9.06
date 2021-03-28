@@ -132,7 +132,7 @@ gs_debug_c(int c)
 
     do {
         ret |= gs_debug[c];
-    } while (c = gs_debug_flag_implied_by[c]);
+    } while ((c = gs_debug_flag_implied_by[c]) != 0);
     return ret;
 }
 

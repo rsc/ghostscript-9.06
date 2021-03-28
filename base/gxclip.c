@@ -424,7 +424,7 @@ clip_fill_rectangle(gx_device * dev, int x, int y, int w, int h,
 }
 
 int
-clip_call_fill_rectangle_hl_color(clip_callback_data_t * pccd, int xc, int yc, 
+clip_call_fill_rectangle_hl_color(clip_callback_data_t * pccd, int xc, int yc,
                                   int xec, int yec)
 {
     gs_fixed_rect rect;
@@ -635,7 +635,7 @@ clip_copy_alpha(gx_device * dev,
 }
 
 int
-clip_call_copy_alpha_hl_color(clip_callback_data_t * pccd, int xc, int yc, 
+clip_call_copy_alpha_hl_color(clip_callback_data_t * pccd, int xc, int yc,
                               int xec, int yec)
 {
     return (*dev_proc(pccd->tdev, copy_alpha_hl_color))
@@ -698,8 +698,8 @@ clip_call_strip_tile_rect_devn(clip_callback_data_t * pccd, int xc, int yc, int 
 static int
 clip_strip_tile_rect_devn(gx_device * dev, const gx_strip_bitmap * tiles,
                                 int x, int y, int w, int h,
-                                const gx_drawing_color *pdcolor0, 
-                                const gx_drawing_color *pdcolor1, int phase_x, 
+                                const gx_drawing_color *pdcolor0,
+                                const gx_drawing_color *pdcolor1, int phase_x,
                                 int phase_y)
 {
     gx_device_clip *rdev = (gx_device_clip *) dev;
@@ -876,7 +876,7 @@ clip_call_fill_path(clip_callback_data_t * pccd, int xc, int yc, int xec, int ye
     dev_proc_fill_path((*proc));
     int code;
     gx_clip_path cpath_intersection;
-    gx_clip_path *pcpath = pccd->pcpath;
+    gx_clip_path *pcpath = (gx_clip_path*)pccd->pcpath;
 
     if (pcpath != NULL) {
         gx_path rect_path;
@@ -886,7 +886,7 @@ clip_call_fill_path(clip_callback_data_t * pccd, int xc, int yc, int xec, int ye
         gx_path_init_local(&rect_path, pccd->ppath->memory);
         gx_path_add_rectangle(&rect_path, int2fixed(xc), int2fixed(yc), int2fixed(xec), int2fixed(yec));
         code = gx_cpath_intersect(&cpath_intersection, &rect_path,
-                                  gx_rule_winding_number, pccd->pis);
+                                  gx_rule_winding_number, (gs_imager_state*)pccd->pis);
         gx_path_free(&rect_path, "clip_call_fill_path");
     } else {
         gs_fixed_rect clip_box;

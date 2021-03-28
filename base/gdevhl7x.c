@@ -244,7 +244,7 @@ return (((156 * resolution / 150 ) * 5 )/4) + 8;
 static dev_proc_open_device(hl7x0_open);
 static dev_proc_close_device(hl7x0_close);
 static dev_proc_print_page(hl720_print_page);
-static dev_proc_print_page(hl730_print_page);
+//static dev_proc_print_page(hl730_print_page);
 
 static const gx_device_procs prn_hl_procs =
   prn_params_procs(hl7x0_open, gdev_prn_output_page, hl7x0_close,
@@ -313,10 +313,12 @@ hl720_print_page(gx_device_printer *pdev, FILE *prn_stream)
                &initCommand);
 }
 /* The HL 730 can compress  */
+#ifdef UNUSED
 static int
 hl730_print_page(gx_device_printer *pdev, FILE *prn_stream)
 {	return hl720_print_page(pdev, prn_stream);
 }
+#endif
 
 /* Send the page to the printer.  For speed, compress each scan line, */
 /* since computer-to-printer communication time is often a bottleneck. */

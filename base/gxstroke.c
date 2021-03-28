@@ -1677,7 +1677,7 @@ stroke_add_fast(gx_path * ppath, gx_path * rpath, bool ensure_closed, int first,
              * line segments generated from arcs to be round. This would
              * solve some flatness issues, but makes some pathological
              * cases incredibly slow. */
-            if ((join == gs_join_round)
+            if (join == gs_join_round
                 /* || (flags & nf_all_from_arc) */) {
                 code = add_pie_join_fast_ccw(ppath, plp, nplp, reflected);
             } else { /* non-round join */
@@ -1717,7 +1717,7 @@ stroke_add_fast(gx_path * ppath, gx_path * rpath, bool ensure_closed, int first,
              * line segments generated from arcs to be round. This would
              * solve some flatness issues, but makes some pathological
              * cases incredibly slow. */
-            if ((join == gs_join_round)
+            if (join == gs_join_round
                 /* || (flags & nf_all_from_arc) */) {
                 code = add_pie_join_fast_cw(rpath, plp, nplp, reflected);
             } else { /* non-round join */

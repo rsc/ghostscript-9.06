@@ -177,7 +177,7 @@ threshold_16_SSE_unaligned(byte *contone_ptr, byte *thresh_ptr, byte *ht_data)
 }
 #endif
 
-/* SSE2 and non-SSE2 implememntation of thresholding a row. Subtractive case  
+/* SSE2 and non-SSE2 implememntation of thresholding a row. Subtractive case
    There is some code replication between the two of these (additive and subtractive)
    that I need to go back and determine how we can combine them without
    any performance loss. */
@@ -390,14 +390,14 @@ gx_ht_threshold_row_bit(byte *contone,  byte *threshold_strip,  int contone_stri
 #endif
 }
 
-/* This thresholds a buffer that is LAND_BITS wide by data_length tall. 
+/* This thresholds a buffer that is LAND_BITS wide by data_length tall.
    Subtractive case */
 void
 gx_ht_threshold_landscape_sub(byte *contone_align, byte *thresh_align,
                     ht_landscape_info_t ht_landscape, byte *halftone,
                     int data_length)
 {
-    __align16 byte contone[LAND_BITS];
+    /*__align16*/ byte contone[LAND_BITS];
     int position_start, position, curr_position;
     int *widths = &(ht_landscape.widths[0]);
     int local_widths[LAND_BITS];
@@ -488,7 +488,7 @@ gx_ht_threshold_landscape(byte *contone_align, byte *thresh_align,
                     ht_landscape_info_t ht_landscape, byte *halftone,
                     int data_length)
 {
-    __align16 byte contone[LAND_BITS];
+    /*__align16*/ byte contone[LAND_BITS];
     int position_start, position, curr_position;
     int *widths = &(ht_landscape.widths[0]);
     int local_widths[LAND_BITS];
@@ -860,7 +860,7 @@ gxht_thresh_planes(gx_image_enum *penum, fixed xrun,
     int offset_bits = penum->ht_offset_bits;
     byte *halftone;
     int dithered_stride = penum->ht_stride;
-    bool is_planar_dev = dev_proc(dev, dev_spec_op)(dev, 
+    bool is_planar_dev = dev_proc(dev, dev_spec_op)(dev,
                                                 gxdso_is_native_planar, NULL, 0);
     gx_color_index dev_white = gx_device_white(dev);
     gx_color_index dev_black = gx_device_black(dev);
@@ -964,7 +964,7 @@ gxht_thresh_planes(gx_image_enum *penum, fixed xrun,
                 if (!is_planar_dev) {
                     (*dev_proc(dev, copy_mono)) (dev, penum->ht_buffer, xoffs, dithered_stride,
                                                  gx_no_bitmap_id, x_pos, y_pos,
-                                                 curr_width, vdi, dev_white, 
+                                                 curr_width, vdi, dev_white,
                                                  dev_black);
                 } else {
                     (*dev_proc(dev, copy_planes)) (dev, penum->ht_buffer, xoffs, dithered_stride,
@@ -1085,7 +1085,7 @@ gxht_thresh_planes(gx_image_enum *penum, fixed xrun,
                                         gx_no_bitmap_id,
                                         penum->ht_landscape.xstart - width + 1,
                                         penum->ht_landscape.y_pos,
-                                        width, dest_height, 
+                                        width, dest_height,
                                         dev_white, dev_black);
                     } else {
                         (*dev_proc(dev, copy_planes))
@@ -1120,15 +1120,15 @@ gxht_thresh_planes(gx_image_enum *penum, fixed xrun,
                 if (!allow_reset) {
                     if (width != penum->ht_landscape.count) {
                         /* move the line do not reset the stuff */
-                        move_landscape_buffer(&(penum->ht_landscape), 
+                        move_landscape_buffer(&(penum->ht_landscape),
                                               contone_align, dest_height);
                     }
                     done = true;
                 } else {
                     penum->ht_landscape.offset_set = false;
                     if (width != penum->ht_landscape.count) {
-                        reset_landscape_buffer(&(penum->ht_landscape), 
-                                               contone_align, dest_height, 
+                        reset_landscape_buffer(&(penum->ht_landscape),
+                                               contone_align, dest_height,
                                                width);
                     } else {
                         /* Reset the whole buffer */

@@ -6810,7 +6810,7 @@ pdf14_clist_update_params(pdf14_clist_device * pdev, const gs_imager_state * pis
         code = gs_create_pdf14trans(&pct_new, &params, pis->memory);
         if (code < 0) return code;
         code = dev_proc(pdev->target, create_compositor)
-                    (pdev->target, &pcdev, pct_new, pis, pis->memory, NULL);
+                    (pdev->target, &pcdev, pct_new, (gs_imager_state*)pis, pis->memory, NULL);
         gs_free_object(pis->memory, pct_new, "pdf14_clist_update_params");
     }
     return code;

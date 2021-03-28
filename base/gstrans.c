@@ -119,9 +119,11 @@ gs_current_transparency_type(const gs_state *pgs)
 }
 
 /* Support for dummy implementation */
+/*
 gs_private_st_ptrs1(st_transparency_state, gs_transparency_state_t,
                     "gs_transparency_state_t", transparency_state_enum_ptrs,
                     transparency_state_reloc_ptrs, saved);
+*/
 #if PUSH_TS
 static int
 push_transparency_stack(gs_state *pgs, gs_transparency_state_type_t type,

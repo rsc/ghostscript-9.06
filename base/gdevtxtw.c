@@ -117,9 +117,11 @@ typedef struct gx_device_txtwrite_s {
 } gx_device_txtwrite_t;
 
 /* GC descriptor */
+/*
 gs_private_st_suffix_add0_final(st_device_txtwrite, gx_device_txtwrite_t,
    "gx_device_txtwrite", device_txtwrite_enum_ptrs, device_txtwrite_reloc_ptrs,
     gx_device_finalize, st_device_forward);
+*/
 
 /* Device procedures */
 static dev_proc_open_device(txtwrite_open_device);
@@ -1669,7 +1671,7 @@ txt_shift_text_currentpoint(textw_text_enum_t *penum, gs_point *wpt)
  */
 static int get_unicode(gs_font *font, gs_glyph glyph, gs_char ch, unsigned short *Buffer)
 {
-    unsigned short unicode;
+    gs_char unicode;
     int code, cid;
     gs_const_string gnstr;
 

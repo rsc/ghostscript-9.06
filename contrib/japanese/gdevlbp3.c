@@ -72,7 +72,7 @@ static int
 lbp310PrintPage(gx_device_printer *pDev, FILE *fp)
 {
         int	i;
-        byte	Buf[10];
+        char	Buf[10];
         long	DataSize;
         struct	bounding	Box;
 
@@ -94,7 +94,7 @@ static int
 lbp320PrintPage(gx_device_printer *pDev, FILE *fp)
 {
         int	i;
-        byte	Buf[16];
+        char	Buf[16];
         long	DataSize;
         struct	bounding	Box;
 

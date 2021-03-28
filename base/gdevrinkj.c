@@ -987,7 +987,7 @@ rinkj_init(rinkj_device *rdev, FILE *file)
     params.width = rdev->width;
     params.height = rdev->height;
     params.n_planes = 7;
-    params.plane_names = "CMYKcmk";
+    params.plane_names = (char*)"CMYKcmk";
     rdev->n_planes_out = params.n_planes;
 
     rinkj_set_luts(rdev, epson_dev, cmyk_dev, rdev->setup_fn, &params);
@@ -1089,7 +1089,7 @@ rinkj_write_image_data(gx_device_printer *pdev, RinkjDevice *cmyk_dev)
                 if (cache[hash].key != color) {
 
                     /* 3 channel to CMYK */
-                    gscms_transform_color((gx_device *)rdev, rdev->icc_link, 
+                    gscms_transform_color((gx_device *)rdev, rdev->icc_link,
                                           &cbuf, &(vbuf), 1);
                     cache[hash].key = color;
                     cache[hash].value = ((bits32 *)vbuf)[0];
@@ -1115,7 +1115,7 @@ rinkj_write_image_data(gx_device_printer *pdev, RinkjDevice *cmyk_dev)
                     ((bits32 *)cbuf)[0] = color;
 
                     /* 4 channel to CMYK */
-                    gscms_transform_color((gx_device *)rdev, rdev->icc_link, 
+                    gscms_transform_color((gx_device *)rdev, rdev->icc_link,
                                            &cbuf, &(vbuf), 1);
                     cache[hash].key = color;
                     cache[hash].value = ((bits32 *)vbuf)[0];
@@ -1147,7 +1147,7 @@ rinkj_write_image_data(gx_device_printer *pdev, RinkjDevice *cmyk_dev)
                        code was still working with 4 to 4
                        conversion.  Replacing with new ICC AMP call */
 
-                    gscms_transform_color((gx_device *) rdev, rdev->icc_link, 
+                    gscms_transform_color((gx_device *) rdev, rdev->icc_link,
                                           &cbuf, &(vbuf), 1);
                     cache[hash].key = color;
                     cache[hash].value = ((bits32 *)vbuf)[0];

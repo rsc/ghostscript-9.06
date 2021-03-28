@@ -201,7 +201,7 @@ oki_print_page(gx_device_printer *pdev, FILE *prn_stream)
 
         if ( in == 0 || out1 == 0 || out2 == 0)
         {	code = gs_error_VMerror;
-                gs_note_error(code);
+                (void)gs_note_error(code);
                 goto bail;
         }
 

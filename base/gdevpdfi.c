@@ -181,7 +181,7 @@ pdf_convert_image4_to_image1(gx_device_pdf *pdev,
                 }
             else
                 lop = lop_know_T_0(lop);
-            switch (lop_rop(lop)) {
+            switch ((int)lop_rop(lop)) {
             case rop3_0:
                 if (black_or_white != 0)
                     return -1;

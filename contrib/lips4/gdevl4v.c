@@ -998,6 +998,7 @@ lips4v_setlinecap(gx_device_vector * vdev, gs_line_cap cap)
         pdev->TextMode = FALSE;
     }
     switch (cap) {
+        default:break;
         case 0:
         case 3:
         line_cap = 0;		/* butt */
@@ -1035,6 +1036,7 @@ lips4v_setlinejoin(gx_device_vector * vdev, gs_line_join join)
     }
 
     switch (join) {
+        default:break;
         case 0:
         lips_join = 2;		/* miter */
         break;

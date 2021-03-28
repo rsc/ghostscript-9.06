@@ -128,7 +128,7 @@ jetp3852_print_page(gx_device_printer *pdev, FILE *prn_stream)
                                         fputs("\0330",prn_stream);
                                         /* Set vertical tab */
                                         vtp = (num_blank_lines  / 8);
-                                                fprintf(prn_stream,"\033B%c\000",vtp);
+                                                fprintf(prn_stream,"\033B%c",vtp);
                                                 /* Do vertical tab */
                                         fputs("\013",prn_stream);
                                         num_blank_lines = 0;

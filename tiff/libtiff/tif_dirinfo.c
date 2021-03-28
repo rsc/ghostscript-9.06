@@ -301,7 +301,7 @@ _TIFFSetupFields(TIFF* tif, const TIFFFieldArray* fieldarray)
 			TIFFField *fld = tif->tif_fields[i];
 			if (fld->field_bit == FIELD_CUSTOM &&
 				strncmp("Tag ", fld->field_name, 4) == 0) {
-					_TIFFfree(fld->field_name);
+					_TIFFfree((void*)fld->field_name);
 					_TIFFfree(fld);
 				}
 		}
@@ -661,7 +661,7 @@ _TIFFCreateAnonField(TIFF *tif, uint32 tag, TIFFDataType field_type)
 	 * note that this name is a special sign to TIFFClose() and
 	 * _TIFFSetupFields() to free the field
 	 */
-	sprintf(fld->field_name, "Tag %d", (int) tag);
+	sprintf((char*)fld->field_name, "Tag %d", (int) tag);
 
 	return fld;
 }
