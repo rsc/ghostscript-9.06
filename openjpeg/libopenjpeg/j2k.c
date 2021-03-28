@@ -265,7 +265,7 @@ static int j2k_get_num_tp(opj_cp_t *cp,int pino,int tileno){
 	int tpnum=1,tpend=0;
 	opj_tcp_t *tcp = &cp->tcps[tileno];
 	prog = j2k_convert_progression_order(tcp->prg);
-	
+
 	if(cp->tp_on == 1){
 		for(i=0;i<4;i++){
 			if(tpend!=1){
@@ -295,7 +295,7 @@ static int j2k_get_num_tp(opj_cp_t *cp,int pino,int tileno){
 }
 
 /**	mem allocation for TLM marker*/
-int j2k_calculate_tp(opj_cp_t *cp,int img_numcomp,opj_image_t *image,opj_j2k_t *j2k ){
+static int j2k_calculate_tp(opj_cp_t *cp,int img_numcomp,opj_image_t *image,opj_j2k_t *j2k ){
 	int pino,tileno,totnum_tp=0;
 	j2k->cur_totnum_tp = (int *) opj_malloc(cp->tw * cp->th * sizeof(int));
 	for (tileno = 0; tileno < cp->tw * cp->th; tileno++) {
@@ -335,7 +335,7 @@ static void j2k_write_soc(opj_j2k_t *j2k) {
 /* <<UniPG */
 }
 
-static void j2k_read_soc(opj_j2k_t *j2k) {	
+static void j2k_read_soc(opj_j2k_t *j2k) {
 	j2k->state = J2K_STATE_MHSIZ;
 	/* Index */
 	if (j2k->cstr_info) {
@@ -351,7 +351,7 @@ static void j2k_write_siz(opj_j2k_t *j2k) {
 	opj_cio_t *cio = j2k->cio;
 	opj_image_t *image = j2k->image;
 	opj_cp_t *cp = j2k->cp;
-	
+
 	cio_write(cio, J2K_MS_SIZ, 2);	/* SIZ */
 	lenp = cio_tell(cio);
 	cio_skip(cio, 2);
@@ -378,11 +378,11 @@ static void j2k_write_siz(opj_j2k_t *j2k) {
 
 static void j2k_read_siz(opj_j2k_t *j2k) {
 	int len, i;
-	
+
 	opj_cio_t *cio = j2k->cio;
 	opj_image_t *image = j2k->image;
 	opj_cp_t *cp = j2k->cp;
-	
+
 	len = cio_read(cio, 2);			/* Lsiz */
 	cio_read(cio, 2);				/* Rsiz (capabilities) */
 	image->x1 = cio_read(cio, 4);	/* Xsiz */
@@ -393,14 +393,14 @@ static void j2k_read_siz(opj_j2k_t *j2k) {
 	cp->tdy = cio_read(cio, 4);		/* YTsiz */
 	cp->tx0 = cio_read(cio, 4);		/* XT0siz */
 	cp->ty0 = cio_read(cio, 4);		/* YT0siz */
-	
+
 	if ((image->x0<0)||(image->x1<0)||(image->y0<0)||(image->y1<0)) {
 		opj_event_msg(j2k->cinfo, EVT_ERROR,
 									"%s: invalid image size (x0:%d, x1:%d, y0:%d, y1:%d)\n",
 									image->x0,image->x1,image->y0,image->y1);
 		return;
 	}
-	
+
 	image->numcomps = cio_read(cio, 2);	/* Csiz */
 
 #ifdef USE_JPWL
@@ -429,11 +429,11 @@ static void j2k_read_siz(opj_j2k_t *j2k) {
 			if (image->numcomps < ((len - 38) / 3)) {
 				len = 38 + 3 * image->numcomps;
 				opj_event_msg(j2k->cinfo, EVT_WARNING, "- setting Lsiz to %d => HYPOTHESIS!!!\n",
-					len);				
+					len);
 			} else {
 				image->numcomps = ((len - 38) / 3);
 				opj_event_msg(j2k->cinfo, EVT_WARNING, "- setting Csiz to %d => HYPOTHESIS!!!\n",
-					image->numcomps);				
+					image->numcomps);
 			}
 		}
 
@@ -450,7 +450,7 @@ static void j2k_read_siz(opj_j2k_t *j2k) {
 		image->comps[i].sgnd = tmp >> 7;
 		image->comps[i].dx = cio_read(cio, 1);	/* XRsiz_i */
 		image->comps[i].dy = cio_read(cio, 1);	/* YRsiz_i */
-		
+
 #ifdef USE_JPWL
 		if (j2k->cp->correct) {
 		/* if JPWL is on, we check whether TX errors have damaged
@@ -476,7 +476,7 @@ static void j2k_read_siz(opj_j2k_t *j2k) {
 						i, image->comps[i].dy);
 				}
 			}
-			
+
 		}
 #endif /* USE_JPWL */
 
@@ -487,7 +487,7 @@ static void j2k_read_siz(opj_j2k_t *j2k) {
 		image->comps[i].resno_decoded = 0;	/* number of resolution decoded */
 		image->comps[i].factor = cp->reduce; /* reducing factor per component */
 	}
-	
+
 	cp->tw = int_ceildiv(image->x1 - cp->tx0, cp->tdx);
 	cp->th = int_ceildiv(image->y1 - cp->ty0, cp->tdy);
 
@@ -534,7 +534,7 @@ static void j2k_read_siz(opj_j2k_t *j2k) {
 	cp->tcps = (opj_tcp_t*) opj_calloc(cp->tw * cp->th, sizeof(opj_tcp_t));
 	cp->tileno = (int*) opj_malloc(cp->tw * cp->th * sizeof(int));
 	cp->tileno_size = 0;
-	
+
 #ifdef USE_JPWL
 	if (j2k->cp->correct) {
 		if (!cp->tcps) {
@@ -553,7 +553,7 @@ static void j2k_read_siz(opj_j2k_t *j2k) {
 		cp->tcps[i].numpocs = 0;
 		cp->tcps[i].first = 1;
 	}
-	
+
 	/* Initialization for PPM marker */
 	cp->ppm = 0;
 	cp->ppm_data = NULL;
@@ -564,7 +564,7 @@ static void j2k_read_siz(opj_j2k_t *j2k) {
 	j2k->default_tcp->tccps = (opj_tccp_t*) opj_calloc(image->numcomps, sizeof(opj_tccp_t));
 	for (i = 0; i < cp->tw * cp->th; i++) {
 		cp->tcps[i].tccps = (opj_tccp_t*) opj_malloc(image->numcomps * sizeof(opj_tccp_t));
-	}	
+	}
 	j2k->tile_data = (unsigned char**) opj_calloc(cp->tw * cp->th, sizeof(unsigned char*));
 	j2k->tile_len = (int*) opj_calloc(cp->tw * cp->th, sizeof(int));
 	j2k->state = J2K_STATE_MH;
@@ -577,11 +577,11 @@ static void j2k_read_siz(opj_j2k_t *j2k) {
 		cstr_info->numcomps = image->numcomps;
 		cstr_info->tw = cp->tw;
 		cstr_info->th = cp->th;
-		cstr_info->tile_x = cp->tdx;	
-		cstr_info->tile_y = cp->tdy;	
-		cstr_info->tile_Ox = cp->tx0;	
-		cstr_info->tile_Oy = cp->ty0;			
-		cstr_info->tile = (opj_tile_info_t*) opj_calloc(cp->tw * cp->th, sizeof(opj_tile_info_t));		
+		cstr_info->tile_x = cp->tdx;
+		cstr_info->tile_y = cp->tdy;
+		cstr_info->tile_Ox = cp->tx0;
+		cstr_info->tile_Oy = cp->ty0;
+		cstr_info->tile = (opj_tile_info_t*) opj_calloc(cp->tw * cp->th, sizeof(opj_tile_info_t));
 	}
 }
 
@@ -609,11 +609,11 @@ static void j2k_write_com(opj_j2k_t *j2k) {
 
 static void j2k_read_com(opj_j2k_t *j2k) {
 	int len;
-	
+
 	opj_cio_t *cio = j2k->cio;
 
 	len = cio_read(cio, 2);
-	cio_skip(cio, len - 2);  
+	cio_skip(cio, len - 2);
 }
 
 static void j2k_write_cox(opj_j2k_t *j2k, int compno) {
@@ -623,13 +623,13 @@ static void j2k_write_cox(opj_j2k_t *j2k, int compno) {
 	opj_tcp_t *tcp = &cp->tcps[j2k->curtileno];
 	opj_tccp_t *tccp = &tcp->tccps[compno];
 	opj_cio_t *cio = j2k->cio;
-	
+
 	cio_write(cio, tccp->numresolutions - 1, 1);	/* SPcox (D) */
 	cio_write(cio, tccp->cblkw - 2, 1);				/* SPcox (E) */
 	cio_write(cio, tccp->cblkh - 2, 1);				/* SPcox (F) */
 	cio_write(cio, tccp->cblksty, 1);				/* SPcox (G) */
 	cio_write(cio, tccp->qmfbid, 1);				/* SPcox (H) */
-	
+
 	if (tccp->csty & J2K_CCP_CSTY_PRT) {
 		for (i = 0; i < tccp->numresolutions; i++) {
 			cio_write(cio, tccp->prcw[i] + (tccp->prch[i] << 4), 1);	/* SPcox (I_i) */
@@ -688,12 +688,12 @@ static void j2k_write_cod(opj_j2k_t *j2k) {
 	int lenp, len;
 
 	opj_cio_t *cio = j2k->cio;
-	
+
 	cio_write(cio, J2K_MS_COD, 2);	/* COD */
-	
+
 	lenp = cio_tell(cio);
 	cio_skip(cio, 2);
-	
+
 	cp = j2k->cp;
 	tcp = &cp->tcps[j2k->curtileno];
 
@@ -701,7 +701,7 @@ static void j2k_write_cod(opj_j2k_t *j2k) {
 	cio_write(cio, tcp->prg, 1);		/* SGcod (A) */
 	cio_write(cio, tcp->numlayers, 2);	/* SGcod (B) */
 	cio_write(cio, tcp->mct, 1);		/* SGcod (C) */
-	
+
 	j2k_write_cox(j2k, 0);
 	len = cio_tell(cio) - lenp;
 	cio_seek(cio, lenp);
@@ -711,18 +711,18 @@ static void j2k_write_cod(opj_j2k_t *j2k) {
 
 static void j2k_read_cod(opj_j2k_t *j2k) {
 	int len, i, pos;
-	
+
 	opj_cio_t *cio = j2k->cio;
 	opj_cp_t *cp = j2k->cp;
 	opj_tcp_t *tcp = j2k->state == J2K_STATE_TPH ? &cp->tcps[j2k->curtileno] : j2k->default_tcp;
 	opj_image_t *image = j2k->image;
-	
+
 	len = cio_read(cio, 2);				/* Lcod */
 	tcp->csty = cio_read(cio, 1);		/* Scod */
 	tcp->prg = (OPJ_PROG_ORDER)cio_read(cio, 1);		/* SGcod (A) */
 	tcp->numlayers = cio_read(cio, 2);	/* SGcod (B) */
 	tcp->mct = cio_read(cio, 1);		/* SGcod (C) */
-	
+
 	pos = cio_tell(cio);
 	for (i = 0; i < image->numcomps; i++) {
 		tcp->tccps[i].csty = tcp->csty & J2K_CP_CSTY_PRT;
@@ -749,7 +749,7 @@ static void j2k_write_coc(opj_j2k_t *j2k, int compno) {
 	opj_tcp_t *tcp = &cp->tcps[j2k->curtileno];
 	opj_image_t *image = j2k->image;
 	opj_cio_t *cio = j2k->cio;
-	
+
 	cio_write(cio, J2K_MS_COC, 2);	/* COC */
 	lenp = cio_tell(cio);
 	cio_skip(cio, 2);
@@ -769,7 +769,7 @@ static void j2k_read_coc(opj_j2k_t *j2k) {
 	opj_tcp_t *tcp = j2k->state == J2K_STATE_TPH ? &cp->tcps[j2k->curtileno] : j2k->default_tcp;
 	opj_image_t *image = j2k->image;
 	opj_cio_t *cio = j2k->cio;
-	
+
 	len = cio_read(cio, 2);		/* Lcoc */
 	compno = cio_read(cio, image->numcomps <= 256 ? 1 : 2);	/* Ccoc */
 	tcp->tccps[compno].csty = cio_read(cio, 1);	/* Scoc */
@@ -779,19 +779,19 @@ static void j2k_read_coc(opj_j2k_t *j2k) {
 static void j2k_write_qcx(opj_j2k_t *j2k, int compno) {
 	int bandno, numbands;
 	int expn, mant;
-	
+
 	opj_cp_t *cp = j2k->cp;
 	opj_tcp_t *tcp = &cp->tcps[j2k->curtileno];
 	opj_tccp_t *tccp = &tcp->tccps[compno];
 	opj_cio_t *cio = j2k->cio;
-	
+
 	cio_write(cio, tccp->qntsty + (tccp->numgbits << 5), 1);	/* Sqcx */
 	numbands = tccp->qntsty == J2K_CCP_QNTSTY_SIQNT ? 1 : tccp->numresolutions * 3 - 2;
-	
+
 	for (bandno = 0; bandno < numbands; bandno++) {
 		expn = tccp->stepsizes[bandno].expn;
 		mant = tccp->stepsizes[bandno].mant;
-		
+
 		if (tccp->qntsty == J2K_CCP_QNTSTY_NOQNT) {
 			cio_write(cio, expn << 3, 1);	/* SPqcx_i */
 		} else {
@@ -812,7 +812,7 @@ static void j2k_read_qcx(opj_j2k_t *j2k, int compno, int len) {
 	tmp = cio_read(cio, 1);		/* Sqcx */
 	tccp->qntsty = tmp & 0x1f;
 	tccp->numgbits = tmp >> 5;
-	numbands = (tccp->qntsty == J2K_CCP_QNTSTY_SIQNT) ? 
+	numbands = (tccp->qntsty == J2K_CCP_QNTSTY_SIQNT) ?
 		1 : ((tccp->qntsty == J2K_CCP_QNTSTY_NOQNT) ? len - 1 : (len - 1) / 2);
 
 #ifdef USE_JPWL
@@ -850,12 +850,12 @@ static void j2k_read_qcx(opj_j2k_t *j2k, int compno, int len) {
 		tccp->stepsizes[bandno].expn = expn;
 		tccp->stepsizes[bandno].mant = mant;
 	}
-	
+
 	/* Add Antonin : if scalar_derived -> compute other stepsizes */
 	if (tccp->qntsty == J2K_CCP_QNTSTY_SIQNT) {
 		for (bandno = 1; bandno < J2K_MAXBANDS; bandno++) {
-			tccp->stepsizes[bandno].expn = 
-				((tccp->stepsizes[0].expn) - ((bandno - 1) / 3) > 0) ? 
+			tccp->stepsizes[bandno].expn =
+				((tccp->stepsizes[0].expn) - ((bandno - 1) / 3) > 0) ?
 					(tccp->stepsizes[0].expn) - ((bandno - 1) / 3) : 0;
 			tccp->stepsizes[bandno].mant = tccp->stepsizes[0].mant;
 		}
@@ -867,7 +867,7 @@ static void j2k_write_qcd(opj_j2k_t *j2k) {
 	int lenp, len;
 
 	opj_cio_t *cio = j2k->cio;
-	
+
 	cio_write(cio, J2K_MS_QCD, 2);	/* QCD */
 	lenp = cio_tell(cio);
 	cio_skip(cio, 2);
@@ -883,7 +883,7 @@ static void j2k_read_qcd(opj_j2k_t *j2k) {
 
 	opj_cio_t *cio = j2k->cio;
 	opj_image_t *image = j2k->image;
-	
+
 	len = cio_read(cio, 2);		/* Lqcd */
 	pos = cio_tell(cio);
 	for (i = 0; i < image->numcomps; i++) {
@@ -896,7 +896,7 @@ static void j2k_write_qcc(opj_j2k_t *j2k, int compno) {
 	int lenp, len;
 
 	opj_cio_t *cio = j2k->cio;
-	
+
 	cio_write(cio, J2K_MS_QCC, 2);	/* QCC */
 	lenp = cio_tell(cio);
 	cio_skip(cio, 2);
@@ -912,7 +912,7 @@ static void j2k_read_qcc(opj_j2k_t *j2k) {
 	int len, compno;
 	int numcomp = j2k->image->numcomps;
 	opj_cio_t *cio = j2k->cio;
-	
+
 	len = cio_read(cio, 2);	/* Lqcc */
 	compno = cio_read(cio, numcomp <= 256 ? 1 : 2);	/* Cqcc */
 
@@ -949,7 +949,7 @@ static void j2k_write_poc(opj_j2k_t *j2k) {
 	int len, numpchgs, i;
 
 	int numcomps = j2k->image->numcomps;
-	
+
 	opj_cp_t *cp = j2k->cp;
 	opj_tcp_t *tcp = &cp->tcps[j2k->curtileno];
 	opj_tccp_t *tccp = &tcp->tccps[0];
@@ -977,16 +977,16 @@ static void j2k_read_poc(opj_j2k_t *j2k) {
 	int len, numpchgs, i, old_poc;
 
 	int numcomps = j2k->image->numcomps;
-	
+
 	opj_cp_t *cp = j2k->cp;
 	opj_tcp_t *tcp = j2k->state == J2K_STATE_TPH ? &cp->tcps[j2k->curtileno] : j2k->default_tcp;
 	opj_cio_t *cio = j2k->cio;
-	
+
 	old_poc = tcp->POC ? tcp->numpocs + 1 : 0;
 	tcp->POC = 1;
 	len = cio_read(cio, 2);		/* Lpoc */
 	numpchgs = (len - 2) / (5 + 2 * (numcomps <= 256 ? 1 : 2));
-	
+
 	for (i = old_poc; i < numpchgs + old_poc; i++) {
 		opj_poc_t *poc;
 		poc = &tcp->pocs[i];
@@ -998,16 +998,16 @@ static void j2k_read_poc(opj_j2k_t *j2k) {
 			cio_read(cio, numcomps <= 256 ? 1 : 2), (unsigned int) numcomps);	/* CEpoc_i */
 		poc->prg = (OPJ_PROG_ORDER)cio_read(cio, 1);	/* Ppoc_i */
 	}
-	
+
 	tcp->numpocs = numpchgs + old_poc - 1;
 }
 
 static void j2k_read_crg(opj_j2k_t *j2k) {
 	int len, i, Xcrg_i, Ycrg_i;
-	
+
 	opj_cio_t *cio = j2k->cio;
 	int numcomps = j2k->image->numcomps;
-	
+
 	len = cio_read(cio, 2);			/* Lcrg */
 	for (i = 0; i < numcomps; i++) {
 		Xcrg_i = cio_read(cio, 2);	/* Xcrg_i */
@@ -1020,7 +1020,7 @@ static void j2k_read_tlm(opj_j2k_t *j2k) {
 	long int Ttlm_i, Ptlm_i;
 
 	opj_cio_t *cio = j2k->cio;
-	
+
 	len = cio_read(cio, 2);		/* Ltlm */
 	Ztlm = cio_read(cio, 1);	/* Ztlm */
 	Stlm = cio_read(cio, 1);	/* Stlm */
@@ -1035,7 +1035,7 @@ static void j2k_read_tlm(opj_j2k_t *j2k) {
 
 static void j2k_read_plm(opj_j2k_t *j2k) {
 	int len, i, Zplm, Nplm, add, packet_len = 0;
-	
+
 	opj_cio_t *cio = j2k->cio;
 
 	len = cio_read(cio, 2);		/* Lplm */
@@ -1060,9 +1060,9 @@ static void j2k_read_plm(opj_j2k_t *j2k) {
 
 static void j2k_read_plt(opj_j2k_t *j2k) {
 	int len, i, Zplt, packet_len = 0, add;
-	
+
 	opj_cio_t *cio = j2k->cio;
-	
+
 	len = cio_read(cio, 2);		/* Lplt */
 	Zplt = cio_read(cio, 1);	/* Zplt */
 	for (i = len - 3; i > 0; i--) {
@@ -1081,10 +1081,10 @@ static void j2k_read_ppm(opj_j2k_t *j2k) {
 
 	opj_cp_t *cp = j2k->cp;
 	opj_cio_t *cio = j2k->cio;
-	
+
 	len = cio_read(cio, 2);
 	cp->ppm = 1;
-	
+
 	Z_ppm = cio_read(cio, 1);	/* Z_ppm */
 	len -= 3;
 	while (len > 0) {
@@ -1245,7 +1245,7 @@ static void j2k_read_sot(opj_j2k_t *j2k) {
       return;
     }
   }
-	
+
 	if (cp->tileno_size == 0) {
 		cp->tileno[cp->tileno_size] = tileno;
 		cp->tileno_size++;
@@ -1260,7 +1260,7 @@ static void j2k_read_sot(opj_j2k_t *j2k) {
 			cp->tileno_size++;
 		}
 	}
-	
+
 	totlen = cio_read(cio, 4);
 
 #ifdef USE_JPWL
@@ -1297,10 +1297,10 @@ static void j2k_read_sot(opj_j2k_t *j2k) {
 
 	if (!totlen)
 		totlen = cio_numbytesleft(cio) + 8;
-	
+
 	partno = cio_read(cio, 1);
 	numparts = cio_read(cio, 1);
-	
+
 	j2k->curtileno = tileno;
 	j2k->cur_tp_num = partno;
 	j2k->eot = cio_getbp(cio) - 12 + totlen;
@@ -1310,11 +1310,11 @@ static void j2k_read_sot(opj_j2k_t *j2k) {
 	/* Index */
 	if (j2k->cstr_info) {
 		if (tcp->first) {
-			if (tileno == 0) 
+			if (tileno == 0)
 				j2k->cstr_info->main_head_end = cio_tell(cio) - 13;
 			j2k->cstr_info->tile[tileno].tileno = tileno;
 			j2k->cstr_info->tile[tileno].start_pos = cio_tell(cio) - 12;
-			j2k->cstr_info->tile[tileno].end_pos = j2k->cstr_info->tile[tileno].start_pos + totlen - 1;				
+			j2k->cstr_info->tile[tileno].end_pos = j2k->cstr_info->tile[tileno].start_pos + totlen - 1;
 			j2k->cstr_info->tile[tileno].num_tps = numparts;
 			if (numparts)
 				j2k->cstr_info->tile[tileno].tp = (opj_tp_info_t *) opj_malloc(numparts * sizeof(opj_tp_info_t));
@@ -1323,13 +1323,13 @@ static void j2k_read_sot(opj_j2k_t *j2k) {
 		}
 		else {
 			j2k->cstr_info->tile[tileno].end_pos += totlen;
-		}		
+		}
 		j2k->cstr_info->tile[tileno].tp[partno].tp_start_pos = cio_tell(cio) - 12;
-		j2k->cstr_info->tile[tileno].tp[partno].tp_end_pos = 
+		j2k->cstr_info->tile[tileno].tp[partno].tp_end_pos =
 			j2k->cstr_info->tile[tileno].tp[partno].tp_start_pos + totlen - 1;
 	}
-	
-	if (tcp->first == 1) {		
+
+	if (tcp->first == 1) {
 		/* Initialization PPT */
 		opj_tccp_t *tmp = tcp->tccps;
 		memcpy(tcp, j2k->default_tcp, sizeof(opj_tcp_t));
@@ -1350,14 +1350,14 @@ static void j2k_write_sod(opj_j2k_t *j2k, void *tile_coder) {
 	int totlen;
 	opj_tcp_t *tcp = NULL;
 	opj_codestream_info_t *cstr_info = NULL;
-	
+
 	opj_tcd_t *tcd = (opj_tcd_t*)tile_coder;	/* cast is needed because of conflicts in header inclusions */
 	opj_cp_t *cp = j2k->cp;
 	opj_cio_t *cio = j2k->cio;
 
 	tcd->tp_num = j2k->tp_num ;
 	tcd->cur_tp_num = j2k->cur_tp_num;
-	
+
 	cio_write(cio, J2K_MS_SOD, 2);
 	if (j2k->curtileno == 0) {
 		j2k->sod_start = cio_tell(cio) + j2k->pos_correction;
@@ -1382,7 +1382,7 @@ static void j2k_write_sod(opj_j2k_t *j2k, void *tile_coder) {
 		/* <<UniPG */
 	}
 	/* << INDEX */
-	
+
 	tcp = &cp->tcps[j2k->curtileno];
 	for (layno = 0; layno < tcp->numlayers; layno++) {
 		if (tcp->rates[layno]>(j2k->sod_start / (cp->th * cp->tw))) {
@@ -1396,9 +1396,9 @@ static void j2k_write_sod(opj_j2k_t *j2k, void *tile_coder) {
 		if(cstr_info)
 			cstr_info->packno = 0;
 	}
-	
+
 	l = tcd_encode_tile(tcd, j2k->curtileno, cio_getbp(cio), cio_numbytesleft(cio) - 2, cstr_info);
-	
+
 	/* Writing Psot in SOT marker */
 	totlen = cio_tell(cio) + l - j2k->sot_start;
 	cio_seek(cio, j2k->sot_start + 6);
@@ -1428,12 +1428,12 @@ static void j2k_read_sod(opj_j2k_t *j2k) {
 			j2k->cstr_info->tile[j2k->curtileno].end_header = cio_tell(cio) + j2k->pos_correction - 1;
 		j2k->cstr_info->packno = 0;
 	}
-	
+
 	len = int_min(j2k->eot - cio_getbp(cio), cio_numbytesleft(cio) + 1);
 
 	if (len == cio_numbytesleft(cio) + 1) {
 		truncate = 1;		/* Case of a truncate codestream */
-	}	
+	}
 
 	data = j2k->tile_data[curtileno];
 	data = (unsigned char*) opj_realloc(data, (j2k->tile_len[curtileno] + len) * sizeof(unsigned char));
@@ -1445,7 +1445,7 @@ static void j2k_read_sod(opj_j2k_t *j2k) {
 
 	j2k->tile_len[curtileno] += len;
 	j2k->tile_data[curtileno] = data;
-	
+
 	if (!truncate) {
 		j2k->state = J2K_STATE_TPHSOT;
 	} else {
@@ -1459,7 +1459,7 @@ static void j2k_write_rgn(opj_j2k_t *j2k, int compno, int tileno) {
 	opj_tcp_t *tcp = &cp->tcps[tileno];
 	opj_cio_t *cio = j2k->cio;
 	int numcomps = j2k->image->numcomps;
-	
+
 	cio_write(cio, J2K_MS_RGN, 2);						/* RGN  */
 	cio_write(cio, numcomps <= 256 ? 5 : 6, 2);			/* Lrgn */
 	cio_write(cio, compno, numcomps <= 256 ? 1 : 2);	/* Crgn */
@@ -1545,11 +1545,11 @@ static void j2k_read_eoc(opj_j2k_t *j2k) {
 			opj_free(j2k->tile_data[tileno]);
 			j2k->tile_data[tileno] = NULL;
 		}
-	}	
+	}
 	if (j2k->state & J2K_STATE_ERR)
 		j2k->state = J2K_STATE_MT + J2K_STATE_ERR;
 	else
-		j2k->state = J2K_STATE_MT; 
+		j2k->state = J2K_STATE_MT;
 }
 
 typedef struct opj_dec_mstabent {
@@ -1616,7 +1616,7 @@ static void j2k_read_unk(opj_j2k_t *j2k) {
 		/* OK, activate this at your own risk!!! */
 		/* we look for the marker at the minimum hamming distance from this */
 		while (j2k_dec_mstab[m].id) {
-			
+
 			/* 1's where they differ */
 			tmp_id = j2k_dec_mstab[m].id ^ id;
 
@@ -1633,7 +1633,7 @@ static void j2k_read_unk(opj_j2k_t *j2k) {
 				min_dist = cur_dist;
 				min_id = j2k_dec_mstab[m].id;
 			}
-			
+
 			/* jump to the next marker */
 			m++;
 		}
@@ -1729,7 +1729,7 @@ void j2k_destroy_decompress(opj_j2k_t *j2k) {
 			opj_free(cp->ppm_data_first);
 		}
 		if(cp->tileno != NULL) {
-			opj_free(cp->tileno);  
+			opj_free(cp->tileno);
 		}
 		if(cp->comment != NULL) {
 			opj_free(cp->comment);
@@ -1744,7 +1744,7 @@ void j2k_setup_decoder(opj_j2k_t *j2k, opj_dparameters_t *parameters) {
 	if(j2k && parameters) {
 		/* create and initialize the coding parameters structure */
 		opj_cp_t *cp = (opj_cp_t*) opj_calloc(1, sizeof(opj_cp_t));
-		cp->reduce = parameters->cp_reduce;	
+		cp->reduce = parameters->cp_reduce;
 		cp->layer = parameters->cp_layer;
 		cp->limit_decoding = parameters->cp_limit_decoding;
 
@@ -1763,7 +1763,7 @@ void j2k_setup_decoder(opj_j2k_t *j2k, opj_dparameters_t *parameters) {
 opj_image_t* j2k_decode(opj_j2k_t *j2k, opj_cio_t *cio, opj_codestream_info_t *cstr_info) {
 	opj_image_t *image = NULL;
 
-	opj_common_ptr cinfo = j2k->cinfo;	
+	opj_common_ptr cinfo = j2k->cinfo;
 
 	j2k->cio = cio;
 	j2k->cstr_info = cstr_info;
@@ -1834,13 +1834,13 @@ opj_image_t* j2k_decode(opj_j2k_t *j2k, opj_cio_t *cio, opj_codestream_info_t *c
 		if (e->id == J2K_MS_SOT && j2k->cp->limit_decoding == LIMIT_TO_MAIN_HEADER) {
 			opj_event_msg(cinfo, EVT_INFO, "Main Header decoded.\n");
 			return image;
-		}		
+		}
 
 		if (e->handler) {
 			(*e->handler)(j2k);
 		}
-		if (j2k->state & J2K_STATE_ERR) 
-			return NULL;	
+		if (j2k->state & J2K_STATE_ERR)
+			return NULL;
 
 		if (j2k->state == J2K_STATE_MT) {
 			break;
@@ -1870,7 +1870,7 @@ opj_image_t* j2k_decode_jpt_stream(opj_j2k_t *j2k, opj_cio_t *cio,  opj_codestre
 	int position;
 
 	opj_common_ptr cinfo = j2k->cinfo;
-	
+
 	j2k->cio = cio;
 
 	/* create an empty image */
@@ -1878,23 +1878,23 @@ opj_image_t* j2k_decode_jpt_stream(opj_j2k_t *j2k, opj_cio_t *cio,  opj_codestre
 	j2k->image = image;
 
 	j2k->state = J2K_STATE_MHSOC;
-	
+
 	/* Initialize the header */
 	jpt_init_msg_header(&header);
 	/* Read the first header of the message */
 	jpt_read_msg_header(cinfo, cio, &header);
-	
+
 	position = cio_tell(cio);
 	if (header.Class_Id != 6) {	/* 6 : Main header data-bin message */
 		opj_image_destroy(image);
 		opj_event_msg(cinfo, EVT_ERROR, "[JPT-stream] : Expecting Main header first [class_Id %d] !\n", header.Class_Id);
 		return 0;
 	}
-	
+
 	for (;;) {
 		opj_dec_mstabent_t *e = NULL;
 		int id;
-		
+
 		if (!cio_numbytesleft(cio)) {
 			j2k_read_eoc(j2k);
 			return image;
@@ -1909,7 +1909,7 @@ opj_image_t* j2k_decode_jpt_stream(opj_j2k_t *j2k, opj_cio_t *cio,  opj_codestre
 				return 0;
 			}
 		}
-		
+
 		id = cio_read(cio, 2);
 		if (id >> 8 != 0xff) {
 			opj_image_destroy(image);
@@ -1935,7 +1935,7 @@ opj_image_t* j2k_decode_jpt_stream(opj_j2k_t *j2k, opj_cio_t *cio,  opj_codestre
 	if (j2k->state == J2K_STATE_NEOC) {
 		j2k_read_eoc(j2k);
 	}
-	
+
 	if (j2k->state != J2K_STATE_MT) {
 		opj_event_msg(cinfo, EVT_WARNING, "Incomplete bitstream\n");
 	}
@@ -1996,8 +1996,8 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 	cp->tw = 1;
 	cp->th = 1;
 
-	/* 
-	copy user encoding parameters 
+	/*
+	copy user encoding parameters
 	*/
 	cp->cinema = parameters->cp_cinema;
 	cp->max_comp_size =	parameters->max_comp_size;
@@ -2045,7 +2045,7 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 		cp->tp_flag = parameters->tp_flag;
 		cp->tp_on = 1;
 	}
-	
+
 	cp->img_size = 0;
 	for(i=0;i<image->numcomps ;i++){
 	cp->img_size += (image->comps[i].w *image->comps[i].h * image->comps[i].prec);
@@ -2067,7 +2067,7 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 		/* set EPB on */
 		if ((parameters->jpwl_hprot_MH > 0) || (parameters->jpwl_hprot_TPH[0] > 0)) {
 			cp->epb_on = true;
-			
+
 			cp->hprot_MH = parameters->jpwl_hprot_MH;
 			for (i = 0; i < JPWL_MAX_NO_TILESPECS; i++) {
 				cp->hprot_TPH_tileno[i] = parameters->jpwl_hprot_TPH_tileno[i];
@@ -2132,7 +2132,7 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 		}
 		tcp->csty = parameters->csty;
 		tcp->prg = parameters->prog_order;
-		tcp->mct = parameters->tcp_mct; 
+		tcp->mct = parameters->tcp_mct;
 
 		numpocs_tile = 0;
 		tcp->POC = 0;
@@ -2153,7 +2153,7 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 				}
 			}
 			tcp->numpocs = numpocs_tile -1 ;
-		}else{ 
+		}else{
 			tcp->numpocs = 0;
 		}
 
@@ -2190,13 +2190,13 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 					int p = 0;
 					for (j = tccp->numresolutions - 1; j >= 0; j--) {
 						if (p < parameters->res_spec) {
-							
+
 							if (parameters->prcw_init[p] < 1) {
 								tccp->prcw[j] = 1;
 							} else {
 								tccp->prcw[j] = int_floorlog2(parameters->prcw_init[p]);
 							}
-							
+
 							if (parameters->prch_init[p] < 1) {
 								tccp->prch[j] = 1;
 							}else {
@@ -2207,13 +2207,13 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 							int res_spec = parameters->res_spec;
 							int size_prcw = parameters->prcw_init[res_spec - 1] >> (p - (res_spec - 1));
 							int size_prch = parameters->prch_init[res_spec - 1] >> (p - (res_spec - 1));
-							
+
 							if (size_prcw < 1) {
 								tccp->prcw[j] = 1;
 							} else {
 								tccp->prcw[j] = int_floorlog2(size_prcw);
 							}
-							
+
 							if (size_prch < 1) {
 								tccp->prch[j] = 1;
 							} else {
@@ -2242,7 +2242,7 @@ bool j2k_encode(opj_j2k_t *j2k, opj_cio_t *cio, opj_image_t *image, opj_codestre
 
 	opj_tcd_t *tcd = NULL;	/* TCD component */
 
-	j2k->cio = cio;	
+	j2k->cio = cio;
 	j2k->image = image;
 
 	cp = j2k->cp;
@@ -2394,7 +2394,7 @@ bool j2k_encode(opj_j2k_t *j2k, opj_cio_t *cio, opj_image_t *image, opj_codestre
 				/* << INDEX */
 
 				j2k->cur_tp_num++;
-			}			
+			}
 		}
 		if(cstr_info) {
 			cstr_info->tile[j2k->curtileno].end_pos = cio_tell(cio) + j2k->pos_correction - 1;
@@ -2402,7 +2402,7 @@ bool j2k_encode(opj_j2k_t *j2k, opj_cio_t *cio, opj_image_t *image, opj_codestre
 
 
 		/*
-		if (tile->PPT) { // BAD PPT !!! 
+		if (tile->PPT) { // BAD PPT !!!
 		FILE *PPT_file;
 		int i;
 		PPT_file=fopen("PPT","rb");

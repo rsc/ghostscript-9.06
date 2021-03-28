@@ -226,7 +226,7 @@
   /* Given a normalized (blend) coordinate, figure out the design          */
   /* coordinate appropriate for that value.                                */
   /*                                                                       */
-  FT_LOCAL_DEF( FT_Fixed )
+  static FT_LOCAL_DEF( FT_Fixed )
   mm_axis_unmap( PS_DesignMap  axismap,
                  FT_Fixed      ncv )
   {
@@ -262,7 +262,7 @@
   /* Given a vector of weights, one for each design, figure out the        */
   /* normalized axis coordinates which gave rise to those weights.         */
   /*                                                                       */
-  FT_LOCAL_DEF( void )
+  static FT_LOCAL_DEF( void )
   mm_weights_unmap( FT_Fixed*  weights,
                     FT_Fixed*  axiscoords,
                     FT_UInt    axis_count )

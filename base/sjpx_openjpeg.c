@@ -83,7 +83,7 @@ get_scaled_idx(stream_jpxd_state *state, int compno, unsigned long idx, unsigned
 {
     if (state->samescale)
 	return idx;
-	
+
     return (y/state->image->comps[compno].dy*state->width + x)/state->image->comps[compno].dx;
 }
 
@@ -91,7 +91,7 @@ get_scaled_idx(stream_jpxd_state *state, int compno, unsigned long idx, unsigned
 static int
 s_jpxd_ycc_to_rgb(stream_jpxd_state *state)
 {
-    unsigned int max_value = ~(-1 << state->image->comps[0].prec); /* maximum of channel value */
+    unsigned int max_value = ~(-(1 << state->image->comps[0].prec)); /* maximum of channel value */
     int flip_value = 1 << (state->image->comps[0].prec-1);
     int p[3], q[3], i;
     int sgnd[2];  /* Cr, Cb */
@@ -332,12 +332,12 @@ static int process_one_trunk(stream_jpxd_state * const state, stream_cursor_writ
                          for (b=0; b<bytepp1; b++)
                              *(pw->ptr++) = (((*(state->pdata[compno]) << shift_bit) >> (8*(bytepp1-b-1))))
                                                                          + (b==0 ? state->sign_comps[compno] : 0); /* split and shift input int to output bytes */
-                         state->pdata[compno]++; 
+                         state->pdata[compno]++;
                      }
                  }
              }
              else
-             {   
+             {
                  /* shift_bit = 0, bpp < 8 */
                  unsigned long image_total = state->width*state->height;
                  int bt=0; int bit_pos = 0;
@@ -471,13 +471,13 @@ s_opjd_process(stream_state * ss, stream_cursor_read * pr,
     if (state->opj_dinfo_p == NULL)
 	return ERRC;
 
-    if (in_size > 0) 
+    if (in_size > 0)
     {
         /* buffer available data */
         s_opjd_accumulate_input(state, pr);
     }
 
-    if (last == 1) 
+    if (last == 1)
     {
         if (state->image == NULL)
         {
@@ -515,7 +515,7 @@ s_opjd_release(stream_state *ss)
     /* free image data structure */
     if (state->image)
         opj_image_destroy(state->image);
-		
+
     /* free decoder handle */
     if (state->opj_dinfo_p)
 	opj_destroy_decompress(state->opj_dinfo_p);
@@ -538,7 +538,7 @@ s_opjd_accumulate_input(stream_jpxd_state *state, stream_cursor_read * pr)
     long in_size = pr->limit - pr->ptr;
 
     /* grow the input buffer if needed */
-    if (state->inbuf_size < state->inbuf_fill + in_size) 
+    if (state->inbuf_size < state->inbuf_fill + in_size)
     {
         unsigned char *new_buf;
         unsigned long new_size = state->inbuf_size==0 ? in_size : state->inbuf_size;

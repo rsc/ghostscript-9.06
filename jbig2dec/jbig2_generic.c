@@ -370,6 +370,7 @@ jbig2_decode_generic_template2a(Jbig2Ctx *ctx,
   return 0;
 }
 
+#ifdef UNUSED
 static int
 jbig2_decode_generic_template3(Jbig2Ctx *ctx,
 			       Jbig2Segment *segment,
@@ -430,6 +431,7 @@ jbig2_decode_generic_template3(Jbig2Ctx *ctx,
 
   return 0;
 }
+#endif
 
 static int
 jbig2_decode_generic_template3_unopt(Jbig2Ctx *ctx,
@@ -484,7 +486,7 @@ copy_prev_row(Jbig2Image *image, int row)
 static int
 jbig2_decode_generic_template0_TPGDON(Jbig2Ctx *ctx,
 				Jbig2Segment *segment,
-				const Jbig2GenericRegionParams *params, 
+				const Jbig2GenericRegionParams *params,
 				Jbig2ArithState *as,
 				Jbig2Image *image,
 				Jbig2ArithCx *GB_stats)
@@ -533,9 +535,9 @@ jbig2_decode_generic_template0_TPGDON(Jbig2Ctx *ctx,
 }
 
 static int
-jbig2_decode_generic_template1_TPGDON(Jbig2Ctx *ctx, 
+jbig2_decode_generic_template1_TPGDON(Jbig2Ctx *ctx,
 				Jbig2Segment *segment,
-				const Jbig2GenericRegionParams *params, 
+				const Jbig2GenericRegionParams *params,
 				Jbig2ArithState *as,
 				Jbig2Image *image,
 				Jbig2ArithCx *GB_stats)
@@ -577,7 +579,7 @@ jbig2_decode_generic_template1_TPGDON(Jbig2Ctx *ctx,
 }
 
 static int
-jbig2_decode_generic_template2_TPGDON(Jbig2Ctx *ctx, 
+jbig2_decode_generic_template2_TPGDON(Jbig2Ctx *ctx,
 				Jbig2Segment *segment,
 				const Jbig2GenericRegionParams *params,
 				Jbig2ArithState *as,
@@ -618,7 +620,7 @@ jbig2_decode_generic_template2_TPGDON(Jbig2Ctx *ctx,
 }
 
 static int
-jbig2_decode_generic_template3_TPGDON(Jbig2Ctx *ctx, 
+jbig2_decode_generic_template3_TPGDON(Jbig2Ctx *ctx,
 				Jbig2Segment *segment,
 				const Jbig2GenericRegionParams *params,
 				Jbig2ArithState *as,
@@ -661,23 +663,23 @@ jbig2_decode_generic_template3_TPGDON(Jbig2Ctx *ctx,
 static int
 jbig2_decode_generic_region_TPGDON(Jbig2Ctx *ctx,
 				Jbig2Segment *segment,
-				const Jbig2GenericRegionParams *params, 
+				const Jbig2GenericRegionParams *params,
 				Jbig2ArithState *as,
 				Jbig2Image *image,
 				Jbig2ArithCx *GB_stats)
 {
   switch (params->GBTEMPLATE) {
     case 0:
-      return jbig2_decode_generic_template0_TPGDON(ctx, segment, 
+      return jbig2_decode_generic_template0_TPGDON(ctx, segment,
 			params, as, image, GB_stats);
     case 1:
-      return jbig2_decode_generic_template1_TPGDON(ctx, segment, 
+      return jbig2_decode_generic_template1_TPGDON(ctx, segment,
 			params, as, image, GB_stats);
     case 2:
-      return jbig2_decode_generic_template2_TPGDON(ctx, segment, 
+      return jbig2_decode_generic_template2_TPGDON(ctx, segment,
 			params, as, image, GB_stats);
     case 3:
-      return jbig2_decode_generic_template3_TPGDON(ctx, segment, 
+      return jbig2_decode_generic_template3_TPGDON(ctx, segment,
 			params, as, image, GB_stats);
   }
 
@@ -711,8 +713,8 @@ jbig2_decode_generic_region(Jbig2Ctx *ctx,
 {
   const int8_t *gbat = params->gbat;
 
-  if (!params->MMR && params->TPGDON) 
-     return jbig2_decode_generic_region_TPGDON(ctx, segment, params, 
+  if (!params->MMR && params->TPGDON)
+     return jbig2_decode_generic_region_TPGDON(ctx, segment, params,
 		as, image, GB_stats);
 
   if (!params->MMR && params->GBTEMPLATE == 0) {

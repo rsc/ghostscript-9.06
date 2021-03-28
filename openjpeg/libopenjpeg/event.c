@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, Hervé Drolon, FreeImage Team
+ * Copyright (c) 2005, Hervï¿½ Drolon, FreeImage Team
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,14 +38,15 @@ i2a(unsigned i, char *a, unsigned r) {
 	return a+1;
 }
 
-/** 
- Transforms integer i into an ascii string and stores the result in a; 
+/**
+ Transforms integer i into an ascii string and stores the result in a;
  string is encoded in the base indicated by r.
  @param i Number to be converted
  @param a String result
  @param r Base of value; must be in the range 2 - 36
  @return Returns a
 */
+#ifdef UNUSED
 static char *
 _itoa(int i, char *a, int r) {
 	r = ((r < 2) || (r > 36)) ? 10 : r;
@@ -56,6 +57,7 @@ _itoa(int i, char *a, int r) {
 	else *i2a(i, a, r) = 0;
 	return a;
 }
+#endif
 
 #endif /* !_WIN32 */
 

@@ -1426,8 +1426,8 @@ get_int(int *v,  const cff_data_t *data, unsigned p, unsigned pe)
 {
     int code;
     unsigned int c, u;
-    const int ext16 = ~0 << 15;  /* sign extension constant */
-    const int ext32 = ~0 << 31;  /* sign extension constant */
+    const int ext16 = (unsigned)~0 << 15;  /* sign extension constant */
+    const int ext32 = (unsigned)~0 << 31;  /* sign extension constant */
 
     if ((code = card8(&c, data, p, pe)) < 0)
         return code;

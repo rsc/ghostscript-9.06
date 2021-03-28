@@ -499,7 +499,7 @@ jbig2_table_read_bits(const byte *data, size_t *bitoffset, const int bitlen)
             d >>= -nshift;
         result |= d;
     }
-    result &= ~(-1 << bitlen);
+    result &= ~(-(1 << bitlen));
     *bitoffset += bitlen;
     return result;
 }
@@ -541,8 +541,8 @@ jbig2_table(Jbig2Ctx *ctx, Jbig2Segment *segment, const byte *segment_data)
         int NTEMP = 0;
 
 #ifdef JBIG2_DEBUG
-        jbig2_error(ctx, JBIG2_SEVERITY_DEBUG, segment->number, 
-            "DECODING USER TABLE... Flags: %d, HTOOB: %d, HTPS: %d, HTRS: %d, HTLOW: %d, HTHIGH: %d", 
+        jbig2_error(ctx, JBIG2_SEVERITY_DEBUG, segment->number,
+            "DECODING USER TABLE... Flags: %d, HTOOB: %d, HTPS: %d, HTRS: %d, HTLOW: %d, HTHIGH: %d",
             code_table_flags, HTOOB, HTPS, HTRS, HTLOW, HTHIGH);
 #endif
 
@@ -617,8 +617,8 @@ jbig2_table(Jbig2Ctx *ctx, Jbig2Segment *segment, const byte *segment_data)
         {
             int i;
             for (i = 0; i < NTEMP; i++) {
-                jbig2_error(ctx, JBIG2_SEVERITY_DEBUG, segment->number, 
-                    "Line: %d, PREFLEN: %d, RANGELEN: %d, RANGELOW: %d", 
+                jbig2_error(ctx, JBIG2_SEVERITY_DEBUG, segment->number,
+                    "Line: %d, PREFLEN: %d, RANGELEN: %d, RANGELOW: %d",
                     i, params->lines[i].PREFLEN, params->lines[i].RANGELEN, params->lines[i].RANGELOW);
             }
         }
@@ -777,7 +777,7 @@ const byte test_input_A[] = {
     /* 0000 0000 0001 1100 0000 0000 0000 0000 */
        0x00,     0x1c,     0x00,     0x00,
     /* 0000 0000 0000 01 */
-       0x00,     0x04, 
+       0x00,     0x04,
 };
 
 

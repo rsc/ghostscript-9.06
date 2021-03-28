@@ -79,7 +79,7 @@ gx_char_cache_alloc(gs_memory_t * struct_mem, gs_memory_t * bits_mem,
        cache character memory before filling the table.  The searching
        code uses an empty table entry as a sentinel. */
     chsize = max(chsize, ROUND_UP(bmax, sizeof_cached_char) / sizeof_cached_char + 1);
-    
+
     /* Round up chsize to a power of 2. */
     while (chsize & (chsize + 1))
         chsize |= chsize >> 1;
@@ -698,8 +698,8 @@ gx_add_char_bits(gs_font_dir * dir, cached_char * cc,
         lprintf4("size %d,%d not multiple of scale %d,%d!\n",
                  cc->width, cc->height,
                  1 << log2_x, 1 << log2_y);
-        cc->width &= -1 << log2_x;
-        cc->height &= -1 << log2_y;
+        cc->width &= -(1 << log2_x);
+        cc->height &= -(1 << log2_y);
     }
 #endif
 

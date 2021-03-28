@@ -38,6 +38,7 @@
 #include "jbig2_generic.h"
 #include "jbig2_image.h"
 
+#ifdef UNUSED
 static int
 jbig2_decode_refinement_template0(Jbig2Ctx *ctx,
                               Jbig2Segment *segment,
@@ -49,6 +50,7 @@ jbig2_decode_refinement_template0(Jbig2Ctx *ctx,
   return jbig2_error(ctx, JBIG2_SEVERITY_FATAL, segment->number,
     "refinement region template 0 NYI");
 }
+#endif
 
 static int
 jbig2_decode_refinement_template0_unopt(Jbig2Ctx *ctx,
@@ -155,6 +157,7 @@ jbig2_decode_refinement_template1_unopt(Jbig2Ctx *ctx,
   return 0;
 }
 
+#ifdef UNUSED
 static int
 jbig2_decode_refinement_template1(Jbig2Ctx *ctx,
                               Jbig2Segment *segment,
@@ -235,7 +238,7 @@ jbig2_decode_refinement_template1(Jbig2Ctx *ctx,
   return 0;
 
 }
-
+#endif
 
 typedef uint32_t (*ContextBuilder)(const Jbig2RefinementRegionParams *,
 Jbig2Image *, int, int);
@@ -393,7 +396,7 @@ jbig2_decode_refinement_region(Jbig2Ctx *ctx,
  * Find the first referred-to intermediate region segment
  * with a non-NULL result for use as a reference image
  */
-Jbig2Segment *
+static Jbig2Segment *
 jbig2_region_find_referred(Jbig2Ctx *ctx,Jbig2Segment *segment)
 {
   const int nsegments = segment->referred_to_segment_count;

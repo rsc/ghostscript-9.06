@@ -398,21 +398,21 @@
   extern "C" {
 #endif
 
-  void
+  static void
   af_glyph_hints_dump_points( AF_GlyphHints  hints )
   {
     FT_UNUSED( hints );
   }
 
 
-  void
+  static void
   af_glyph_hints_dump_segments( AF_GlyphHints  hints )
   {
     FT_UNUSED( hints );
   }
 
 
-  FT_Error
+  static FT_Error
   af_glyph_hints_get_num_segments( AF_GlyphHints  hints,
                                    FT_Int         dimension,
                                    FT_Int*        num_segments )
@@ -425,7 +425,7 @@
   }
 
 
-  FT_Error
+  static FT_Error
   af_glyph_hints_get_segment_offset( AF_GlyphHints  hints,
                                      FT_Int         dimension,
                                      FT_Int         idx,
@@ -440,7 +440,7 @@
   }
 
 
-  void
+  static void
   af_glyph_hints_dump_edges( AF_GlyphHints  hints )
   {
     FT_UNUSED( hints );

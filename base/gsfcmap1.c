@@ -76,6 +76,7 @@ public_st_cmap_lookup_range_element();
  * multi-dimensional range comparator
  */
 
+#ifdef UNUSED
 static void
 print_msg_str_in_range(const byte *str,
                        const byte *key_lo, const byte *key_hi,
@@ -88,6 +89,7 @@ print_msg_str_in_range(const byte *str,
     debug_print_string_hex(key_hi, key_size);
     dlprintf("\n");
 }
+#endif
 
 static int
 gs_cmap_get_shortest_chr(const gx_code_map_t * pcmap, uint *pfidx)
@@ -409,7 +411,7 @@ gs_cmap_adobe1_decode_next(const gs_cmap_t * pcmap_in,
          * at the end of Fonts chapter.
          */
 
-        const byte *str = pstr->data + save_index;
+        // const byte *str = pstr->data + save_index;
         uint ssize = pstr->size - save_index;
         int chr_size_shortest =
                 gs_cmap_get_shortest_chr(&pcmap->def, pfidx);

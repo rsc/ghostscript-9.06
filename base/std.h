@@ -78,11 +78,11 @@ typedef ulong bits32;
 
 /* Minimum and maximum values for the signed types. */
 /* Avoid casts, to make them acceptable to strict ANSI compilers. */
-#define min_short (-1 << (arch_sizeof_short * 8 - 1))
+#define min_short (-(1 << (arch_sizeof_short * 8 - 1)))
 #define max_short (~min_short)
-#define min_int (-1 << (arch_sizeof_int * 8 - 1))
+#define min_int (-(1 << (arch_sizeof_int * 8 - 1)))
 #define max_int (~min_int)
-#define min_long (-1L << (arch_sizeof_long * 8 - 1))
+#define min_long (-(1L << (arch_sizeof_long * 8 - 1)))
 #define max_long (~min_long)
 
 /*

@@ -31,9 +31,9 @@
 #include "ivmspace.h"
 #include "store.h"
 
-static int do_validate_chunk(const chunk_t * cp, gc_state_t * gcst);
-static int do_validate_object(const obj_header_t * ptr, const chunk_t * cp,
-                              gc_state_t * gcst);
+// static int do_validate_chunk(const chunk_t * cp, gc_state_t * gcst);
+// static int do_validate_object(const obj_header_t * ptr, const chunk_t * cp,
+//                              gc_state_t * gcst);
 
 
 /* ================ Locating ================ */
@@ -302,6 +302,8 @@ static int ialloc_validate_ref_packed(const ref_packed *, gc_state_t *, const ob
 static int ialloc_validate_ref(const ref *, gc_state_t *);
 static int ialloc_validate_ref_packed(const ref_packed *, gc_state_t *);
 #endif
+
+#ifdef UNUSED
 static int
 do_validate_chunk(const chunk_t * cp, gc_state_t * gcst)
 {
@@ -376,6 +378,7 @@ do_validate_chunk(const chunk_t * cp, gc_state_t * gcst)
     END_OBJECTS_SCAN
     return ret;
 }
+#endif
 
 void
 ialloc_validate_chunk(const chunk_t * cp, gc_state_t * gcst)
@@ -569,6 +572,7 @@ ialloc_validate_pointer_stability(const obj_header_t * ptr_fr,
 }
 #endif
 
+#ifdef UNUSED
 /* Validate an object. */
 static int
 do_validate_object(const obj_header_t * ptr, const chunk_t * cp,
@@ -610,6 +614,7 @@ do_validate_object(const obj_header_t * ptr, const chunk_t * cp,
     }
     return 0;
 }
+#endif
 
 void
 ialloc_validate_object(const obj_header_t * ptr, const chunk_t * cp,

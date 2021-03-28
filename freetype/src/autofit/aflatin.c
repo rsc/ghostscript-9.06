@@ -1350,7 +1350,7 @@
 
   /* Compute all edges which lie within blue zones. */
 
-  FT_LOCAL_DEF( void )
+  static FT_LOCAL_DEF( void )
   af_latin_hints_compute_blue_edges( AF_GlyphHints    hints,
                                      AF_LatinMetrics  metrics )
   {
@@ -1796,7 +1796,7 @@
 
   /* The main grid-fitting routine. */
 
-  FT_LOCAL_DEF( void )
+  static FT_LOCAL_DEF( void )
   af_latin_hint_edges( AF_GlyphHints  hints,
                        AF_Dimension   dim )
   {

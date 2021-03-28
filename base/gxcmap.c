@@ -647,9 +647,9 @@ gx_remap_DeviceGray(const gs_client_color * pc, const gs_color_space * pcs,
     int code;
 
     /* We are in here due to the fact that we are using a color space that
-       was set in the graphic state before the ICC manager was intitialized 
+       was set in the graphic state before the ICC manager was intitialized
        and the color space was never actually "installed" and hence set
-       over to a proper ICC color space. We will "install" this color space 
+       over to a proper ICC color space. We will "install" this color space
        at this time */
     if (pis->icc_manager->default_gray != NULL) {
         gs_color_space *pcs_notconst = (gs_color_space*) pcs;
@@ -657,11 +657,11 @@ gx_remap_DeviceGray(const gs_client_color * pc, const gs_color_space * pcs,
         pcs_notconst->cmm_icc_profile_data = pis->icc_manager->default_gray;
         rc_increment(pis->icc_manager->default_gray);
         pcs_notconst->type = &gs_color_space_type_ICC;
-        code = 
+        code =
             (*pcs_notconst->type->remap_color)(gs_currentcolor_inline(pgs),
-                                               pcs_notconst, 
+                                               pcs_notconst,
                                                gs_currentdevicecolor_inline(pgs),
-                                               pis, pgs->device, 
+                                               pis, pgs->device,
                                                gs_color_select_texture);
         return code;
     }
@@ -962,7 +962,7 @@ cmap_cmyk_direct(frac c, frac m, frac y, frac k, gx_device_color * pdc,
             black_index = dev_proc(dev, get_color_comp_index)(dev, "Black",
                                     strlen("Black"), SEPARATION_NAME);
             cm_comps[black_index] = frac_1 - gx_map_color_frac(pis,
-                                    (frac)(frac_1 - cm_comps[black_index]), 
+                                    (frac)(frac_1 - cm_comps[black_index]),
                                     effective_transfer[black_index]);
         } else {
             for (i = 0; i < ncomps; i++)
@@ -1317,7 +1317,7 @@ devicen_icc_cmyk(frac cm_comps[], const gs_imager_state * pis, gx_device *dev)
         psrc[k] = frac2cv(cm_comps[k]);
     }
     icc_link = gsicc_get_link_profile(pis, dev, pis->icc_manager->default_cmyk,
-                des_profile, &rendering_params, pis->memory, 
+                des_profile, &rendering_params, pis->memory,
                 dev_profile->devicegraytok);
     /* Transform the color */
     if (icc_link->is_identity) {
@@ -1430,7 +1430,7 @@ cmap_devicen_direct(const frac * pcc,
            in PDF and PS data. */
         code = devicen_icc_cmyk(cm_comps, pis, dev);
     }
-    /* apply the transfer function(s); convert to color values.  
+    /* apply the transfer function(s); convert to color values.
        assign directly if output device supports devn */
     if (dev_proc(dev, dev_spec_op)(dev, gxdso_supports_devn, NULL, 0)) {
         if (dev->color_info.polarity == GX_CINFO_POLARITY_ADDITIVE)
@@ -1523,7 +1523,7 @@ gx_color_frac_map(frac cv, const frac * values)
     mdv = values[cmi + 1] - mv;
 #if ARCH_INTS_ARE_SHORT
     /* Only use long multiplication if necessary. */
-    if (mdv < -1 << (16 - cp_frac_bits) ||
+    if (mdv < -(1 << (16 - cp_frac_bits)) ||
         mdv > 1 << (16 - cp_frac_bits)
         )
         return mv + (uint) (((ulong) rem * mdv) >> cp_frac_bits);

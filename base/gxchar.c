@@ -468,13 +468,13 @@ compute_glyph_raster_params(gs_show_enum *penum, bool in_setcachedevice, int *al
     *depth = (log2_scale->x + log2_scale->y == 0 ?
         1 : min(log2_scale->x + log2_scale->y, *alpha_bits));
     if (gs_currentaligntopixels(penum->current_font->dir) == 0) {
-        int scx = -1L << (_fixed_shift - log2_scale->x);
+        int scx = -(1L << (_fixed_shift - log2_scale->x));
         int rdx =  1L << (_fixed_shift - 1 - log2_scale->x);
 
 #       if 1 /* Ever align Y to pixels to provide an uniform glyph height. */
             subpix_origin->y = 0;
 #       else
-            int scy = -1L << (_fixed_shift - log2_scale->y);
+            int scy = -(1L << (_fixed_shift - log2_scale->y));
             int rdy =  1L << (_fixed_shift - 1 - log2_scale->y);
 
             subpix_origin->y = ((penum->origin.y + rdy) & scy) & (fixed_1 - 1);
@@ -1575,8 +1575,8 @@ show_origin_setup(gs_state * pgs, fixed cpt_x, fixed cpt_y, gs_show_enum * penum
         /* Round the translation in the graphics state. */
         /* This helps prevent rounding artifacts later. */
         if (gs_currentaligntopixels(penum->current_font->dir) == 0) {
-            int scx = -1L << (_fixed_shift - penum->log2_scale.x);
-            int scy = -1L << (_fixed_shift - penum->log2_scale.y);
+            int scx = -(1L << (_fixed_shift - penum->log2_scale.x));
+            int scy = -(1L << (_fixed_shift - penum->log2_scale.y));
             int rdx =  1L << (_fixed_shift - 1 - penum->log2_scale.x);
             int rdy =  1L << (_fixed_shift - 1 - penum->log2_scale.y);
 

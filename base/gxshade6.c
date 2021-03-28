@@ -1350,7 +1350,7 @@ dc2fc(const patch_fill_state_t *pfs, gx_device_color *pdevc,
                 int shift = cinfo->comp_shift[j];
                 int bits = cinfo->comp_bits[j];
 
-                fc[j] = ((pdevc->colors.pure >> shift) & ((1 << bits) - 1)) << 
+                fc[j] = ((pdevc->colors.pure >> shift) & ((1 << bits) - 1)) <<
                         (sizeof(frac31) * 8 - 1 - bits);
         }
     } else {
@@ -1363,8 +1363,8 @@ dc2fc(const patch_fill_state_t *pfs, gx_device_color *pdevc,
 #define DEBUG_COLOR_INDEX_CACHE 0
 
 static inline int
-patch_color_to_device_color_inline(const patch_fill_state_t *pfs, 
-                                   const patch_color_t *c, gx_device_color *pdevc, 
+patch_color_to_device_color_inline(const patch_fill_state_t *pfs,
+                                   const patch_color_t *c, gx_device_color *pdevc,
                                    frac31 *frac_values)
 {
     /* Must return 2 if the color is not pure.
@@ -1374,7 +1374,7 @@ patch_color_to_device_color_inline(const patch_fill_state_t *pfs,
     gx_device_color devc;
     gx_device *dev = pfs->dev;
 
-    if (pfs->trans_device != NULL) 
+    if (pfs->trans_device != NULL)
         dev = pfs->trans_device;
 
     if (DEBUG_COLOR_INDEX_CACHE && pdevc == NULL)
@@ -1403,7 +1403,7 @@ patch_color_to_device_color_inline(const patch_fill_state_t *pfs,
                 return code;
             if (frac_values != NULL) {
                 if (!(pdevc->type == &gx_dc_type_data_devn ||
-                      pdevc->type == &gx_dc_type_data_pure)) 
+                      pdevc->type == &gx_dc_type_data_pure))
                     return 2;
                 dc2fc(pfs, pdevc, frac_values);
             }
@@ -1817,6 +1817,7 @@ split_curve(const gs_fixed_point pole[4], gs_fixed_point q0[4], gs_fixed_point q
     split_curve_s(pole, q0, q1, 1);
 }
 
+#ifdef UNUSED
 static inline void
 do_swap_axes(gs_fixed_point *p, int k)
 {
@@ -1885,6 +1886,7 @@ draw_wedge(const gs_fixed_point *p, int n)
     /*vd_stroke;*/
 #endif
 }
+#endif
 
 static inline fixed
 manhattan_dist(const gs_fixed_point *p0, const gs_fixed_point *p1)
@@ -2162,7 +2164,7 @@ try_device_linear_color(patch_fill_state_t *pfs, bool wedge,
         code = patch_color_to_device_color_inline(pfs, p0->c, &dc[0], fc[0]);
         if (code != 0)
             return code;
-        if (!(dc[0].type == &gx_dc_type_data_pure || 
+        if (!(dc[0].type == &gx_dc_type_data_pure ||
             dc[0].type == &gx_dc_type_data_devn))
             return 2;
         if (!wedge) {
@@ -2875,6 +2877,7 @@ is_quadrangle_color_monotonic(const patch_fill_state_t *pfs, const quadrangle_pa
     return !code;
 }
 
+#ifdef UNUSED
 static inline bool
 quadrangle_bbox_covers_pixel_centers(const quadrangle_patch *p)
 {
@@ -2894,6 +2897,7 @@ quadrangle_bbox_covers_pixel_centers(const quadrangle_patch *p)
         return true;
     return false;
 }
+#endif
 
 static inline void
 divide_bar(patch_fill_state_t *pfs,
@@ -3883,6 +3887,7 @@ fill_stripe(patch_fill_state_t *pfs, const tensor_patch *p)
     return fill_wedges(pfs, ku[3], kum, p->pole[3], 1, p->c[1][0], p->c[1][1], inpatch_wedge);
 }
 
+#ifdef UNUSED
 static inline bool
 is_curve_x_monotonic(const gs_fixed_point *pole, int pole_step)
 {   /* true = monotonic, false = don't know. */
@@ -3904,6 +3909,7 @@ is_curve_y_monotonic(const gs_fixed_point *pole, int pole_step)
             pole[1 * pole_step].y >= pole[2 * pole_step].y &&
             pole[2 * pole_step].y >= pole[3 * pole_step].y);
 }
+#endif
 
 static inline bool neqs(int *a, int b)
 {   /* Unequal signs. Assuming -1, 0, 1 only. */
@@ -4075,7 +4081,7 @@ fill_patch(patch_fill_state_t *pfs, const tensor_patch *p, int kv, int kv0, int 
 
         if (!pfs->inside) {
             gs_fixed_rect r, r1;
-            
+
             tensor_patch_bbox(&r, p);
             r.p.x -= INTERPATCH_PADDING;
             r.p.y -= INTERPATCH_PADDING;

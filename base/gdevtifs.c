@@ -378,10 +378,10 @@ int tiff_set_fields_for_printer(gx_device_printer *pdev,
         cmm_profile_t *icc_profile = pdev->icc_struct->device_profile[0];
         if (icc_profile->num_comps == pdev->color_info.num_components &&
             icc_profile->data_cs != gsCIELAB) {
-            TIFFSetField(tif, TIFFTAG_ICCPROFILE, icc_profile->buffer_size, 
+            TIFFSetField(tif, TIFFTAG_ICCPROFILE, icc_profile->buffer_size,
                          icc_profile->buffer);
         }
-    } 
+    }
     return 0;
 }
 
@@ -461,7 +461,7 @@ tiff_downscale_and_print_page(gx_device_printer *dev, TIFF *tif, int factor,
     int size = gdev_mem_bytes_per_scan_line((gx_device *)dev);
     int max_size = max(size, TIFFScanlineSize(tif));
     int row;
-    int width  = dev->width/factor;
+    // int width  = dev->width/factor;
     int height = dev->height/factor;
     gx_downscaler_t ds;
 

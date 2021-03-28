@@ -539,6 +539,7 @@ no_scale:
     *psmat = mat;
 }
 
+#ifdef UNUSED
 /* Compute the total number of points in a (possibly composite) glyph. */
 static int
 total_points(gs_font_type42 *pfont, uint glyph_index)
@@ -583,6 +584,7 @@ total_points(gs_font_type42 *pfont, uint glyph_index)
     gs_glyph_data_free(&glyph_data, "total_points");
     return total;
 }
+#endif
 
 /*
  * Define the default implementation for getting the glyph index from a

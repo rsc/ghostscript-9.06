@@ -137,7 +137,7 @@ Jbig2Image *jbig2_image_resize(Jbig2Ctx *ctx, Jbig2Image *image,
 
 /* composite one jbig2_image onto another
    slow but general version */
-int jbig2_image_compose_unopt(Jbig2Ctx *ctx,
+static int jbig2_image_compose_unopt(Jbig2Ctx *ctx,
 			Jbig2Image *dst, Jbig2Image *src,
                         int x, int y, Jbig2ComposeOp op)
 {

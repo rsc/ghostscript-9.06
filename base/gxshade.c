@@ -358,7 +358,7 @@ top:
             break;
         }
     if (num_colors <= 32) {
-        gx_ht_order_component *components = pis->dev_ht->components;
+        // gx_ht_order_component *components = pis->dev_ht->components;
         /****** WRONG FOR MULTI-PLANE HALFTONES ******/
         num_colors *= pis->dev_ht->components[0].corder.num_levels;
     }

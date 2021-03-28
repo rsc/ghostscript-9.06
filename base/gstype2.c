@@ -566,11 +566,11 @@ gs_type2_interpret(gs_type1_state * pcis, const gs_glyph_data_t *pgd,
 #endif
                 switch ((char2_extended_command) c) {
                     case ce2_and:
-                        csp[-1] = ((csp[-1] != 0) & (*csp != 0) ? fixed_1 : 0);
+                        csp[-1] = ((csp[-1] != 0) && (*csp != 0) ? fixed_1 : 0);
                         --csp;
                         break;
                     case ce2_or:
-                        csp[-1] = (csp[-1] | *csp ? fixed_1 : 0);
+                        csp[-1] = (csp[-1] || *csp ? fixed_1 : 0);
                         --csp;
                         break;
                     case ce2_not:

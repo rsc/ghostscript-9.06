@@ -438,12 +438,12 @@ obj_cvp(const ref * op, byte * str, uint len, uint * prlen,
                 if (truncate) {
                     if (len - *prlen < 4 - skip)
                         return 1;
-                    memcpy(w.ptr + 1, "...)" + skip, 4 - skip);
+                    memcpy(w.ptr + 1, &"...)"[skip], 4 - skip);
                     *prlen += 4 - skip;
                 } else {
                     if (len - *prlen < 1 - skip)
                         return 1;
-                    memcpy(w.ptr + 1, ")" + skip, 1 - skip);
+                    memcpy(w.ptr + 1, &")"[skip], 1 - skip);
                     *prlen += 1 - skip;
                 }
             }

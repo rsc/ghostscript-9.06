@@ -38,7 +38,7 @@ const bits16 mono_copy_masks[17] = {
 };
 const bits32 mono_fill_masks[33] = {
 #define mask(n)\
-  ((~0xff | (0xff >> (n & 7))) << (n & -8))
+  ((bits32)(~0xff | (0xff >> (n & 7))) << (n & -8))
     mask( 0),mask( 1),mask( 2),mask( 3),mask( 4),mask( 5),mask( 6),mask( 7),
     mask( 8),mask( 9),mask(10),mask(11),mask(12),mask(13),mask(14),mask(15),
     mask(16),mask(17),mask(18),mask(19),mask(20),mask(21),mask(22),mask(23),
@@ -391,7 +391,7 @@ bits_bounding_box(const byte * data, uint height, uint raster,
 #  define shift_out_last(x,n) ((x) >>= (n))
 #  define right_justify_last(x,n) DO_NOTHING
 #else
-#  define last_bits(n) (-1L << ((arch_sizeof_long * 8) - (n)))
+#  define last_bits(n) (-(1L << ((arch_sizeof_long * 8) - (n))))
 #  define shift_out_last(x,n) ((x) <<= (n))
 #  define right_justify_last(x,n) (x) >>= ((arch_sizeof_long * 8) - (n))
 #endif

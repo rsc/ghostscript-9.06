@@ -29,6 +29,7 @@
 #include FT_INTERNAL_STREAM_H
 #include FT_INTERNAL_RFORK_H
 #include "basepic.h"
+#include "ftbase.h"
 
 #undef  FT_COMPONENT
 #define FT_COMPONENT  trace_raccess

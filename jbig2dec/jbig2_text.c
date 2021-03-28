@@ -356,7 +356,7 @@ cleanup1:
 		  if (params->SBHUFF) {
 		    jbig2_release_huffman_table(ctx, SBSYMCODES);
 		  }
-		  return jbig2_error(ctx, JBIG2_SEVERITY_FATAL, 
+		  return jbig2_error(ctx, JBIG2_SEVERITY_FATAL,
 			segment->number,
 			"couldn't allocate reference image");
 	        }
@@ -878,7 +878,7 @@ jbig2_text_region(Jbig2Ctx *ctx, Jbig2Segment *segment, const byte *segment_data
     }
 
 	/* Table 31 */
-	for (SBSYMCODELEN = 0; (1 << SBSYMCODELEN) < SBNUMSYMS; SBSYMCODELEN++);
+	for (SBSYMCODELEN = 0; (1 << SBSYMCODELEN) < SBNUMSYMS; SBSYMCODELEN++){}
     params.IAID = jbig2_arith_iaid_ctx_new(ctx, SBSYMCODELEN);
 	params.IARI = jbig2_arith_int_ctx_new(ctx);
 	params.IARDW = jbig2_arith_int_ctx_new(ctx);
