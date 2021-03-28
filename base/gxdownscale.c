@@ -1159,7 +1159,7 @@ int gx_downscaler_init_planar(gx_downscaler_t      *ds,
 {
     int                span = bitmap_raster(dev->width * src_bpc);
     int                width;
-    int                code;
+    int                code = -1;
     gx_downscale_core *core;
     int                i;
     int                upfactor, downfactor;
@@ -1287,7 +1287,7 @@ int gx_downscaler_init(gx_downscaler_t   *ds,
     gx_downscale_core *core;
     int                upfactor;
     int                downfactor;
-    
+
     decode_factor(factor, &upfactor, &downfactor);
 
     /* width = scaled width */
@@ -1309,7 +1309,7 @@ int gx_downscaler_init(gx_downscaler_t   *ds,
     ds->factor     = factor;
     ds->num_planes = 0;
     ds->src_bpc    = src_bpc;
-    
+
     /* Choose an appropriate core */
     if (factor > 8)
     {
@@ -1355,14 +1355,14 @@ int gx_downscaler_init(gx_downscaler_t   *ds,
         goto cleanup;
     }
     ds->down_core = core;
-    
+
     if (core != NULL) {
         ds->data = gs_alloc_bytes(dev->memory,
                                   span * downfactor,
                                   "gx_downscaler(data)");
         if (ds->data == NULL)
             return_error(gs_error_VMerror);
-    
+
         if (mfs > 1) {
             ds->mfs_data = (byte *)gs_alloc_bytes(dev->memory,
                                                   awidth+1,
@@ -1386,7 +1386,7 @@ int gx_downscaler_init(gx_downscaler_t   *ds,
             memset(ds->errors, 0, num_comps * (awidth+3) * sizeof(int));
         }
     }
-    
+
     return 0;
 
   cleanup:
@@ -1438,7 +1438,7 @@ int gx_downscaler_getbits(gx_downscaler_t *ds,
         data_ptr += ds->span;
         y++;
     } while (y < y_end);
-    
+
     (ds->down_core)(ds, out_data, ds->data, row, 0, ds->span);
 
     return code;

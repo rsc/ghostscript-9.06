@@ -19,17 +19,17 @@
 
  SPECIAL THANKS:
 
-    本ドライバの作成にあたり、大森紀人さんの gdevlips, gdevl4v.c を参考に
-    させて頂きました。
+    鐃旬ドライ鐃出の削申鐃緒申鐃祝わ申鐃緒申鐃所、鐃順森鐃緒申鐃粛わ申鐃緒申鐃緒申 gdevlips, gdevl4v.c 鐃薯参考わ申
+    鐃緒申鐃緒申鐃緒申頂鐃緒申鐃殉わ申鐃緒申鐃緒申
 
  NOTES:
 
   - About Ghostscript 5.10/5.50 BUGS
-    Ghostscript 5.10/5.50 の Vector driver の setlinewidth 関数には
-    バグがあります。本来スケールが変更されるにしたがって線の太さも変更され
-    なければなりませんが、Ghostscript 5.10/5.50 ではスケールを考慮するのを
-    忘れています。
-    このドライバはそのバグを回避するためにスケールを自分で処理しています。
+    Ghostscript 5.10/5.50 鐃緒申 Vector driver 鐃緒申 setlinewidth 鐃舜随申鐃祝わ申
+    鐃出ワ申鐃緒申鐃緒申鐃緒申鐃殉わ申鐃緒申鐃緒申鐃処ス鐃緒申鐃緒申鐃暑が鐃術刻申鐃緒申鐃緒申鐃緒申鐃祝わ申鐃緒申鐃緒申鐃獣わ申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申鐃術刻申鐃緒申鐃緒申
+    鐃淑わ申鐃緒申鐃出なわ申鐃殉わ申鐃藷が￥申Ghostscript 5.10/5.50 鐃叔はワ申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申慮鐃緒申鐃緒申鐃塾わ申
+    忘鐃緒申鐃銃わ申鐃殉わ申鐃緒申
+    鐃緒申鐃塾ドライ鐃出はわ申鐃塾バワ申鐃緒申鐃緒申鐃薯するた鐃緒申鐃祝ワ申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申分鐃叔緒申鐃緒申鐃緒申鐃銃わ申鐃殉わ申鐃緒申
 
  */
 
@@ -100,8 +100,8 @@ gs_public_st_suffix_add0_final(st_device_escv, gx_device_escv,
                                gx_device_finalize, st_device_vector);
 
 /* for ESC/Page-Color
-** 原点の値を 0 とした場合,計算誤差？の問題から描画エリアが狂うため
-** 原点を 0.001 としておく。
+** 鐃緒申鐃緒申鐃緒申鐃粛わ申 0 鐃夙わ申鐃緒申鐃緒申鐃緒申,鐃竣誌申鐃渚差鐃緒申鐃緒申鐃緒申鐃所か鐃緒申鐃緒申鐃処エ鐃所ア鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申
+** 鐃緒申鐃緒申鐃緒申 0.001 鐃夙わ申鐃銃わ申鐃緒申鐃緒申
 */
 #define escv_device_full_body(dtype, pprocs, dname, stype, w, h, xdpi, ydpi, \
         ncomp, depth, mg, mc, dg, dc, lm, bm, rm, tm)\
@@ -455,11 +455,11 @@ lputs(stream * s, const char *str)
 
 /* Write a string on a stream. */
 static void
-put_bytes(stream * s, const byte * data, uint count)
+put_bytes(stream * s, const char * data, uint count)
 {
   uint used;
 
-  sputs(s, data, count, &used);
+  sputs(s, (const byte*)data, count, &used);
 }
 
 static int
@@ -544,7 +544,7 @@ escv_vector_dopath(gx_device_vector * vdev, const gx_path * ppath,
     x = fixed2float(vs[0]) / scale.x;
     y = fixed2float(vs[1]) / scale.y;
 
-    /* サブパス開始命令 p1 */
+    /* 鐃緒申鐃瞬パワ申鐃緒申鐃緒申命鐃緒申 p1 */
     (void)sprintf(obuf, ESC_GS "0;%d;%dmvpG", (int)x, (int)y);
     lputs(s, obuf);
 
@@ -568,7 +568,7 @@ escv_vector_dopath(gx_device_vector * vdev, const gx_path * ppath,
       pe_op = gx_path_enum_next(&cenum, (gs_fixed_point *) vs);
     } while (pe_op == gs_pe_lineto);
 
-    /* パス・ポリライン命令 */
+    /* 鐃術ワ申鐃緒申鐃楯ワ申鐃初イ鐃緒申命鐃緒申 */
     lputs(s, "lnpG");
     pdev->ispath = 1;
 
@@ -590,7 +590,7 @@ escv_vector_dopath(gx_device_vector * vdev, const gx_path * ppath,
       pe_op = gx_path_enum_next(&cenum, (gs_fixed_point *) vs);
     } while (pe_op == gs_pe_curveto);
 
-    /* ベジェ曲線 */
+    /* 鐃駿ワ申鐃緒申鐃緒申鐃緒申 */
     lputs(s, "bzpG");
     pdev->ispath = 1;
 
@@ -646,9 +646,9 @@ escv_vector_dorect(gx_device_vector * vdev, fixed x0, fixed y0, fixed x1,
   pdev->ispath = 1;
 
 #if 0
-  /* Ghostscript 側のバグで closepath を呼んでいないので処理を会わせる。 */
+  /* Ghostscript 側鐃塾バワ申鐃緒申 closepath 鐃緒申鐃銃わ申鐃叔わ申鐃淑わ申鐃塾で緒申鐃緒申鐃緒申鐃緒申鐃緒せ鐃暑。 */
 
-  /* 本来は (*vdev_proc(vdev, closepath))() を呼ぶべき */
+  /* 鐃緒申鐃緒申鐃緒申 (*vdev_proc(vdev, closepath))() 鐃緒申鐃銃ぶべわ申 */
   lputs(s, ESC_GS "clpG");
 #endif
 
@@ -1239,7 +1239,7 @@ escv_beginpage(gx_device_vector * vdev)
 
       lputs(s, START_CODE1);
 
-      lputs(s, ESC_GS "0sarG");		/* 絶対座標指定 */
+      lputs(s, ESC_GS "0sarG");		/* 鐃緒申鐃出削申標鐃緒申鐃緒申 */
       /*	lputs(s, ESC_GS "1owE");*/
 
     } else {			/* ESC/Page-Color */
@@ -1285,8 +1285,8 @@ escv_beginpage(gx_device_vector * vdev)
       lputs(s, ESC_GS "8;1;2;2;2plr{E");
       put_bytes(s, "\377\377\377\377\000\000\000\000", 8);
 
-      lputs(s, ESC_GS "0sarG");		/* 絶対座標指定 */
-      lputs(s, ESC_GS "2;204wfE");		/* rop 指定 */
+      lputs(s, ESC_GS "0sarG");		/* 鐃緒申鐃出削申標鐃緒申鐃緒申 */
+      lputs(s, ESC_GS "2;204wfE");		/* rop 鐃緒申鐃緒申 */
 
     }	/* ESC/Page-Color */
 
@@ -1303,7 +1303,7 @@ escv_setlinewidth(gx_device_vector * vdev, floatp width)
   char			obuf[64];
 
 #if GS_VERSION_MAJOR == 5
-  /* Scale を掛けているのは, Ghostscript 5.10/5.50 のバグのため */
+  /* Scale 鐃緒申鐃楯わ申鐃銃わ申鐃緒申鐃塾わ申, Ghostscript 5.10/5.50 鐃塾バワ申鐃塾わ申鐃緒申 */
   floatp xscale, yscale;
 
   xscale = fabs(igs->ctm.xx);
@@ -1317,7 +1317,7 @@ escv_setlinewidth(gx_device_vector * vdev, floatp width)
 
   if (width < 1) width = 1;
 
-  /* ESC/Page では線幅／終端／接合部の設定は１つのコマンドになっているため保持しておく。 */
+  /* ESC/Page 鐃叔わ申鐃緒申鐃緒申鐃緒申鐃緒申端鐃緒申鐃旬刻申鐃緒申鐃緒申鐃緒申鐃緒申鐃熟ｏ申鐃縦のワ申鐃殉ワ申鐃宿になってわ申鐃暑た鐃緒申鐃楯誌申鐃緒申鐃銃わ申鐃緒申鐃緒申 */
   pdev -> lwidth = width;
 
   (void)sprintf(obuf, ESC_GS "%d;%d;%dlwG",
@@ -1336,7 +1336,7 @@ escv_setlinecap(gx_device_vector * vdev, gs_line_cap cap)
   gx_device_escv *const	pdev = (gx_device_escv *) vdev;
   char			obuf[64];
 
-  /* ESC/Page では線幅／終端／接合部の設定は１つのコマンドになっているため保持しておく。 */
+  /* ESC/Page 鐃叔わ申鐃緒申鐃緒申鐃緒申鐃緒申端鐃緒申鐃旬刻申鐃緒申鐃緒申鐃緒申鐃緒申鐃熟ｏ申鐃縦のワ申鐃殉ワ申鐃宿になってわ申鐃暑た鐃緒申鐃楯誌申鐃緒申鐃銃わ申鐃緒申鐃緒申 */
   pdev -> cap = cap;
 
   if (pdev -> cap >= 3) return -1;
@@ -1357,7 +1357,7 @@ escv_setlinejoin(gx_device_vector * vdev, gs_line_join join)
   gx_device_escv *const	pdev = (gx_device_escv *) vdev;
   char			obuf[64];
 
-  /* ESC/Page では線幅／終端／接合部の設定は１つのコマンドになっているため保持しておく。 */
+  /* ESC/Page 鐃叔わ申鐃緒申鐃緒申鐃緒申鐃緒申端鐃緒申鐃旬刻申鐃緒申鐃緒申鐃緒申鐃緒申鐃熟ｏ申鐃縦のワ申鐃殉ワ申鐃宿になってわ申鐃暑た鐃緒申鐃楯誌申鐃緒申鐃銃わ申鐃緒申鐃緒申 */
   switch (join) {
   case 0:
     pdev -> join = 3;		/* miter */
@@ -1388,11 +1388,11 @@ escv_setmiterlimit(gx_device_vector * vdev, floatp limit)
   gx_device_escv *const	pdev = (gx_device_escv *) vdev;
   char			obuf[128];
 
-  /* マイターリミット値を設定するには lwG にて 接合部指定(n3) が 3 になっている
-  ** 必要がある。
+  /* 鐃殉ワ申鐃緒申鐃緒申鐃緒申鐃淳ッワ申鐃粛わ申鐃緒申鐃所す鐃緒申鐃祝わ申 lwG 鐃祝わ申 鐃旬刻申鐃緒申鐃緒申鐃緒申(n3) 鐃緒申 3 鐃祝なってわ申鐃緒申
+  ** 必鐃竣わ申鐃緒申鐃暑。
   */
   if (pdev -> join != 3) {
-    /* 強制的に接合部指定を行う */
+    /* 鐃緒申鐃緒申的鐃緒申鐃旬刻申鐃緒申鐃緒申鐃緒申鐃緒申鐃峻わ申 */
     pdev -> join = 3;
     (void)sprintf(obuf, ESC_GS "%d;%d;%dlwG",
                   (int)(pdev -> lwidth),
@@ -1446,7 +1446,7 @@ escv_setfillcolor(gx_device_vector * vdev,
 
   } else {			/* ESC/Page-Color */
 
-    /* パターンＯＮ指定／ソリッドパターン指定 */
+    /* 鐃術ワ申鐃緒申鐃緒申鐃熟Ｎ誌申鐃所／鐃緒申鐃緒申鐃獣ドパワ申鐃緒申鐃緒申鐃緒申鐃緒申 */
     (void)sprintf(obuf, ESC_GS "1;2;3;%d;%d;%dfpE",
                   (unsigned char)(color >> 16 & 0xff),
                   (unsigned char)(color >> 8 & 0xff),
@@ -1493,7 +1493,7 @@ escv_setstrokecolor(gx_device_vector * vdev,
     if (vdev->color_info.depth == 24) {
 
       pdev->current_color = color;
-      /* パターンＯＮ色指定／ソリッドパターン指定 */
+      /* 鐃術ワ申鐃緒申鐃緒申鐃熟Ｎ随申鐃緒申鐃所／鐃緒申鐃緒申鐃獣ドパワ申鐃緒申鐃緒申鐃緒申鐃緒申 */
       (void)sprintf(obuf, ESC_GS "1;2;3;%d;%d;%dfpE" ESC_GS "2;2;1;0;0cpE",
                     (unsigned char)(color >> 16 & 0xff),
                     (unsigned char)(color >> 8 & 0xff),
@@ -1506,7 +1506,7 @@ escv_setstrokecolor(gx_device_vector * vdev,
   return 0;
 }
 
-/* 線種指定命令 */
+/* 鐃緒申鐃緒申鐃緒申鐃緒申命鐃緒申 */
 static int
 escv_setdash(gx_device_vector * vdev, const float *pattern, uint count, floatp offset)
 {
@@ -1516,7 +1516,7 @@ escv_setdash(gx_device_vector * vdev, const float *pattern, uint count, floatp o
 
 #if GS_VERSION_MAJOR == 5
   float			scale, xscale, yscale;
-  /* Scale を掛けているのは, Ghostscript 5.10/5.50 のバグのため */
+  /* Scale 鐃緒申鐃楯わ申鐃銃わ申鐃緒申鐃塾わ申, Ghostscript 5.10/5.50 鐃塾バワ申鐃塾わ申鐃緒申 */
   xscale = fabs(igs->ctm.xx);
   yscale = fabs(igs->ctm.xy);
 
@@ -1527,12 +1527,12 @@ escv_setdash(gx_device_vector * vdev, const float *pattern, uint count, floatp o
 #endif
 
   if (count == 0){
-    /* 実線 */
+    /* 鐃緒申鐃緒申 */
     lputs(s, ESC_GS "0;0lpG");
     return 0;
   }
 
-  /* offset が０以外の場合は描画不可として返却 */
+  /* offset 鐃緒申鐃緒申鐃淑鰹申鐃塾常申鐃緒申鐃緒申鐃緒申鐃緒申鐃峻可とわ申鐃緒申鐃瞬居申 */
   if (offset != 0) return -1;
 
   if (count) {
@@ -1546,7 +1546,7 @@ escv_setdash(gx_device_vector * vdev, const float *pattern, uint count, floatp o
 #endif
       lputs(s, obuf);
     } else {
-      /* pattern に０があった場合は描画不可として返却 */
+      /* pattern 鐃祝ｏ申鐃緒申鐃緒申鐃獣わ申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申鐃峻可とわ申鐃緒申鐃瞬居申 */
       for (i = 0; i < count; ++i) {
         if (pattern[i] == 0) return -1;
       }
@@ -1568,7 +1568,7 @@ escv_setdash(gx_device_vector * vdev, const float *pattern, uint count, floatp o
   return 0;
 }
 
-/* パス平滑度指定 */
+/* 鐃術ワ申平鐃緒申鐃駿誌申鐃緒申 */
 static int
 escv_setflat(gx_device_vector * vdev, floatp flatness)
 {
@@ -1589,11 +1589,11 @@ escv_beginpath(gx_device_vector * vdev, gx_path_type_t type)
   stream		*s = gdev_vector_stream(vdev);
   gx_device_escv *pdev = (gx_device_escv *) vdev;
 
-  /* パス構築開始命令 */
+  /* 鐃術ワ申鐃緒申鐃循鰹申鐃緒申命鐃緒申 */
   if (type & gx_path_type_clip) {
-    lputs(s, ESC_GS "1bgpG");		/* クリップ登録 */
+    lputs(s, ESC_GS "1bgpG");		/* 鐃緒申鐃緒申鐃獣ワ申鐃緒申録 */
   } else {
-    lputs(s, ESC_GS "0bgpG");		/* 描画登録 */
+    lputs(s, ESC_GS "0bgpG");		/* 鐃緒申鐃緒申鐃緒申録 */
   }
   pdev->ispath = 0;
 
@@ -1607,7 +1607,7 @@ escv_moveto(gx_device_vector * vdev,
   stream	*s = gdev_vector_stream(vdev);
   char	obuf[64];
 
-  /* サブパス開始命令 */
+  /* 鐃緒申鐃瞬パワ申鐃緒申鐃緒申命鐃緒申 */
   (void)sprintf(obuf, ESC_GS "0;%d;%dmvpG", (int)x1, (int)y1);
   lputs(s, obuf);
 
@@ -1638,7 +1638,7 @@ escv_curveto(gx_device_vector * vdev, floatp x0, floatp y0,
   gx_device_escv *pdev = (gx_device_escv *) vdev;
   char	obuf[128];
 
-  /* ベジェ曲線 */
+  /* 鐃駿ワ申鐃緒申鐃緒申鐃緒申 */
   (void)sprintf(obuf, ESC_GS "0;3;%d;%d;%d;%d;%d;%dbzpG",
                 (int)x1, (int)y1, (int)x2, (int)y2, (int)x3, (int)y3);
   lputs(s, obuf);
@@ -1664,34 +1664,34 @@ escv_endpath(gx_device_vector * vdev, gx_path_type_t type)
   gx_device_escv *pdev = (gx_device_escv *) vdev;
 
   if (type & gx_path_type_fill || type & gx_path_type_clip) {
-    /* default で処理されるが出力しておく */
+    /* default 鐃叔緒申鐃緒申鐃緒申鐃緒申鐃暑が鐃緒申鐃熟わ申鐃銃わ申鐃緒申 */
     lputs(s, ESC_GS "clpG");
   }
 
-  /* パスクローズ */
+  /* 鐃術ワ申鐃緒申鐃渚ー鐃緒申 */
   lputs(s, ESC_GS "enpG");
 
-  /* パス描画 */
+  /* 鐃術ワ申鐃緒申鐃緒申 */
   if (type & gx_path_type_clip) {
 
     if ( ( 0 != ESCV_FORCEDRAWPATH ) || ( 0 != pdev->ispath ) ) {
-      /* クリップ指定
-      ** クリップにも gx_path_type_winding_number, gx_path_type_even_odd の判断が
-      ** 必要だと思うが gs 側が付加してこない。
-      ** とりあえず gx_path_type_even_odd をデフォルトにする。
+      /* 鐃緒申鐃緒申鐃獣プ誌申鐃緒申
+      ** 鐃緒申鐃緒申鐃獣プにわ申 gx_path_type_winding_number, gx_path_type_even_odd 鐃緒申判鐃叔わ申
+      ** 必鐃竣わ申鐃夙思わ申鐃緒申 gs 側鐃緒申鐃春加わ申鐃銃わ申鐃淑わ申鐃緒申
+      ** 鐃夙りあ鐃緒申鐃緒申 gx_path_type_even_odd 鐃緒申鐃叔フワ申鐃緒申鐃夙にわ申鐃暑。
       */
       lputs(s, ESC_GS "1;2capG");
     }
   } else if (type & gx_path_type_fill) {
 
-    /* 塗りつぶし規則設定 */
+    /* 鐃宿わ申鐃縦ぶわ申鐃緒申則鐃緒申鐃緒申 */
     if (type & gx_path_type_even_odd) {
-      lputs(s, ESC_GS "0;2drpG");		/* 塗りつぶし描画 */
+      lputs(s, ESC_GS "0;2drpG");		/* 鐃宿わ申鐃縦ぶわ申鐃緒申鐃緒申 */
     } else {
-      lputs(s, ESC_GS "0;1drpG");		/* 塗りつぶし描画 */
+      lputs(s, ESC_GS "0;1drpG");		/* 鐃宿わ申鐃縦ぶわ申鐃緒申鐃緒申 */
     }
   } else {
-    lputs(s, ESC_GS "0;0drpG");		/* 輪郭線描画 */
+    lputs(s, ESC_GS "0;0drpG");		/* 鐃舜鰹申鐃緒申鐃緒申鐃緒申 */
   }
 
   return 0;
@@ -1759,7 +1759,7 @@ escv_output_page(gx_device * dev, int num_copies, int flush)
   gx_device_escv *const pdev = (gx_device_escv *) dev;
   stream *s = gdev_vector_stream(vdev);
 
-  /* 線幅,終端処理,接合部処理を初期化しておく */
+  /* 鐃緒申鐃緒申,鐃緒申端鐃緒申鐃緒申,鐃旬刻申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申鐃銃わ申鐃緒申 */
   lputs(s, ESC_GS "3;0;0lwG" ESC_GS "1;10mlG" ESC_FF);
 
   sflush(s);
@@ -1777,7 +1777,7 @@ escv_close(gx_device *dev)
   gx_device_vector	*const vdev = (gx_device_vector *) dev;
   FILE		*f = vdev->file;
 
-  /* 終了処理コードは決め打ち */
+  /* 鐃緒申了鐃緒申鐃緒申鐃緒申鐃緒申鐃宿は件申鐃緒申鐃叔わ申 */
   (void)fprintf(f, ESC_GS "rhE" "\033\001@EJL \012@EJL EJ \012\033\001@EJL \012");
 
   gdev_vector_close_file(vdev);
@@ -1880,7 +1880,7 @@ escv_set_str_param( gs_param_list * plist, const char * key, char *strvalue, int
     switch (code = param_read_string(plist, (param_name = key), &gsstr)) {
     case 0:
       writesize = ( bufmax < gsstr.size )? bufmax : gsstr.size ;
-      strncpy( strvalue, gsstr.data, writesize );
+      strncpy( strvalue, (const char*)gsstr.data, writesize );
       strvalue[ writesize ] = '\0';
       break;
     default:
@@ -2004,27 +2004,27 @@ escv_put_params(gx_device * dev, gs_param_list * plist)
         goto pmediae;
     } else {   /* Check the validity of ``MediaType'' characters */
 
-      if (strcmp(pmedia.data, "NM") == 0) {
+      if (strcmp((const char*)pmedia.data, "NM") == 0) {
         pdev->MediaType = 0;
-      } else if ((strcmp(pmedia.data, "THICK") == 0) ||
-                 (strcmp(pmedia.data, "TH") == 0)) {
+      } else if ((strcmp((const char*)pmedia.data, "THICK") == 0) ||
+                 (strcmp((const char*)pmedia.data, "TH") == 0)) {
         pdev->MediaType = 1;
-      } else if ((strcmp(pmedia.data, "TRANS") == 0) ||
-                 (strcmp(pmedia.data, "TR") == 0)) {
+      } else if ((strcmp((const char*)pmedia.data, "TRANS") == 0) ||
+                 (strcmp((const char*)pmedia.data, "TR") == 0)) {
         pdev->MediaType = 2;
-      } else if (strcmp(pmedia.data, "TN") == 0) {
+      } else if (strcmp((const char*)pmedia.data, "TN") == 0) {
         pdev->MediaType = 3;
-      } else if (strcmp(pmedia.data, "LH") == 0) {
+      } else if (strcmp((const char*)pmedia.data, "LH") == 0) {
         pdev->MediaType = 4;
-      } else if (strcmp(pmedia.data, "CT") == 0) {
+      } else if (strcmp((const char*)pmedia.data, "CT") == 0) {
         pdev->MediaType = 5;
-      } else if (strcmp(pmedia.data, "ET") == 0) {
+      } else if (strcmp((const char*)pmedia.data, "ET") == 0) {
         pdev->MediaType = 6;
-      } else if (strcmp(pmedia.data, "HQ") == 0) {
+      } else if (strcmp((const char*)pmedia.data, "HQ") == 0) {
         pdev->MediaType = 7;
-      } else if (strcmp(pmedia.data, "UT") == 0) {
+      } else if (strcmp((const char*)pmedia.data, "UT") == 0) {
         pdev->MediaType = 8;
-      } else if (strcmp(pmedia.data, "UM") == 0) {
+      } else if (strcmp((const char*)pmedia.data, "UM") == 0) {
         pdev->MediaType = 9;
       } else {
         ecode = gs_error_rangecheck;
@@ -2198,7 +2198,7 @@ escv_copy_mono(gx_device * dev, const byte * data,
     c_color = one;
 
   } else if (one == gx_no_color_index)
-    /* 1bit は透明 ビット反転・zero 色に染める */
+    /* 1bit 鐃緒申透鐃緒申 鐃俊ッワ申反転鐃緒申zero 鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申 */
     {
       if (pdev->MaskState != 1) {
 
@@ -2255,14 +2255,14 @@ escv_copy_mono(gx_device * dev, const byte * data,
 #endif
                                            &color);
 
-      /* ここを通過したら以下の色設定は無意味？ */
+      /* 鐃緒申鐃緒申鐃緒申鐃縮過し鐃緒申鐃緒申鐃淑駕申鐃塾随申鐃緒申鐃緒申鐃緒申無鐃緒申味鐃緒申 */
     }
   if (code < 0) return 0;
 
   if( 0 == pdev->colormode ) { /* ESC/Page (Monochrome) */
   } else {			/* ESC/Page-Color */
 
-    /* パターンＯＮ指定／ソリッドパターン指定 */
+    /* 鐃術ワ申鐃緒申鐃緒申鐃熟Ｎ誌申鐃所／鐃緒申鐃緒申鐃獣ドパワ申鐃緒申鐃緒申鐃緒申鐃緒申 */
     (void)sprintf(obuf, ESC_GS "1;2;3;%d;%d;%dfpE",
                   (unsigned char)(c_color >> 16 & 0xff),
                   (unsigned char)(c_color >> 8 & 0xff),
@@ -2295,7 +2295,7 @@ escv_copy_mono(gx_device * dev, const byte * data,
       }
     }
 
-    escv_write_data(dev, depth, buf, num_bytes, w, h);
+    escv_write_data(dev, depth, (char*)buf, num_bytes, w, h);
     gs_free_object(vdev->memory, buf, "escv_copy_mono(buf)");
   }
   escv_write_end(dev, depth);
@@ -2341,7 +2341,7 @@ escv_copy_color(gx_device * dev,
       memcpy(buf + i * width_bytes, data + ((data_x * depth) >> 3) + i * raster, width_bytes);
     }
 
-    escv_write_data(dev, depth, buf, num_bytes, w, h);
+    escv_write_data(dev, depth, (char*)buf, num_bytes, w, h);
     gs_free_object(vdev->memory, buf, "escv_copy_color(buf)");
   }
 
@@ -2430,7 +2430,7 @@ escv_fill_mask(gx_device * dev,
 
         (void)sprintf(obuf, ESC_GS "%d;%d;%d;%d;0db{F", num_bytes, (int)(id & VCACHE), w, h);
         lputs(s, obuf);
-        put_bytes(s, buf, num_bytes);
+        put_bytes(s, (const char*)buf, num_bytes);
 
         gs_free_object(vdev->memory, buf, "escv_fill_mask(buf)");
         pdev -> id_cache[id & VCACHE] = id;
@@ -2456,7 +2456,7 @@ escv_fill_mask(gx_device * dev,
       memcpy(buf + i * width_bytes, data + (data_x >> 3) + i * raster, width_bytes);
     }
 
-    escv_write_data(dev, depth, buf, num_bytes, w, h);
+    escv_write_data(dev, depth, (char*)buf, num_bytes, w, h);
     escv_write_end(dev, depth);
     gs_free_object(vdev->memory, buf, "escv_fill_mask(buf)");
   }
@@ -2565,7 +2565,7 @@ escv_begin_image(gx_device * dev,
   sx = bx - (int)imat.tx;
   sy = by - (int)imat.ty;
 
-  /* とりあえず絵の位置に収まるように強制的に座標を変更する。 */
+  /* 鐃夙りあ鐃緒申鐃緒申鐃緒申鐃塾逸申鐃瞬に種申鐃殉わ申鐃処う鐃祝駈申鐃緒申的鐃祝削申標鐃緒申鐃術刻申鐃緒申鐃暑。 */
   pdev -> roll = 0;
   pdev -> reverse_x = pdev -> reverse_y = 0;
   if (imat.tx > bx) {
@@ -2590,14 +2590,14 @@ escv_begin_image(gx_device * dev,
   pdev -> by = 0;
 
   if (ty == cy) {
-    /* 回転時の描画については現在未実装。GS 側の機能を使用する */
+    /* 鐃緒申転鐃緒申鐃緒申鐃緒申鐃緒申鐃祝つわ申鐃銃は醐申鐃緒申未鐃緒申鐃緒申鐃緒申GS 側鐃塾居申能鐃緒申鐃緒申鐃術わ申鐃緒申 */
     return -1;
   }
 
   if (pim->ImageMask) {
     pdev->ncomp = 1;
 
-    /* 描画論理設定命令 - 透過 */
+    /* 鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申命鐃緒申 - 透鐃緒申 */
     if (pdev->MaskState != 1) {
 
       if( 0 == pdev->colormode ) { /* ESC/Page (Monochrome) */
@@ -2625,7 +2625,7 @@ escv_begin_image(gx_device * dev,
 
   } else {
 
-    /* 描画論理設定命令 - 白塗り */
+    /* 鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申鐃緒申命鐃緒申 - 鐃緒申鐃宿わ申 */
     if (pdev->MaskState != 0) {
 
       if( 0 == pdev->colormode ) { /* ESC/Page (Monochrome) */
@@ -2850,7 +2850,7 @@ escv_image_plane_data(gx_image_enum_common_t *info, const gx_image_plane_t *plan
 
     }
 
-    escv_write_data(dev, pie->bits_per_pixel, buf, tbyte, pdev -> w, height);
+    escv_write_data(dev, pie->bits_per_pixel, (char*)buf, tbyte, pdev -> w, height);
 
     if (pdev -> reverse_y) {
       escv_write_end(dev, pie->bits_per_pixel);
@@ -2946,32 +2946,32 @@ static void escv_write_begin(gx_device *dev, int bits, int x, int y, int sw, int
       (void)sprintf(obuf, ESC_GS "2;201;1;%d;%d;%d;%d;%d;%dscrI", comp, sw, sh, dw, dh, roll);
     } else if (bits == 4) {
       if (pdev -> c4map) {
-        /* カラーマップ登録 */
+        /* 鐃緒申鐃初ー鐃殉ッワ申鐃緒申録 */
         lputs(s, ESC_GS "64;2;2;16;16plr{E");
-        p = tmp = gs_alloc_bytes(vdev->memory, 64, "escv_write_begin(tmp4)");
+        p = tmp = (char*)gs_alloc_bytes(vdev->memory, 64, "escv_write_begin(tmp4)");
         for (i = 0; i < 16; i++) {
           *p++ = i << 4;
           *p++ = i << 4;
           *p++ = i << 4;
           *p++ = i << 4;
         }
-        put_bytes(s, tmp, 64);
+        put_bytes(s, (const char*)tmp, 64);
         gs_free_object(vdev->memory, tmp, "escv_write_begin(tmp4)");
         pdev -> c4map = FALSE;
       }
       (void)sprintf(obuf, ESC_GS "2;203;2;%d;%d;%d;%d;%d;%dscrI", comp, sw, sh, dw, dh, roll);
     } else if (bits == 8) {
       if (pdev -> c8map) {
-        /* カラーマップ登録 */
+        /* 鐃緒申鐃初ー鐃殉ッワ申鐃緒申録 */
         lputs(s, ESC_GS "1024;4;2;256;256plr{E");
-        p = tmp = gs_alloc_bytes(vdev->memory, 1024, "escv_write_begin(tmp)");
+        p = tmp = (char*)gs_alloc_bytes(vdev->memory, 1024, "escv_write_begin(tmp)");
         for (i = 0; i < 256; i++) {
           *p++ = i;
           *p++ = i;
           *p++ = i;
           *p++ = i;
         }
-        put_bytes(s, tmp, 1024);
+        put_bytes(s, (const char*)tmp, 1024);
         gs_free_object(vdev->memory, tmp, "escv_write_begin(tmp)");
         pdev -> c8map = FALSE;
       }
@@ -3005,7 +3005,7 @@ static void escv_write_data(gx_device *dev, int bits, char *buf, int bsize, int 
     tmps = 0;
 
     if (bits == 12) {
-      p = tmps = gs_alloc_bytes(vdev->memory, bsize * 2, "escv_write_data(tmp)");
+      p = tmps = (char*)gs_alloc_bytes(vdev->memory, bsize * 2, "escv_write_data(tmp)");
       for (size = 0; size < bsize; size++) {
         *p++ = buf[size] & 0xF0;
         *p++ = buf[size] << 4;
@@ -3015,7 +3015,7 @@ static void escv_write_data(gx_device *dev, int bits, char *buf, int bsize, int 
     }
 
     if(bits == 4) {
-      p = tmps = gs_alloc_bytes(vdev->memory, bsize * 2, "escv_write_data(tmp)");
+      p = tmps = (char*)gs_alloc_bytes(vdev->memory, bsize * 2, "escv_write_data(tmp)");
       for (size = 0; size < bsize; size++) {
         *p++ = ((buf[size] & 0xF0) * 0xFF / 0xF0);
         *p++ = ((buf[size] << 4 & 0xF0) * 0xFF / 0xF0);
@@ -3025,11 +3025,11 @@ static void escv_write_data(gx_device *dev, int bits, char *buf, int bsize, int 
     }
 
     if(bits == 24) {		/* 8bit RGB */
-      tmps = gs_alloc_bytes(vdev->memory, bsize / 3, "escv_write_data(tmp)");
+      tmps = (char*)gs_alloc_bytes(vdev->memory, bsize / 3, "escv_write_data(tmp)");
 
       /* convert 24bit RGB to 8bit Grayscale */
-      rgbbuf = buf;
-      ucp = tmps;
+      rgbbuf = (byte*)buf;
+      ucp = (byte*)tmps;
       for (size = 0; size < bsize; size = size + 3) {
         gray8 = (0.299L * rgbbuf[size]) + (0.587L * rgbbuf[size + 1]) + (0.114L * rgbbuf[size + 2]);
         if ( gray8 > 255L )
@@ -3054,7 +3054,7 @@ static void escv_write_data(gx_device *dev, int bits, char *buf, int bsize, int 
     }
     lputs(s, obuf);
 
-    put_bytes(s, buf, bsize);
+    put_bytes(s, (const char*)buf, bsize);
 
     if (bits == 12 || bits == 4 || bits == 24) {
       gs_free_object(vdev->memory, tmps, "escv_write_data(tmp)");
@@ -3066,7 +3066,7 @@ static void escv_write_data(gx_device *dev, int bits, char *buf, int bsize, int 
 
     tmps = 0;
     if (bits == 12) {
-      p = tmps = gs_alloc_bytes(vdev->memory, bsize * 2, "escv_write_data(tmp)");
+      p = tmps = (char*)gs_alloc_bytes(vdev->memory, bsize * 2, "escv_write_data(tmp)");
       for (size = 0; size < bsize; size++) {
         tmp = buf[size] & 0xF0;
         *p++ = (tmp + (tmp >> 4 & 0x0F));
@@ -3079,7 +3079,7 @@ static void escv_write_data(gx_device *dev, int bits, char *buf, int bsize, int 
 
     (void)sprintf(obuf, ESC_GS "%d;%dcu{I", bsize, ras);
     lputs(s, obuf);
-    put_bytes(s, buf, bsize);
+    put_bytes(s, (const char*)buf, bsize);
 
     if (bits == 12) {
       gs_free_object(vdev->memory, tmps, "escv_write_data(tmp)");
