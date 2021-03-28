@@ -1178,7 +1178,7 @@ gsicc_set_device_profile(gx_device * pdev, gs_memory_t * mem,
     /* Check if device has a profile for this slot. Note that we already
        decremented for any profile that we might be replacing
        in gsicc_init_device_profile_struct */
-    if (file_name != '\0') {
+    if (file_name != 0 && *file_name != '\0') {
         str = gsicc_open_search(file_name, strlen(file_name), mem,
                                 mem->gs_lib_ctx->profiledir,
                                 mem->gs_lib_ctx->profiledir_len);

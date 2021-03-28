@@ -320,9 +320,9 @@ inode_write(FILE *out, romfs_inode *node, int compression, int inode_count, int 
     fprintf(out, "\t0 };\t/* end-of-node */\n");
 
     printf("node '%s' len=%ld", node->name, node->length);
-    printf(" %ld blocks", blocks);
+    printf(" %d blocks", blocks);
     if (compression) {
-        printf(", compressed size=%ld", clen);
+        printf(", compressed size=%d", clen);
     }
     printf("\n");
 }

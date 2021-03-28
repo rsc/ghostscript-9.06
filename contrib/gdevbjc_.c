@@ -83,113 +83,113 @@ BJL_command BJL_command_set[] = {
 /* String parameter definitions */
 
 stringParamDescription strPrinterType[] = {
-    { { "BJC-250",    7, false },   	0 },
-    { { "BJC-250ex",  9, false }, 	1 },
-    { { "BJC-1000",   8, false },  	2 },
+    { { (const byte*)"BJC-250",    7, false },   	0 },
+    { { (const byte*)"BJC-250ex",  9, false }, 	1 },
+    { { (const byte*)"BJC-1000",   8, false },  	2 },
 
-    { { "250",   3, false },       	0 },
-    { { "250ex", 5, false },     	1 },
-    { { "1000",  4, false },      	2 },
+    { { (const byte*)"250",   3, false },       	0 },
+    { { (const byte*)"250ex", 5, false },     	1 },
+    { { (const byte*)"1000",  4, false },      	2 },
     { {0} }
 };
 
 stringParamDescription strFeeder[] = {
-    { { "Manual",	6, false },    	0x11 },
-    { { "Auto",        	4, false },    	0x10 },
+    { { (const byte*)"Manual",	6, false },    	0x11 },
+    { { (const byte*)"Auto",        	4, false },    	0x10 },
 
-    { { "m",		1, false },    	0x11 },
-    { { "a",		1, false },    	0x10 },
+    { { (const byte*)"m",		1, false },    	0x11 },
+    { { (const byte*)"a",		1, false },    	0x10 },
     { {0} }
 };
 
 stringParamDescription strQuality[] = {
-    { { "Normal",	6, false },    	0 },
-    { { "High",        	4, false },    	1 },
-    { { "Draft",        5, false },    	2 },
-    { { "NonBleed",   	8, false },    	8 },
+    { { (const byte*)"Normal",	6, false },    	0 },
+    { { (const byte*)"High",        	4, false },    	1 },
+    { { (const byte*)"Draft",        5, false },    	2 },
+    { { (const byte*)"NonBleed",   	8, false },    	8 },
 
-    { { "n",		1, false },    	0 },
-    { { "h",		1, false },    	1 },
-    { { "d",		1, false },    	2 },
-    { { "b",		1, false },    	8 },
+    { { (const byte*)"n",		1, false },    	0 },
+    { { (const byte*)"h",		1, false },    	1 },
+    { { (const byte*)"d",		1, false },    	2 },
+    { { (const byte*)"b",		1, false },    	8 },
     { {0} }
 };
 
 stringParamDescription strInk[] = {
-    { { "Black",	5, false },    	8 },
-    { { "Cyan",        	4, false },    	1 },
-    { { "Magenta",      7, false },    	2 },
-    { { "Yellow",   	6, false },    	4 },
-    { { "Red",        	3, false },    	6 },
-    { { "Green",        5, false },    	5 },
-    { { "Blue",   	4, false },    	3 },
+    { { (const byte*)"Black",	5, false },    	8 },
+    { { (const byte*)"Cyan",        	4, false },    	1 },
+    { { (const byte*)"Magenta",      7, false },    	2 },
+    { { (const byte*)"Yellow",   	6, false },    	4 },
+    { { (const byte*)"Red",        	3, false },    	6 },
+    { { (const byte*)"Green",        5, false },    	5 },
+    { { (const byte*)"Blue",   	4, false },    	3 },
 
-    { { "K",		1, false },    	8 },
-    { { "C",		1, false },    	1 },
-    { { "M",		1, false },    	2 },
-    { { "Y",		1, false },    	4 },
-    { { "R",		1, false },    	6 },
-    { { "G",		1, false },    	5 },
-    { { "B",		1, false },    	3 },
-    { { "CK",		2, false },    	9 },
-    { { "MK",		2, false },    10 },
-    { { "YK",		2, false },    12 },
-    { { "RK",		2, false },    14 },
-    { { "GK",		2, false },    13 },
-    { { "BK",		2, false },    11 },
-    { { "CMY",		3, false },     7 },
-    { { "CMYK",		4, false },    15 },
+    { { (const byte*)"K",		1, false },    	8 },
+    { { (const byte*)"C",		1, false },    	1 },
+    { { (const byte*)"M",		1, false },    	2 },
+    { { (const byte*)"Y",		1, false },    	4 },
+    { { (const byte*)"R",		1, false },    	6 },
+    { { (const byte*)"G",		1, false },    	5 },
+    { { (const byte*)"B",		1, false },    	3 },
+    { { (const byte*)"CK",		2, false },    	9 },
+    { { (const byte*)"MK",		2, false },    10 },
+    { { (const byte*)"YK",		2, false },    12 },
+    { { (const byte*)"RK",		2, false },    14 },
+    { { (const byte*)"GK",		2, false },    13 },
+    { { (const byte*)"BK",		2, false },    11 },
+    { { (const byte*)"CMY",		3, false },     7 },
+    { { (const byte*)"CMYK",		4, false },    15 },
     { {0} }
 };
 
 static stringParamDescription strMedia[] = {
-  {{"PlainPaper", 10, false}, 0},
-  {{"CoatedPaper", 11, false}, 1},
-  {{"TransparencyFilm", 16, false}, 2},
-  {{"BackprintFilm", 13, false}, 3},
-  {{"T-ShirtTransfer", 15, false}, 3},
-  {{"FabricSheet", 11, false}, 4},
-  {{"GlossyPaper", 11, false}, 5},
-  {{"GlossyPhotoPaper", 16, false}, 5},
-  {{"HighGlossPaper", 14, false}, 5},
-  {{"HighGlossyFilm", 14, false}, 6},
-  {{"Envelope", 8, false}, 7},
-  {{"OtherPaper", 10, false}, 8},
-  {{"HighResolutionPaper", 19, false}, 9},
-/*    { { "HighResPaper",		12, false },    11 }, */
-  {{"GlossyPhotoCard", 15, false}, 10},
-/*    { { "FullBleed",		 9, false },    12 }, */
-  {{"Banner", 6, false}, 11},
+  {{(const byte*)"PlainPaper", 10, false}, 0},
+  {{(const byte*)"CoatedPaper", 11, false}, 1},
+  {{(const byte*)"TransparencyFilm", 16, false}, 2},
+  {{(const byte*)"BackprintFilm", 13, false}, 3},
+  {{(const byte*)"T-ShirtTransfer", 15, false}, 3},
+  {{(const byte*)"FabricSheet", 11, false}, 4},
+  {{(const byte*)"GlossyPaper", 11, false}, 5},
+  {{(const byte*)"GlossyPhotoPaper", 16, false}, 5},
+  {{(const byte*)"HighGlossPaper", 14, false}, 5},
+  {{(const byte*)"HighGlossyFilm", 14, false}, 6},
+  {{(const byte*)"Envelope", 8, false}, 7},
+  {{(const byte*)"OtherPaper", 10, false}, 8},
+  {{(const byte*)"HighResolutionPaper", 19, false}, 9},
+/*    { { (const byte*)"HighResPaper",		12, false },    11 }, */
+  {{(const byte*)"GlossyPhotoCard", 15, false}, 10},
+/*    { { (const byte*)"FullBleed",		 9, false },    12 }, */
+  {{(const byte*)"Banner", 6, false}, 11},
 
-  {{"Plain", 5, false}, 0},
-  {{"Coated", 6, false}, 1},
-  {{"Trans", 5, false}, 2},
-  {{"Back", 4, false}, 3},
-  {{"Shirt", 4, false}, 3},
-/*    { { "Lead",			 4, false },    4 }, */
-  {{"Fabric", 6, false}, 4},
-  {{"Glossy", 6, false}, 5},
-  {{"HGloss", 6, false}, 6},
-  {{"Env", 3, false}, 7},
-  {{"Oth", 3, false}, 8},
-  {{"HiRes", 5, false}, 9},
-/*    { { "Bleed",		 5, false },    12 }, */
-  {{"Card", 4, false}, 10},
-  {{"Ban", 3, false}, 11},
+  {{(const byte*)"Plain", 5, false}, 0},
+  {{(const byte*)"Coated", 6, false}, 1},
+  {{(const byte*)"Trans", 5, false}, 2},
+  {{(const byte*)"Back", 4, false}, 3},
+  {{(const byte*)"Shirt", 4, false}, 3},
+/*    { { (const byte*)"Lead",			 4, false },    4 }, */
+  {{(const byte*)"Fabric", 6, false}, 4},
+  {{(const byte*)"Glossy", 6, false}, 5},
+  {{(const byte*)"HGloss", 6, false}, 6},
+  {{(const byte*)"Env", 3, false}, 7},
+  {{(const byte*)"Oth", 3, false}, 8},
+  {{(const byte*)"HiRes", 5, false}, 9},
+/*    { { (const byte*)"Bleed",		 5, false },    12 }, */
+  {{(const byte*)"Card", 4, false}, 10},
+  {{(const byte*)"Ban", 3, false}, 11},
 
-  {{"p", 1, false}, 0},
-  {{"c", 1, false}, 1},
-  {{"t", 1, false}, 2},
-  {{"b", 1, false}, 3},
-  {{"s", 1, false}, 3},
-  {{"f", 1, false}, 4},
-  {{"g", 1, false}, 5},
-  {{"F", 1, false}, 6},
-  {{"e", 1, false}, 7},
-  {{"o", 1, false}, 8},
-  {{"h", 1, false}, 9},
-  {{"C", 1, false}, 10},
-  {{"B", 1, false}, 11},
+  {{(const byte*)"p", 1, false}, 0},
+  {{(const byte*)"c", 1, false}, 1},
+  {{(const byte*)"t", 1, false}, 2},
+  {{(const byte*)"b", 1, false}, 3},
+  {{(const byte*)"s", 1, false}, 3},
+  {{(const byte*)"f", 1, false}, 4},
+  {{(const byte*)"g", 1, false}, 5},
+  {{(const byte*)"F", 1, false}, 6},
+  {{(const byte*)"e", 1, false}, 7},
+  {{(const byte*)"o", 1, false}, 8},
+  {{(const byte*)"h", 1, false}, 9},
+  {{(const byte*)"C", 1, false}, 10},
+  {{(const byte*)"B", 1, false}, 11},
   {{0}}
 };
 
@@ -428,7 +428,7 @@ gdev_bjc_put_params(gx_device * pdev, gs_param_list * plist)
     const char *param_name;
     gs_param_string tmppar;
     uint parsize;
-    stringParamDescription *tmpstr=NULL;
+    const stringParamDescription *tmpstr=NULL;
 
 #   define ppdev ((gx_device_bjc_printer *)pdev)
 
@@ -601,13 +601,13 @@ bjc_print_page_mono(gx_device_printer * pdev, FILE * file)
         skip = 1;
         if(compress) cmplen = bjc_compress(row, raster, cmp), outrow = cmp;
         else outrow = row, cmplen = raster;  /* compress or not */
-        if(inkc & INK_K) bjc_put_cmyk_image(file, CMYK_K, outrow, cmplen),
+        if(inkc & INK_K) bjc_put_cmyk_image(file, CMYK_K, (const char*)outrow, cmplen),
                 bjc_put_CR(file);
-        if(inkc & INK_C) bjc_put_cmyk_image(file, CMYK_C, outrow, cmplen),
+        if(inkc & INK_C) bjc_put_cmyk_image(file, CMYK_C, (const char*)outrow, cmplen),
                 bjc_put_CR(file);
-        if(inkc & INK_M) bjc_put_cmyk_image(file, CMYK_M, outrow, cmplen),
+        if(inkc & INK_M) bjc_put_cmyk_image(file, CMYK_M, (const char*)outrow, cmplen),
                 bjc_put_CR(file);
-        if(inkc & INK_Y) bjc_put_cmyk_image(file, CMYK_Y, outrow, cmplen),
+        if(inkc & INK_Y) bjc_put_cmyk_image(file, CMYK_Y, (const char*)outrow, cmplen),
                 bjc_put_CR(file); /* use the needed ink(s) */
        }
       else skip++; /* +1 empty line */
@@ -683,13 +683,13 @@ bjc_print_page_gray(gx_device_printer * pdev, FILE * file)
           if(compress) cmplen = bjc_compress(dit, raster, cmp), out = cmp;
           else cmplen = raster, out = dit;  /* compress or not */
 
-          if(inkc & INK_K) bjc_put_cmyk_image(file, CMYK_K, out, cmplen),
+          if(inkc & INK_K) bjc_put_cmyk_image(file, CMYK_K, (const char*)out, cmplen),
                 bjc_put_CR(file);
-          if(inkc & INK_C) bjc_put_cmyk_image(file, CMYK_C, out, cmplen),
+          if(inkc & INK_C) bjc_put_cmyk_image(file, CMYK_C, (const char*)out, cmplen),
                 bjc_put_CR(file);
-          if(inkc & INK_M) bjc_put_cmyk_image(file, CMYK_M, out, cmplen),
+          if(inkc & INK_M) bjc_put_cmyk_image(file, CMYK_M, (const char*)out, cmplen),
                 bjc_put_CR(file);
-          if(inkc & INK_Y) bjc_put_cmyk_image(file, CMYK_Y, out, cmplen),
+          if(inkc & INK_Y) bjc_put_cmyk_image(file, CMYK_Y, (const char*)out, cmplen),
                 bjc_put_CR(file); /* use the needed ink(s) */
 
        } else skip++; /* +1 empty line */
@@ -793,22 +793,22 @@ bjc_print_page_cmyk(gx_device_printer * pdev, FILE * file)
             if(skipc.skipC && (inkc & INK_C)) {
                 if(compress) cmplen = bjc_compress(rows[0], raster, cmp), outrow = cmp;
                 else outrow = rows[0], cmplen = raster;  /* compress or not */
-                bjc_put_cmyk_image(file, CMYK_C, outrow, cmplen), bjc_put_CR(file);
+                bjc_put_cmyk_image(file, CMYK_C, (const char*)outrow, cmplen), bjc_put_CR(file);
             }
             if(skipc.skipM && (inkc & INK_M)) {
                 if(compress) cmplen = bjc_compress(rows[1], raster, cmp), outrow = cmp;
                 else outrow = rows[1], cmplen = raster;  /* compress or not */
-                bjc_put_cmyk_image(file, CMYK_M, outrow, cmplen), bjc_put_CR(file);
+                bjc_put_cmyk_image(file, CMYK_M, (const char*)outrow, cmplen), bjc_put_CR(file);
             }
             if(skipc.skipY && (inkc & INK_Y)) {
                 if(compress) cmplen = bjc_compress(rows[2], raster, cmp), outrow = cmp;
                 else outrow = rows[2], cmplen = raster;  /* compress or not */
-                bjc_put_cmyk_image(file, CMYK_Y, outrow, cmplen), bjc_put_CR(file);
+                bjc_put_cmyk_image(file, CMYK_Y, (const char*)outrow, cmplen), bjc_put_CR(file);
             }
             if(skipc.skipK && (inkc & INK_K)) {
                 if(compress) cmplen = bjc_compress(rows[3], raster, cmp), outrow = cmp;
                 else outrow = rows[3], cmplen = raster;  /* compress or not */
-                bjc_put_cmyk_image(file, CMYK_K, outrow, cmplen), bjc_put_CR(file);
+                bjc_put_cmyk_image(file, CMYK_K, (const char*)outrow, cmplen), bjc_put_CR(file);
             }
         }
         else skip++; /* +1 empty line */
@@ -899,22 +899,22 @@ bjc_print_page_color(gx_device_printer * pdev, FILE * file)
             if(skipc.skipC && (inkc & INK_C) ) {
                 if(compress) cmplen = bjc_compress(rowC, raster, cmp), outrow = cmp;
                 else outrow = rowC, cmplen = raster;  /* compress or not */
-                bjc_put_cmyk_image(file, CMYK_C, outrow, cmplen), bjc_put_CR(file);
+                bjc_put_cmyk_image(file, CMYK_C, (const char*)outrow, cmplen), bjc_put_CR(file);
             }
             if(skipc.skipM  && (inkc & INK_M) ) {
                 if(compress) cmplen = bjc_compress(rowM, raster, cmp), outrow = cmp;
                 else outrow = rowM, cmplen = raster;  /* compress or not */
-                bjc_put_cmyk_image(file, CMYK_M, outrow, cmplen), bjc_put_CR(file);
+                bjc_put_cmyk_image(file, CMYK_M, (const char*)outrow, cmplen), bjc_put_CR(file);
             }
             if(skipc.skipY  && (inkc & INK_Y) ) {
                 if(compress) cmplen = bjc_compress(rowY, raster, cmp), outrow = cmp;
                 else outrow = rowY, cmplen = raster;  /* compress or not */
-                bjc_put_cmyk_image(file, CMYK_Y, outrow, cmplen), bjc_put_CR(file);
+                bjc_put_cmyk_image(file, CMYK_Y, (const char*)outrow, cmplen), bjc_put_CR(file);
             }
             if(skipc.skipK  && (inkc & INK_K) ) {
                 if(compress) cmplen = bjc_compress(rowK, raster, cmp), outrow = cmp;
                 else outrow = rowK, cmplen = raster;  /* compress or not */
-                bjc_put_cmyk_image(file, CMYK_K, outrow, cmplen), bjc_put_CR(file);
+                bjc_put_cmyk_image(file, CMYK_K, (const char*)outrow, cmplen), bjc_put_CR(file);
             }
         }
         else skip++; /* +1 empty line */

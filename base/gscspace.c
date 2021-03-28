@@ -166,7 +166,7 @@ gs_color_space *
 gs_cspace_new_ICC(gs_memory_t *pmem, gs_state * pgs, int components)
 {
     gsicc_manager_t *icc_manage = pgs->icc_manager;
-    int code;
+    int code = 0;
     gs_color_space *pcspace = gs_cspace_alloc(pmem, &gs_color_space_type_ICC);
 
     switch (components) {
@@ -175,7 +175,7 @@ gs_cspace_new_ICC(gs_memory_t *pmem, gs_state * pgs, int components)
                 code = gsicc_initialize_iccsmask(icc_manage);
             }
             if (code == 0) {
-                pcspace->cmm_icc_profile_data = 
+                pcspace->cmm_icc_profile_data =
                     icc_manage->smask_profiles->smask_gray;
             } else {
                 pcspace->cmm_icc_profile_data = icc_manage->default_gray;
@@ -186,15 +186,15 @@ gs_cspace_new_ICC(gs_memory_t *pmem, gs_state * pgs, int components)
                 code = gsicc_initialize_iccsmask(icc_manage);
             }
             if (code == 0) {
-                pcspace->cmm_icc_profile_data = 
+                pcspace->cmm_icc_profile_data =
                     icc_manage->smask_profiles->smask_rgb;
             } else {
                 pcspace->cmm_icc_profile_data = icc_manage->default_rgb;
             }
             break;
-        case 1: pcspace->cmm_icc_profile_data = icc_manage->default_gray; break; 
-        case 3: pcspace->cmm_icc_profile_data = icc_manage->default_rgb; break; 
-        case 4: pcspace->cmm_icc_profile_data = icc_manage->default_cmyk; break; 
+        case 1: pcspace->cmm_icc_profile_data = icc_manage->default_gray; break;
+        case 3: pcspace->cmm_icc_profile_data = icc_manage->default_rgb; break;
+        case 4: pcspace->cmm_icc_profile_data = icc_manage->default_cmyk; break;
         default: rc_decrement(pcspace,"gs_cspace_new_ICC"); return NULL;
     }
     rc_increment(pcspace->cmm_icc_profile_data);
@@ -590,16 +590,16 @@ gx_set_overprint_DeviceCMYK(const gs_color_space * pcs, gs_state * pgs)
 
 /* A few comments about ICC profiles and overprint simulation.  In order
    to do proper overprint simulation, the source ICC profile and the
-   destination ICC profile must be the same.  If they are not, then 
-   we end up mapping the source CMYK data to a different CMYK value.  In 
-   this case, the non-zero components, which with overprint mode = 1 specify 
-   which are to be overprinted will not be correct to produce the proper 
-   overprint simulation.  This is seen with AR when doing output preview, 
+   destination ICC profile must be the same.  If they are not, then
+   we end up mapping the source CMYK data to a different CMYK value.  In
+   this case, the non-zero components, which with overprint mode = 1 specify
+   which are to be overprinted will not be correct to produce the proper
+   overprint simulation.  This is seen with AR when doing output preview,
    overprint simulation enabled of the file overprint_icc.pdf (see our
-   test files) which has SWOP ICC based CMYK fills.  In AR, if we use a 
-   simluation ICC profile that is different than the source profile, 
-   overprinting is no longer previewed. We follow the same logic here.  
-   If the source and destination ICC profiles do not match, then there is 
+   test files) which has SWOP ICC based CMYK fills.  In AR, if we use a
+   simluation ICC profile that is different than the source profile,
+   overprinting is no longer previewed. We follow the same logic here.
+   If the source and destination ICC profiles do not match, then there is
    effectively no overprinting enabled.  This is bug 692433 */
 int gx_set_overprint_cmyk(const gs_color_space * pcs, gs_state * pgs)
 {
@@ -629,9 +629,9 @@ int gx_set_overprint_cmyk(const gs_color_space * pcs, gs_state * pgs)
     /* correct for any zero'ed color components.  But only if profiles
        match */
     if (pcs->cmm_icc_profile_data != NULL && output_profile != NULL) {
-        if (output_profile->hashcode == 
+        if (output_profile->hashcode ==
             pcs->cmm_icc_profile_data->hashcode) {
-            profile_ok = true;        
+            profile_ok = true;
         }
     }
 
@@ -647,11 +647,11 @@ int gx_set_overprint_cmyk(const gs_color_space * pcs, gs_state * pgs)
 
         procp = pdc->type->get_nonzero_comps;
         if (pdc->ccolor_valid) {
-            /* If we have the source colors, then use those in making the 
-               decision as to which ones are non-zero.  Then we avoid 
-               accidently looking at small values that get quantized to zero 
-               Note that to get here in the code, the source color data color 
-               space has to be CMYK. Trick is that we do need to worry about 
+            /* If we have the source colors, then use those in making the
+               decision as to which ones are non-zero.  Then we avoid
+               accidently looking at small values that get quantized to zero
+               Note that to get here in the code, the source color data color
+               space has to be CMYK. Trick is that we do need to worry about
                the colorant order on the target device */
             num_colorant[0] = (dev_proc(dev, get_color_comp_index))\
                              (dev, "Cyan", strlen("Cyan"), NO_COMP_NAME_TYPE);
@@ -692,7 +692,7 @@ int gx_set_overprint_cmyk(const gs_color_space * pcs, gs_state * pgs)
     return gs_state_update_overprint(pgs, &params);
 }
 
-/* This is used for the case where we have an RGB based device, but we want 
+/* This is used for the case where we have an RGB based device, but we want
    to simulate CMY overprinting.  Color management is pretty much thrown out
    the window when doing this. */
 
@@ -704,8 +704,8 @@ int gx_set_overprint_rgb(const gs_color_space * pcs, gs_state * pgs)
     gs_overprint_params_t   params;
     gx_device_color        *pdc;
 
-    /* check if color model behavior must be determined.  This is why we 
-       need the GX_CINFO_OPMODE_RGB and GX_CINFO_OPMODE_RGB_SET.  
+    /* check if color model behavior must be determined.  This is why we
+       need the GX_CINFO_OPMODE_RGB and GX_CINFO_OPMODE_RGB_SET.
        We only need to do this once */
     if (pcinfo->opmode == GX_CINFO_OPMODE_RGB)
         drawn_comps = check_rgb_color_model_comps(dev);
@@ -730,11 +730,11 @@ int gx_set_overprint_rgb(const gs_color_space * pcs, gs_state * pgs)
 
         procp = pdc->type->get_nonzero_comps;
         if (pdc->ccolor_valid) {
-            /* If we have the source colors, then use those in making the 
-               decision as to which ones are non-zero.  Then we avoid 
-               accidently looking at small values that get quantized to zero 
-               Note that to get here in the code, the source color data color 
-               space has to be CMYK. Trick is that we do need to worry about 
+            /* If we have the source colors, then use those in making the
+               decision as to which ones are non-zero.  Then we avoid
+               accidently looking at small values that get quantized to zero
+               Note that to get here in the code, the source color data color
+               space has to be CMYK. Trick is that we do need to worry about
                the RGB colorant order on the target device */
             num_colorant[0] = (dev_proc(dev, get_color_comp_index))\
                              (dev, "Red", strlen("Red"), NO_COMP_NAME_TYPE);

@@ -70,7 +70,7 @@ rgb_cs_to_devn_cm(gx_device * dev, int * map,
 
 /* Convert a CMYK color space to DeviceN colorants. */
 void
-cmyk_cs_to_devn_cm(gx_device * dev, int * map,
+cmyk_cs_to_devn_cm(gx_device * dev, const int * map,
                 frac c, frac m, frac y, frac k, frac out[])
 {
     int i = dev->color_info.num_components - 1;
@@ -257,7 +257,7 @@ devn_get_color_comp_index(gx_device * dev, gs_devn_params * pdevn_params,
             pdevn_params->num_separation_order_names != 0)
         return -1;      /* Do not add --> indicate colorant unknown. */
 
-    /* Make sure the name is not "None"  this is sometimes 
+    /* Make sure the name is not "None"  this is sometimes
        within a DeviceN list and should not be added as one of the
        separations.  */
     if (strncmp(pname, "None", name_size) == 0) {
@@ -416,7 +416,7 @@ devn_put_params(gx_device * pdev, gs_param_list * plist,
             }
             num_spot_changed = true;
             for (i = pdevn_params->separations.num_separations; i < num_spot; i++)
-                pdevn_params->separation_order_map[i + pdevn_params->num_std_colorant_names] = 
+                pdevn_params->separation_order_map[i + pdevn_params->num_std_colorant_names] =
                 i + pdevn_params->num_std_colorant_names;
             pdevn_params->separations.num_separations = num_spot;
         }

@@ -13,8 +13,10 @@
 
 /* Configuration management identification */
 #ifndef lint
+#ifdef UNUSED
 static const char
   cm_id[] = "@(#)$Id: mediasize.c,v 1.11 2001/04/12 18:35:26 Martin Rel $";
+#endif
 #endif
 
 /*****************************************************************************/
@@ -408,8 +410,8 @@ extern int ms_find_name_from_code(char *buffer, size_t length,
   code = ms_flags(code);
 
   /* Substrings */
-  if (user_flag_list != NULL &&
-      add_substrings(buffer, &length, &code, user_flag_list) != 0 ||
+  if ((user_flag_list != NULL &&
+      add_substrings(buffer, &length, &code, user_flag_list) != 0) ||
     add_substrings(buffer, &length, &code, substrings) != 0) return -1;
 
   /* Transverse qualifier */

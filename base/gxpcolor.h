@@ -130,7 +130,7 @@ extern const gs_color_space_type gs_color_space_type_Pattern;
  * device color type.
  */
 extern const gx_device_color_type_t
-    gx_dc_pattern, gx_dc_pure_masked, gx_dc_binary_masked, 
+    gx_dc_pattern, gx_dc_pure_masked, gx_dc_binary_masked,
     gx_dc_colored_masked, gx_dc_devn_masked;
 
 #ifndef gx_dc_type_pattern
@@ -225,10 +225,10 @@ struct gx_color_tile_s {
     /* The following is neither key nor value. */
     uint index;			/* the index of the tile within */
     bool trans_group_popped;    /* Used to avoid multiple group pops in image mask fills */
-    bool is_planar;             /* Has to be stored here due to the device 
-                                   change that can occur when the tile is 
+    bool is_planar;             /* Has to be stored here due to the device
+                                   change that can occur when the tile is
                                    created and when it is written in the clist
-                                   when we are writing to a transparency 
+                                   when we are writing to a transparency
                                    device which, is not planar but the target
                                    is */
     /* the cache (for GC) */
@@ -298,7 +298,7 @@ gx_device_forward * gx_pattern_accum_alloc(gs_memory_t * mem,
 /* Given the size of a new pattern tile, free entries from the cache until  */
 /* enough space is available (or nothing left to free).			    */
 /* This will allow 1 oversized entry					    */
-void gx_pattern_cache_ensure_space(gs_imager_state * pis, int needed);
+void gx_pattern_cache_ensure_space(const gs_imager_state * pis, int needed);
 
 void gx_pattern_cache_update_used(gs_imager_state *pis, ulong used);
 

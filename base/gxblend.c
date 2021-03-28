@@ -39,7 +39,7 @@ extern unsigned int clist_band_count;
 
 void
 smask_luminosity_mapping(int num_rows, int num_cols, int n_chan, int row_stride,
-                         int plane_stride, byte *src, const byte *dst, bool isadditive,
+                         int plane_stride, byte *src, byte *dst, bool isadditive,
                          gs_transparency_mask_subtype_t SMask_SubType)
 {
     int x,y;
@@ -182,7 +182,7 @@ smask_blend(byte *src, int width, int height, int rowstride,
 }
 
 void smask_copy(int num_rows, int num_cols, int row_stride,
-                        byte *src, const byte *dst)
+                        byte *src, byte *dst)
 {
     int y;
     byte *dstptr,*srcptr;
@@ -196,8 +196,8 @@ void smask_copy(int num_rows, int num_cols, int row_stride,
     }
 }
 
-void smask_icc(gx_device *dev, int num_rows, int num_cols, int n_chan, 
-               int row_stride, int plane_stride, byte *src, const byte *dst,
+void smask_icc(gx_device *dev, int num_rows, int num_cols, int n_chan,
+               int row_stride, int plane_stride, byte *src, byte *dst,
                gsicc_link_t *icclink)
 {
     gsicc_bufferdesc_t input_buff_desc;
@@ -221,7 +221,7 @@ void smask_icc(gx_device *dev, int num_rows, int num_cols, int n_chan,
                   false, false, true, plane_stride,
                   row_stride, num_rows, num_cols);
     /* Transform the data */
-    (icclink->procs.map_buffer)(dev, icclink, &input_buff_desc, &output_buff_desc, 
+    (icclink->procs.map_buffer)(dev, icclink, &input_buff_desc, &output_buff_desc,
                                 (void*) src, (void*) dst);
 }
 

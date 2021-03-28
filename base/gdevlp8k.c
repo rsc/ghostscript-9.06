@@ -358,8 +358,8 @@ Y coordinate of the printer equals (lnum - 60)
         fwrite("\035",1,1,prn_stream);
         fprintf(prn_stream,"%d",lnum-60);
         fwrite("Y\035",1,2,prn_stream);
-        fprintf(prn_stream,"%d;",(outp - out));
-        fprintf(prn_stream,"%d;",(in_end - inp) << 3);
+        fprintf(prn_stream,"%ld;",(outp - out));
+        fprintf(prn_stream,"%ld;",(in_end - inp) << 3);
         fwrite("1;0bi{I",1,7,prn_stream);
         fwrite(out,1,(outp - out),prn_stream);
 

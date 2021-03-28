@@ -910,7 +910,7 @@ static int pcl3_put_params(gx_device *device, gs_param_list *plist)
       else {
         eprintf1("%s" ERRPREF "Unknown subdevice name: `", epref);
         errwrite(dev->memory,
-                 string_value.data, sizeof(char)*string_value.size);
+                 (const char*)string_value.data, sizeof(char)*string_value.size);
         eprintf("'.\n");
         last_error = gs_error_rangecheck;
         param_signal_error(plist, pname, last_error);
@@ -1020,7 +1020,7 @@ static int pcl3_put_params(gx_device *device, gs_param_list *plist)
       else {
         eprintf1("%s" ERRPREF "Invalid duplex capability: `", epref);
         errwrite(dev->memory,
-                 string_value.data, sizeof(char)*string_value.size);
+                 (const char*)string_value.data, sizeof(char)*string_value.size);
         eprintf("'.\n");
         last_error = gs_error_rangecheck;
         param_signal_error(plist, pname, last_error);
@@ -1076,7 +1076,7 @@ static int pcl3_put_params(gx_device *device, gs_param_list *plist)
       if (rc != gs_error_VMerror) {
         eprintf1("%s" ERRPREF "Unknown medium: `", epref);
         errwrite(dev->memory,
-                 string_value.data, sizeof(char)*string_value.size);
+                 (const char*)string_value.data, sizeof(char)*string_value.size);
         eprintf("'.\n");
       }
       last_error = rc;
@@ -1146,7 +1146,7 @@ static int pcl3_put_params(gx_device *device, gs_param_list *plist)
       if (rc != gs_error_VMerror) {
         eprintf1("%s" ERRPREF "Unknown print quality: `", epref);
         errwrite(dev->memory,
-                 string_value.data, sizeof(char)*string_value.size);
+                 (const char*)string_value.data, sizeof(char)*string_value.size);
         eprintf("'.\n");
       }
       last_error = rc;
@@ -1235,7 +1235,7 @@ static int pcl3_put_params(gx_device *device, gs_param_list *plist)
   /* Process parameters defined by base classes (should occur after treating
      parameters defined for the derived class, see gsparam.h) */
   if ((rc = eprn_put_params(device, plist)) < 0 ||
-    rc > 0 && last_error >= 0) last_error = rc;
+    (rc > 0 && last_error >= 0)) last_error = rc;
 
   /* Act if the colour model was changed */
   if (previous_colour_model != dev->eprn.colour_model) set_palette(dev);
@@ -1349,10 +1349,10 @@ static int pcl3_open_device(gx_device *device)
              just as fast, provided the compiler is sufficiently intelligent. */
 
         dev->eprn.soft_tumble = dev->duplex_capability != Duplex_both &&
-            (same_leading_edge &&
-                dev->duplex_capability != Duplex_sameLeadingEdge ||
-              !same_leading_edge &&
-                dev->duplex_capability != Duplex_oppositeLeadingEdge);
+            ((same_leading_edge &&
+                dev->duplex_capability != Duplex_sameLeadingEdge) ||
+              (!same_leading_edge &&
+                dev->duplex_capability != Duplex_oppositeLeadingEdge));
         if (dev->eprn.soft_tumble) same_leading_edge = !same_leading_edge;
 
         /*  I am assuming here that the values 1 and 2, specified by HP in
@@ -1475,8 +1475,8 @@ static int pcl3_print_page(gx_device_printer *device, FILE *out)
   if (pcl_cm_is_differential(dev->file_data.compression))
     rd.previous = (pcl_OctetString *)malloc(planes*sizeof(pcl_OctetString));
   if (lengths == NULL || rd.next == NULL ||
-      pcl_cm_is_differential(dev->file_data.compression) &&
-        rd.previous == NULL) {
+      (pcl_cm_is_differential(dev->file_data.compression) &&
+        rd.previous == NULL)) {
     free(lengths); free(rd.next); free(rd.previous);
     eprintf1("%s" ERRPREF "Memory allocation failure from malloc().\n",
       epref);

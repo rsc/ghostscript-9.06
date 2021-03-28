@@ -102,15 +102,15 @@ typedef pdf14_parent_cs_params_s pdf14_parent_cs_params_t;
 
 /* This function is used for mapping Smask CMYK or RGB data to a monochrome alpha buffer */
 void smask_luminosity_mapping(int num_rows, int num_cols, int n_chan, int row_stride,
-                         int plane_stride, byte *src, const byte *des, bool isadditive,
+                         int plane_stride, byte *src, byte *des, bool isadditive,
                             gs_transparency_mask_subtype_t SMask_SubType);
 void smask_blend(byte *src, int width, int height, int rowstride,
                  int planestride);
 
 void smask_copy(int num_rows, int num_cols, int row_stride,
-                         byte *src, const byte *des);
-void smask_icc(gx_device *dev, int num_rows, int num_cols, int n_chan, 
-               int row_stride, int plane_stride, byte *src, const byte *des,
+                         byte *src, byte *des);
+void smask_icc(gx_device *dev, int num_rows, int num_cols, int n_chan,
+               int row_stride, int plane_stride, byte *src, byte *des,
                gsicc_link_t *icclink);
 /**
  * art_blend_pixel: Compute PDF 1.4 blending function.

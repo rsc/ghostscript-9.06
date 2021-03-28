@@ -529,7 +529,7 @@ static void split_colour(eprn_OctetString *line, eprn_OctetString *next_line,
     plane = 0;
     for (colorant = last_colorant; colorant >= 0; colorant--) {
       while (plane < next_plane[colorant]) {
-        *ptr[plane] = (*ptr[plane] << 1) | approx[colorant] & 0x01;
+        *ptr[plane] = (*ptr[plane] << 1) | (approx[colorant] & 0x01);
         approx[colorant] >>= 1;
         plane++;
       }

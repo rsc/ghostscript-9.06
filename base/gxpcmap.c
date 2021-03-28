@@ -592,8 +592,8 @@ pattern_accum_close(gx_device * dev)
 /* _hl_color */
 static int
 pattern_accum_fill_rectangle_hl_color(gx_device *dev, const gs_fixed_rect *rect,
-                                      const gs_imager_state *pis, 
-                                      const gx_drawing_color *pdcolor, 
+                                      const gs_imager_state *pis,
+                                      const gx_drawing_color *pdcolor,
                                       const gx_clip_path *pcpath)
 {
     gx_device_pattern_accum *const padev = (gx_device_pattern_accum *) dev;
@@ -861,7 +861,7 @@ gx_pattern_cache_free_entry(gx_pattern_cache * pcache, gx_color_tile * ctile)
                 ctile->ttrans->fill_trans_buffer = NULL;
             } else {
                 dev_proc(ctile->ttrans->pdev14, close_device)((gx_device *)ctile->ttrans->pdev14);
-                temp_device = ctile->ttrans->pdev14;
+                temp_device = (gx_device*)ctile->ttrans->pdev14;
                 gx_device_retain(temp_device, false);
                 rc_decrement(temp_device,"gx_pattern_cache_free_entry");
                 ctile->ttrans->pdev14 = NULL;
@@ -885,9 +885,9 @@ gx_pattern_cache_free_entry(gx_pattern_cache * pcache, gx_color_tile * ctile)
 /* enough space is available (or nothing left to free).                     */
 /* This will allow 1 oversized entry                                        */
 void
-gx_pattern_cache_ensure_space(gs_imager_state * pis, int needed)
+gx_pattern_cache_ensure_space(const gs_imager_state * pis, int needed)
 {
-    int code = ensure_pattern_cache(pis);
+    int code = ensure_pattern_cache((gs_imager_state*)pis);
     gx_pattern_cache *pcache;
 
     if (code < 0)
@@ -1163,7 +1163,7 @@ dump_raw_pattern(int height, int width, int n_chan, int depth,
             fwrite(Buffer,1,max_bands*height*width,fid);
         }
     } else {
-        /* Binary Data. Lets get to 8 bit for debugging.  We have to 
+        /* Binary Data. Lets get to 8 bit for debugging.  We have to
            worry about planar vs. chunky.  Note this assumes 1 bit data
            only. */
         if (is_planar) {
@@ -1185,17 +1185,17 @@ dump_raw_pattern(int height, int width, int n_chan, int depth,
                 for (k = 0; k < width; k++) {
                     for (m = 0; m < max_bands; m++) {
                         /* index current byte */
-                        byte_number = 
-                            (int) ceil((( (float) k * (float) max_bands + 
+                        byte_number =
+                            (int) ceil((( (float) k * (float) max_bands +
                                           (float) m + 1.0) / 8.0)) - 1;
                         /* get byte of interest */
-                        current_byte = 
+                        current_byte =
                                 curr_ptr[j*(mdev->raster) + byte_number];
                         /* get bit position */
-                        bit_position = 
+                        bit_position =
                                 7 - (k * max_bands + m -  byte_number * 8);
                         /* extract and create byte */
-                        output_val = 
+                        output_val =
                                 ((current_byte >> bit_position) & 0x1) * 255;
                         fwrite(&output_val,1,1,fid);
                     }
@@ -1377,7 +1377,7 @@ gx_pattern_load(gx_device_color * pdc, const gs_imager_state * pis,
                     return code;
             } else {
                 /* Not a clist, get PDF14 buffer information */
-                code = 
+                code =
                     pdf14_get_buffer_information(saved->device,
                                                 ((gx_device_pattern_accum*)adev)->transbuff,
                                                  saved->memory,

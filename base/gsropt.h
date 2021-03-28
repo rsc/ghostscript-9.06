@@ -97,14 +97,14 @@ typedef enum {
 /* 3-input RasterOp */
 typedef enum {
     rop3_0 = 0,
-#define rop3_T 0xf0              /* texture */
+#define rop3_T 0xf0     /* texture */
 #define rop3_T_shift 4
-#define rop3_S 0xcc              /* source */
+#define rop3_S 0xcc     /* source */
 #define rop3_S_shift 2
     rop3_D = 0xaa,              /* destination */
 #define rop3_D_shift 1
     rop3_1 = 0xff,
-    rop3_default = rop3_T | rop3_S
+#define rop3_default (rop3_T|rop3_S)
 } gs_rop3_t;
 
 /* All the transformations on rop3s are designed so that */

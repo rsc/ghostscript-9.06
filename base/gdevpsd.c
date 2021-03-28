@@ -353,17 +353,17 @@ psd_prn_open(gx_device * pdev)
     pdev_psd->warning_given = false;
     /* With planar the depth can be more than 64.  Update the color
        info to reflect the proper depth and number of planes.  Also note
-       that the number of spot colors can change from page to page.  
+       that the number of spot colors can change from page to page.
        Update things so that we only output separations for the
        inks on that page. */
     if (pdev_psd->devn_params.page_spot_colors >= 0) {
-        pdev->color_info.num_components = 
-            (pdev_psd->devn_params.page_spot_colors 
+        pdev->color_info.num_components =
+            (pdev_psd->devn_params.page_spot_colors
                                  + pdev_psd->devn_params.num_std_colorant_names);
         if (pdev->color_info.num_components > pdev->color_info.max_components)
             pdev->color_info.num_components = pdev->color_info.max_components;
     } else {
-        /* We do not know how many spots may occur on the page. 
+        /* We do not know how many spots may occur on the page.
            For this reason we go ahead and allocate the maximum that we
            have available.  Note, lack of knowledge only occurs in the case
            of PS files.  With PDF we know a priori the number of spot
@@ -379,7 +379,7 @@ psd_prn_open(gx_device * pdev)
         for (k = 0; k < GS_CLIENT_COLOR_MAX_COMPONENTS; k++) {
             pdev_psd->devn_params.separation_order_map[k] = k;
         }
-    pdev->color_info.depth = pdev->color_info.num_components * 
+    pdev->color_info.depth = pdev->color_info.num_components *
                              pdev_psd->devn_params.bitspercomponent;
     pdev->color_info.separable_and_linear = GX_CINFO_SEP_LIN;
     pdev->icc_struct->supports_devn = true;
@@ -473,12 +473,12 @@ cmyk_cs_to_psdcmyk_cm(gx_device * dev,
     const gs_devn_params *devn = psd_ret_devn_params(dev);
     const int *map = devn->separation_order_map;
     int j;
-    
+
     if (devn->num_separation_order_names > 0) {
         /* This is to set only those that we are using */
         for (j = 0; j < devn->num_separation_order_names; j++) {
             switch (map[j]) {
-                case 0 : 
+                case 0 :
                     out[0] = c;
                     break;
                 case 1:
@@ -1005,14 +1005,14 @@ psd_get_color_comp_index(gx_device * dev, const char * pname,
                 &(((psd_device *)dev)->devn_params),
                 &(((psd_device *)dev)->equiv_cmyk_colors),
                 pname, name_size, component_type, ENABLE_AUTO_SPOT_COLORS);
-    /* This is a one shot deal.  That is it will simply post a notice once that 
+    /* This is a one shot deal.  That is it will simply post a notice once that
        some colorants will be converted due to a limit being reached.  It will
-       not list names of colorants since then I would need to keep track of 
+       not list names of colorants since then I would need to keep track of
        which ones I have already mentioned.  Also, if someone is fooling with
        num_order, then this warning is not given since they should know what
        is going on already */
-    if (index < 0 && component_type == SEPARATION_NAME && 
-        pdev->warning_given == false && 
+    if (index < 0 && component_type == SEPARATION_NAME &&
+        pdev->warning_given == false &&
         pdev->devn_params.num_separation_order_names == 0) {
         dlprintf("**** Max spot colorants reached.\n");
         dlprintf("**** Some colorants will be converted to equivalent CMYK values.\n");
@@ -1080,7 +1080,7 @@ psd_setup(psd_write_ctx *xc, psd_device *dev)
      * which planes are actually imaged.  For the process color model channels
      * we image the channels which are requested.  Non requested process color
      * model channels are simply filled with white.  For spot colors we only
-     * image the requested channels. 
+     * image the requested channels.
      */
     for (i = 0; i < xc->base_bytes_pp + xc->n_extra_channels; i++) {
         xc->chnl_to_position[i] = i;
@@ -1309,7 +1309,7 @@ psd_write_image_data(psd_write_ctx *xc, gx_device_printer *pdev)
     sep_line = gs_alloc_bytes(pdev->memory, xc->width, "psd_write_sep_line");
 
     for (chan_idx = 0; chan_idx < num_comp; chan_idx++) {
-        planes[chan_idx] = gs_alloc_bytes(pdev->memory, raster_plane, 
+        planes[chan_idx] = gs_alloc_bytes(pdev->memory, raster_plane,
                                         "psd_write_sep_line");
         params.data[chan_idx] = planes[chan_idx];
         if (params.data[chan_idx] == NULL)
@@ -1329,7 +1329,7 @@ psd_write_image_data(psd_write_ctx *xc, gx_device_printer *pdev)
         int data_pos = xc->chnl_to_position[chan_idx];
         if (data_pos >= 0) {
             for (j = 0; j < xc->height; ++j) {
-                rect.p.y = j;   
+                rect.p.y = j;
                 rect.q.y = j + 1;
                 code = gx_downscaler_get_bits_rectangle(&ds, &params, j);
                 if (code < 0)
@@ -1367,7 +1367,7 @@ cleanup:
     gx_downscaler_fin(&ds);
     gs_free_object(pdev->memory, sep_line, "psd_write_sep_line");
     for (chan_idx = 0; chan_idx < num_comp; chan_idx++) {
-        gs_free_object(pdev->memory, planes[chan_idx], 
+        gs_free_object(pdev->memory, planes[chan_idx],
                                         "psd_write_image_data");
     }
     return code;

@@ -199,7 +199,7 @@ typedef enum {
  *      110sxxxx xxxxxxff
  *      111----- (a full-size `fixed' value)
  */
-#define is_bits(d, n) !(((d) + ((fixed)1 << ((n) - 1))) & (-(fixed)1 << (n)))
+#define is_bits(d, n) !(((d) + ((fixed)1 << ((n) - 1))) & (-(fixed)((ufixed)1 << (n))))
 
 /*
  * Maximum size of a halftone segment. This leaves enough headroom to

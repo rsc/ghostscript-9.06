@@ -1179,8 +1179,8 @@ static void
                      struct error_val_field *error_values,
                      const Gamma *gamma,
                      FILE * prn_stream);
-static void
-     do_gamma(float mastergamma, float gammaval, byte * values);
+//static void
+//     do_gamma(float mastergamma, float gammaval, byte * values);
 static void
      do_black_correction(float kvalue, int *kcorrect);
 

@@ -266,7 +266,7 @@ psf_get_outline_glyphs(psf_outline_glyphs_t *pglyphs, gs_font_base *pfont,
     uint subset_size = orig_subset_size;
 
     if (subset_glyphs) {
-        if (subset_size > countof(pglyphs->subset_data))
+        if (subset_size > pglyphs->subset_size)
             return_error(gs_error_limitcheck);
         memcpy(pglyphs->subset_data, orig_subset_glyphs,
                sizeof(gs_glyph) * subset_size);
@@ -316,7 +316,7 @@ psf_get_outline_glyphs(psf_outline_glyphs_t *pglyphs, gs_font_base *pfont,
          * 2 pieces.
          */
         int code = psf_add_subset_pieces(subset_glyphs, &subset_size,
-                                          countof(pglyphs->subset_data) - 1, 2,
+                                          pglyphs->subset_size - 1, 2,
                                           (gs_font *)pfont);
         uint keep_size, i;
 

@@ -31,12 +31,14 @@
    ==========================================================*/
 
 #ifndef _WIN32
+#ifdef UNUSED
 static char*
 i2a(unsigned i, char *a, unsigned r) {
 	if (i/r > 0) a = i2a(i/r,a,r);
 	*a = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"[i%r];
 	return a+1;
 }
+#endif
 
 /**
  Transforms integer i into an ascii string and stores the result in a;

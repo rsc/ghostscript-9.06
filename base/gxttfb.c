@@ -213,7 +213,7 @@ gx_ttfReader__default_get_metrics(const ttfReader *ttf, uint glyph_index, bool b
     int factor = self->pfont->data.unitsPerEm;
 
     if (bVertical)
-        factor = factor; /* See simple_glyph_metrics */
+        /*factor = factor*/{} /* See simple_glyph_metrics */
     code = self->pfont->data.get_metrics(self->pfont, glyph_index, bVertical, sbw);
     if (code < 0)
         return code;

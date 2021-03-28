@@ -223,7 +223,7 @@ alps_put_params(gx_device *pdev, gs_param_list *plist)
     code = alps_put_param_int (plist, "Yellow",  &yellow,  0, 2048, code);
     code = alps_put_param_int (plist, "Black",   &black,   0, 2048, code);
 
-#define mediaTypeCmp(mname) strncmp(mediaType.data, mname, mediaType.size)
+#define mediaTypeCmp(mname) strncmp((const char*)mediaType.data, mname, mediaType.size)
     if (param_read_string(plist, "MediaType", &mediaType) == 0) {
         dev_alps->mediaType
             = (! mediaTypeCmp("PlainPaper"      ) ? 0

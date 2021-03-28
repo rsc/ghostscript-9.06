@@ -307,16 +307,17 @@ run_stdin:
             /* FALLTHROUGH */
         case '@':               /* ditto with @-expansion */
             {
-                const char *psarg = arg_next(pal, &code);
+                const char *psargc = (char*)arg_next(pal, &code);
+                char *psarg;
 
                 if (code < 0)
                     return e_Fatal;
-                if (psarg == 0) {
+                if (psargc == 0) {
                     outprintf(minst->heap, "Usage: gs ... -%c file.ps arg1 ... argn\n", sw);
                     arg_finit(pal);
                     return e_Fatal;
                 }
-                psarg = arg_copy(psarg, minst->heap);
+                psarg = arg_copy(psargc, minst->heap);
                 if (psarg == NULL)
                     code = e_Fatal;
                 else
@@ -334,7 +335,7 @@ run_stdin:
                 arg_free(psarg, minst->heap);
                 if (code >= 0)
                     code = e_Quit;
-                
+
                 return code;
             }
         case 'A':               /* trace allocator */

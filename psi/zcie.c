@@ -228,7 +228,7 @@ cie_table_param(const ref * ptref, gx_color_lookup_table * pclt,
         }
     }
     if (code < 0) {
-        gs_free_object(mem, table, "cie_table_param");
+        // gs_free_object(mem, table, "cie_table_param");
         return code;
     }
     pclt->table = table;
@@ -841,7 +841,7 @@ cie_cache_finish1(i_ctx_t *i_ctx_p)
 /* ptr will be the top element of the o-stack. */
 int
 cie_cache_push_finish(i_ctx_t *i_ctx_p, op_proc_t finish_proc,
-                      gs_ref_memory_t * imem, void *data)
+                      const gs_ref_memory_t * imem, void *data)
 {
     check_estack(2);
     push_op_estack(finish_proc);

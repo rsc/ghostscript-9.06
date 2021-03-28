@@ -50,7 +50,7 @@ prn_putc(gx_device_printer *pdev, int c)
 }
 
 static int
-prn_puts(gx_device_printer *pdev, char *ptr)
+prn_puts(gx_device_printer *pdev, const char *ptr)
 {
   return fputs(ptr, pdev->file);
 }
@@ -184,7 +184,7 @@ fmpr_print_page(gx_device_printer *pdev, FILE *prn_stream)
     }
     out_beg -= (out_beg - out) % bytes_per_column;
 
-    sprintf(prn_buf, "\033[%da",
+    sprintf(prn_buf, "\033[%lda",
             (out_beg - out) / bytes_per_column);
     prn_puts(pdev, prn_buf);
 
@@ -192,7 +192,7 @@ fmpr_print_page(gx_device_printer *pdev, FILE *prn_stream)
     size = out_end - out_beg + 1;
     sprintf(prn_buf, "\033Q%d W", size / bytes_per_column);
     prn_puts(pdev, prn_buf);
-    prn_write(pdev, out_beg, size);
+    prn_write(pdev, (char*)out_beg, size);
 
     prn_putc(pdev, '\n');
   }

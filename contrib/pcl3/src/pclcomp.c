@@ -164,7 +164,7 @@ static int compress_tiff(const pcl_Octet *in, int incount, pcl_Octet *out,
     last = *in; in++; /* Fetch one octet and remember it. */
     /* to state2 */
 
-  state2:
+  //state2:
     /* One octet to be treated is in 'last', 'in' points to the next. */
     if (*in != last) {
       if (available < 3) return -1;

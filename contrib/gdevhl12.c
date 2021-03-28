@@ -481,7 +481,7 @@ hl1250_compress_band(FILE * prn_stream, hl1250_state_t * s, unsigned int band)
         break;
     }
     if (s->out_count) {
-        fprintf(prn_stream, "\033*b%uW", s->out_count * sizeof(u16) + 9);
+        fprintf(prn_stream, "\033*b%luW", s->out_count * sizeof(u16) + 9);
         put_be16(prn_stream, s->out_count * sizeof(u16) + 7);
         put_be16(prn_stream, s->xl * 16);
         put_be16(prn_stream, band + ytop);

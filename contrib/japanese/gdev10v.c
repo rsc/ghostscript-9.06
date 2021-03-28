@@ -198,7 +198,7 @@ bj10v_print_page(gx_device_printer *pdev, FILE *prn_stream)
 {	int line_size = gdev_prn_raster((gx_device *)pdev);
         int xres = pdev->x_pixels_per_inch;
         int yres = pdev->y_pixels_per_inch;
-        char *mode = (yres == 180 ?
+        const char *mode = (yres == 180 ?
                       (xres == 180 ? "\052\047" : "\052\050") :
                       "|*");
         int bits_per_column = 24 * (yres / 180);

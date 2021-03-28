@@ -467,10 +467,12 @@ unsigned long FrameTiffComp(unsigned char *pubDest,
     }
     else
     {
+      /*
       if(i == 0x253)
       {
         i = i;
       }
+      */
       usLineSize = PreTiffComp(SrcPtr, usBytesPerLine);
     }
     SrcPtr += usBytesPerLine;

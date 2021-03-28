@@ -172,7 +172,7 @@ jj100_print_page(gx_device_printer *pdev, FILE *prn_stream)
                 out_beg -= (out_beg - out) % (bytes_per_column * 2);
 
                 /* Dot addressing */
-                sprintf(prn_buf, "\033F%04d",
+                sprintf(prn_buf, "\033F%04ld",
                         (out_beg - out) / bytes_per_column / 2);
                 fputs(prn_buf, pdev->file);
 

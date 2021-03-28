@@ -68,7 +68,7 @@ int cie_set_finish(i_ctx_t *, gs_color_space *,
                    const ref_cie_procs *, int, int);
 
 int cie_cache_push_finish(i_ctx_t *i_ctx_p, op_proc_t finish_proc,
-                          gs_ref_memory_t * imem, void *data);
+                          const gs_ref_memory_t * imem, void *data);
 int cie_prepare_cache(i_ctx_t *i_ctx_p, const gs_range * domain,
                       const ref * proc, cie_cache_floats * pcache,
                       void *container, gs_ref_memory_t * imem,
