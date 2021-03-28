@@ -261,7 +261,7 @@ typedef unsigned long ulong;
  * header file that includes sys/types.h.
  *
  */
-#define bool bool_		/* (maybe not needed) */
+//#define bool bool_		/* (maybe not needed) */
 #define uchar uchar_
 #define uint uint_
 #define ushort ushort_

@@ -51,8 +51,10 @@
 
 /* Configuration management identification */
 #ifndef lint
+#ifdef UNUSED
 static const char
   cm_id[] = "@(#)$Id: pclgen.c,v 1.21 2001/04/29 10:37:08 Martin Rel $";
+#endif
 #endif
 
 /*****************************************************************************/

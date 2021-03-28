@@ -23,7 +23,7 @@
 #define _pclgen_h
 
 /* Configuration management identification */
-#pragma ident "@(#)$Id: pclgen.h,v 1.25 2001/08/18 17:41:29 Martin Rel $"
+//#pragma ident "@(#)$Id: pclgen.h,v 1.25 2001/08/18 17:41:29 Martin Rel $"
 
 /*****************************************************************************/
 

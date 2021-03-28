@@ -398,6 +398,7 @@
   extern "C" {
 #endif
 
+  #ifdef UNUSED
   static void
   af_glyph_hints_dump_points( AF_GlyphHints  hints )
   {
@@ -445,6 +446,7 @@
   {
     FT_UNUSED( hints );
   }
+  #endif
 
 #ifdef __cplusplus
   }

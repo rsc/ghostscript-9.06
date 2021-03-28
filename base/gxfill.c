@@ -1966,10 +1966,12 @@ intersect_al(line_list *ll, fixed y, fixed *y_top, int draw, bool all_bands)
     *y_top = y1;
 }
 
+#ifdef UNUSED
 static inline int sign(int a)
 {
     return a < 0 ? -1 : a > 0 ? 1 : 0;
 }
+#endif
 
 /* ---------------- Trapezoid filling loop ---------------- */
 

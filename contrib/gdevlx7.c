@@ -372,7 +372,7 @@ static const int IDX_5700DIF=12;
 static const int IDX_HSTART=15;
 static const int IDX_HEND=17;
 static const int IDX_DATA=26;
-static const int IDX_CARTRIDGE=10;
+//static const int IDX_CARTRIDGE=10;
 
 #define DIV8(x) ( (x) >> 3 )
 #define MOD8(x) ( (x) & 0x7 )

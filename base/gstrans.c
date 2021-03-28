@@ -127,7 +127,7 @@ static int
 push_transparency_stack(gs_state *pgs, gs_transparency_state_type_t type,
                         client_name_t cname)
 {
-    (void)st_transparency_state;
+    st_transparency_state;
     gs_transparency_state_t *pts =
         gs_alloc_struct(pgs->memory, gs_transparency_state_t,
                         &st_transparency_state, cname);

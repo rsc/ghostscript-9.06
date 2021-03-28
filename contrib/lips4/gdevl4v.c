@@ -23,46 +23,46 @@
 
 /*
 
-   Vector driver ¤Ï Ghostscript 5.0 ¤«¤é¿·¤¿¤Ë²Ã¤ï¤Ã¤¿¥É¥é¥¤¥Ð¤Ç¤¹¡£
-   ¤è¤Ã¤Æ»ÅÍÍ¤¬°ÂÄê¤·¤Æ¤¤¤Þ¤»¤ó¡£Ghostscript 5.10 ¤È Ghostscript 5.50 ¤Ç¤Ï
-   Hi-level bitmap imaging ¤Î»ÅÍÍ¤¬ÊÑ¤ï¤Ã¤Æ¤¤¤Þ¤¹¡£
-   Ghostscript 6.0 ¤Ç¤Ï¹¹¤Ë text_begin ¤È¤¤¤¦ API ¤¬ÄÉ²Ã¤µ¤ì¤ë¤è¤¦¤Ç¤¹¡£
+   Vector driver ï¿½ï¿½ Ghostscript 5.0 ï¿½ï¿½ï¿½é¿·ï¿½ï¿½ï¿½Ë²Ã¤ï¿½ï¿½Ã¤ï¿½ï¿½É¥é¥¤ï¿½Ð¤Ç¤ï¿½ï¿½ï¿½
+   ï¿½ï¿½ï¿½Ã¤Æ»ï¿½ï¿½Í¤ï¿½ï¿½ï¿½ï¿½ê¤·ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½Ghostscript 5.10 ï¿½ï¿½ Ghostscript 5.50 ï¿½Ç¤ï¿½
+   Hi-level bitmap imaging ï¿½Î»ï¿½ï¿½Í¤ï¿½ï¿½Ñ¤ï¿½ï¿½Ã¤Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½
+   Ghostscript 6.0 ï¿½Ç¤Ï¹ï¿½ï¿½ï¿½ text_begin ï¿½È¤ï¿½ï¿½ï¿½ API ï¿½ï¿½ï¿½É²Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¤¦ï¿½Ç¤ï¿½ï¿½ï¿½
 
-   ¡ûGhostscript 5.10/5.50 ¤Î¥Ð¥°¤Ë¤Ä¤¤¤Æ
+   ï¿½ï¿½Ghostscript 5.10/5.50 ï¿½Î¥Ð¥ï¿½ï¿½Ë¤Ä¤ï¿½ï¿½ï¿½
 
-   Ghostscript 5.10/5.50 ¤Î Vector driver ¤Î setlinewidth ´Ø¿ô¤Ë¤Ï
-   ¥Ð¥°¤¬¤¢¤ê¤Þ¤¹¡£ËÜÍè¥¹¥±¡¼¥ë¤¬ÊÑ¹¹¤µ¤ì¤ë¤Ë¤·¤¿¤¬¤Ã¤ÆÀþ¤ÎÂÀ¤µ¤âÊÑ¹¹¤µ¤ì
-   ¤Ê¤±¤ì¤Ð¤Ê¤ê¤Þ¤»¤ó¤¬¡¢Ghostscript 5.10/5.50 ¤Ç¤Ï¥¹¥±¡¼¥ë¤ò¹ÍÎ¸¤¹¤ë¤Î¤ò
-   Ëº¤ì¤Æ¤¤¤Þ¤¹¡£(¥Ð¥°Êó¹ð¤ò2²ó¤Û¤ÉÁ÷¤Ã¤¿¤Î¤À¤±¤ì¤É...)
-   ¤³¤Î¥É¥é¥¤¥Ð¤Ï¤½¤Î¥Ð¥°¤ò²óÈò¤¹¤ë¤¿¤á¤Ë¥¹¥±¡¼¥ë¤ò¼«Ê¬¤Ç½èÍý¤·¤Æ¤¤¤Þ¤¹¡£
+   Ghostscript 5.10/5.50 ï¿½ï¿½ Vector driver ï¿½ï¿½ setlinewidth ï¿½Ø¿ï¿½ï¿½Ë¤ï¿½
+   ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¥¹ï¿½ï¿½ï¿½ï¿½ï¿½ë¤¬ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½
+   ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½Ð¤Ê¤ï¿½ï¿½Þ¤ï¿½ï¿½ó¤¬¡ï¿½Ghostscript 5.10/5.50 ï¿½Ç¤Ï¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¸ï¿½ï¿½ï¿½ï¿½ï¿½Î¤ï¿½
+   Ëºï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½(ï¿½Ð¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½Û¤ï¿½ï¿½ï¿½ï¿½Ã¤ï¿½ï¿½Î¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...)
+   ï¿½ï¿½ï¿½Î¥É¥é¥¤ï¿½Ð¤Ï¤ï¿½ï¿½Î¥Ð¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¤¹¤ë¤¿ï¿½ï¿½ï¿½Ë¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½
 
-   Ghostscript 5.10 ¤ÎÀ¸À®¤¹¤ë¥Ñ¥¹¤Ï Ghostscript 5.50 ¤¬À¸À®¤¹¤ë¥Ñ¥¹¤è¤ê¤â
-   Èó¾ï¤Ë¸úÎ¨¤Î°­¤¤¤â¤Î¤Ë¤Ê¤ë¤³¤È¤¬¤¢¤ê¤Þ¤¹¡£LIPS IV ¤Î½èÍý¤Ç¤­¤ë¸Â³¦¤òÄ¶¤¨¤ë
-   ¤³¤È¤â¤¢¤ê¤Þ¤·¤¿¡£¸úÎ¨¤Î°­¤¤¥Ñ¥¹¤ÏÂ®ÅÙ¤ÎÄã²¼¤Ë¤â¤Ä¤Ê¤¬¤ë¤Î¤Ç Ghostscript
-   5.50 ¤ò»È¤Ã¤¿Êý¤¬¤³¤Î¥É¥é¥¤¥Ð¤Ç¤Ï½ÐÎÏÂ®ÅÙ¤¬Â®¤¯¤Ê¤ê¤Þ¤¹¡£
+   Ghostscript 5.10 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¥ï¿½ï¿½ï¿½ Ghostscript 5.50 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+   ï¿½ï¿½ï¿½ï¿½ï¿½Ë¸ï¿½Î¨ï¿½Î°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤Ë¤Ê¤ë¤³ï¿½È¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½LIPS IV ï¿½Î½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½Â³ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½
+   ï¿½ï¿½ï¿½È¤â¤¢ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¨ï¿½Î°ï¿½ï¿½ï¿½ï¿½Ñ¥ï¿½ï¿½ï¿½Â®ï¿½Ù¤ï¿½ï¿½ã²¼ï¿½Ë¤ï¿½ï¿½Ä¤Ê¤ï¿½ï¿½ï¿½ï¿½Î¤ï¿½ Ghostscript
+   5.50 ï¿½ï¿½ï¿½È¤Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥É¥é¥¤ï¿½Ð¤Ç¤Ï½ï¿½ï¿½ï¿½Â®ï¿½Ù¤ï¿½Â®ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½
 
-   ¤Þ¤¿ Ghostscript 5.10 ¤Ç¤Ï
-   fill_trapezoid¡¢fill_parallelogram¡¢fill_triangle
-   ¤Î´Ø¿ô¤ÎµóÆ°¤¬ÊÑ¤Ë¤Ê¤ë¤³¤È¤¬¤¢¤Ã¤¿¤Î¤Ç¤³¤ì¤é¤Ï»È¤Ã¤Æ¤¤¤Þ¤»¤ó¡£
+   ï¿½Þ¤ï¿½ Ghostscript 5.10 ï¿½Ç¤ï¿½
+   fill_trapezoidï¿½ï¿½fill_parallelogramï¿½ï¿½fill_triangle
+   ï¿½Î´Ø¿ï¿½ï¿½Îµï¿½Æ°ï¿½ï¿½ï¿½Ñ¤Ë¤Ê¤ë¤³ï¿½È¤ï¿½ï¿½ï¿½ï¿½Ã¤ï¿½ï¿½Î¤Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï»È¤Ã¤Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½
 
-   ¡û LIPS IV ¤Î¥Ð¥°¤Ë¤Ä¤¤¤Æ
+   ï¿½ï¿½ LIPS IV ï¿½Î¥Ð¥ï¿½ï¿½Ë¤Ä¤ï¿½ï¿½ï¿½
 
-   ¤³¤Î¥É¥é¥¤¥Ð¤Ï³«È¯Ãæ¤ËÈ¯¸«¤·¤¿¼¡¤Î LIPS IV ¤Î¥Ð¥°¤ò²óÈò¤·¤Æ¤¤¤Þ¤¹¡£
-   1. 1 dot ¤Î¥¤¥á¡¼¥¸¤òÊÑ·Á¤·¤¿¤È¤­¤ËºÂÉ¸¤Î·×»»¤¬¶¸¤¦
-   2. ¾®¤µ¤Ê¥¤¥á¡¼¥¸¤òÉÁ²è¤¹¤ë¤ÈÀµ¾ï¤ËÉÁ¤«¤ì¤Ê¤¤
-   3. ¥¯¥ê¥Ã¥Ô¥ó¥°Ì¿Îá¤È¥Ñ¥¹¡¦¥¯¥ê¥Ã¥Ô¥ó¥°Ì¿Îá¤¬¤½¤ì¤¾¤ìÆÈÎ©¤ËÆ¯¤¤¤Æ¤·¤Þ¤¦¡£
+   ï¿½ï¿½ï¿½Î¥É¥é¥¤ï¿½Ð¤Ï³ï¿½È¯ï¿½ï¿½ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ LIPS IV ï¿½Î¥Ð¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¤·¤Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½
+   1. 1 dot ï¿½Î¥ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½Ëºï¿½É¸ï¿½Î·×»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+   2. ï¿½ï¿½ï¿½ï¿½ï¿½Ê¥ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¤¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½
+   3. ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥Ô¥ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½È¥Ñ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥Ô¥ï¿½ï¿½ï¿½Ì¿ï¿½á¤¬ï¿½ï¿½ï¿½ì¤¾ï¿½ï¿½ï¿½ï¿½Î©ï¿½ï¿½Æ¯ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½
 
-   1. ¤Ï 1 dot ¤Î¥¤¥á¡¼¥¸¤ò¶ë·Á¤Ë¤·¤Æ²óÈò¤·¤Þ¤·¤¿¡£
-   2. ¤Ï¥¤¥á¡¼¥¸ÎÎ°è³ÎÊÝÌ¿Îá¤ÇÊ¬³ä¤ò»ØÄê¤¹¤ë¤³¤È¤Ë¤è¤ê²óÈò¤·¤Þ¤·¤¿¡£
-   3. ¤Ï¥¯¥ê¥Ã¥Ô¥ó¥°Ì¿Îá¤ò»È¤ï¤Ê¤¤¤³¤È¤Ë¤·¤Æ²óÈò¤·¤Þ¤·¤¿¡£
+   1. ï¿½ï¿½ 1 dot ï¿½Î¥ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½Æ²ï¿½ï¿½ò¤·¤Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½
+   2. ï¿½Ï¥ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½Î°ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¹ï¿½ë¤³ï¿½È¤Ë¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¤·¤Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½
+   3. ï¿½Ï¥ï¿½ï¿½ï¿½ï¿½Ã¥Ô¥ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½È¤Ë¤ï¿½ï¿½Æ²ï¿½ï¿½ò¤·¤Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½
 
-   ¡û LIPS IV ¤Î»ÅÍÍ¤Ë¤Ä¤¤¤Æ
+   ï¿½ï¿½ LIPS IV ï¿½Î»ï¿½ï¿½Í¤Ë¤Ä¤ï¿½ï¿½ï¿½
 
-   1. Ã±¿§¥¤¥á¡¼¥¸¡¦¥«¥é¡¼»ØÄêÌ¿Îá¤Ï¥°¥ì¡¼¥¹¥±¡¼¥ë¥¤¥á¡¼¥¸¤ËÂÐ¤·¤Æ¤â
-   Æ¯¤¤¤Æ¤·¤Þ¤¤¤Þ¤¹¡£
-   2. LIPS IV ¤Ç¤Ï¥°¥ì¡¼¥¹¥±¡¼¥ë¤Î¿§É½¸½¤¬ PostScript ¤ÈµÕ¤Ç¤¹¡£
-   3. LIPS IV ¤Ë¤Ï¥¤¥á¡¼¥¸¤Î¥Ó¥Ã¥È¤òÈ¿Å¾¤µ¤»¤ë¥³¥Þ¥ó¥É¤Ï¤¢¤ê¤Þ¤»¤ó¡£
-   4. LIPS IV ¤Ë¤Ï CMYK ¤Î¥«¥é¡¼¥¹¥Ú¡¼¥¹¤Ï¤¢¤ê¤Þ¤»¤ó¡£
+   1. Ã±ï¿½ï¿½ï¿½ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¡¼ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Ï¥ï¿½ï¿½ì¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¥¤ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½Ð¤ï¿½ï¿½Æ¤ï¿½
+   Æ¯ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½
+   2. LIPS IV ï¿½Ç¤Ï¥ï¿½ï¿½ì¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¿ï¿½É½ï¿½ï¿½ï¿½ï¿½ PostScript ï¿½ÈµÕ¤Ç¤ï¿½ï¿½ï¿½
+   3. LIPS IV ï¿½Ë¤Ï¥ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½Î¥Ó¥Ã¥È¤ï¿½È¿Å¾ï¿½ï¿½ï¿½ï¿½ï¿½ë¥³ï¿½Þ¥ï¿½ï¿½É¤Ï¤ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½
+   4. LIPS IV ï¿½Ë¤ï¿½ CMYK ï¿½Î¥ï¿½ï¿½é¡¼ï¿½ï¿½ï¿½Ú¡ï¿½ï¿½ï¿½ï¿½Ï¤ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½
 
  */
 
@@ -543,10 +543,10 @@ lips4v_copy_text_char(gx_device * dev, const byte * data,
 
     if (download) {
         if (ccode % 128 == 0 && ccode == pdev->count) {
-            /* Ê¸»ú¥»¥Ã¥ÈÅÐÏ¿Êä½õÌ¿Îá */
+            /* Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
             sprintf(cset_sub, "%c%dx%c", LIPS_DCS, ccode / 128, LIPS_ST);
             lputs(s, cset_sub);
-            /* Ê¸»ú¥»¥Ã¥ÈÅÐÏ¿Ì¿Îá */
+            /* Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½Ï¿Ì¿ï¿½ï¿½ */
             sprintf(cset,
                     "%c%d;1;0;0;3840;8;400;100;0;0;200;%d;%d;0;0;;;;;%d.p",
                     LIPS_CSI,
@@ -555,14 +555,14 @@ lips4v_copy_text_char(gx_device * dev, const byte * data,
                     (int)dev->x_pixels_per_inch);
             lputs(s, cset);
         } else {
-            /* 1Ê¸»úÅÐÏ¿Ì¿Îá */
+            /* 1Ê¸ï¿½ï¿½ï¿½ï¿½Ï¿Ì¿ï¿½ï¿½ */
             sprintf(cset,
                     "%c%d;%d;8;%d.q", LIPS_CSI,
                     size + 9, ccode / 128, (int)dev->x_pixels_per_inch);
             lputs(s, cset);
         }
 
-        /* ¥æ¡¼¥¶Ê¸»úÅÐÏ¿¥Ç¡¼¥¿ ¤Î¥Ø¥Ã¥À */
+        /* ï¿½æ¡¼ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½Ç¡ï¿½ï¿½ï¿½ ï¿½Î¥Ø¥Ã¥ï¿½ */
         sputc(s, ccode % 128);	/* charcter code */
         put_int(s, w);
         put_int(s, 0);
@@ -572,7 +572,7 @@ lips4v_copy_text_char(gx_device * dev, const byte * data,
             put_bytes(s, data + i * raster, width_bytes);
         }
     }
-    /* Ê¸»ú¥»¥Ã¥È¡¦¥¢¥µ¥¤¥óÈÖ¹æÁªÂòÌ¿Îá2 */
+    /* Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½2 */
     if (download) {
         if (pdev->current_font != ccode / 128) {
             sprintf(cset_number, "%c%d%%v", LIPS_CSI, ccode / 128);
@@ -587,7 +587,7 @@ lips4v_copy_text_char(gx_device * dev, const byte * data,
         }
     }
 
-    /* ¥«¥é¡¼ */
+    /* ï¿½ï¿½ï¿½é¡¼ */
     if (pdev->current_color != pdev->prev_color) {
         if (pdev->color_info.depth == 8) {
             sputc(s, LIPS_CSI);
@@ -607,7 +607,7 @@ lips4v_copy_text_char(gx_device * dev, const byte * data,
         lputs(s, "%p");
         pdev->prev_color = pdev->current_color;
     }
-    /* À©¸æÊ¸»ú°õ»úÌ¿Îá */
+    /* ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
     if (ccode % 128 == 0x00 ||
         (ccode % 128 >= 0x07 && ccode % 128 <= 0x0F) ||
         ccode % 128 == 0x1B) {
@@ -704,7 +704,7 @@ lips4v_beginpage(gx_device_vector * vdev)
     int dupset = pdev->Duplex_set;
     bool tum = pdev->Tumble;
 
-    /* ¥Ù¥¯¥¿¡¦¥â¡¼¥É°Ü¹ÔÌ¿Îá CSI &} ¤ÏÊÇ¤´¤È¤ËÈ¯¹Ô¤¹¤ë */
+    /* ï¿½Ù¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â¡¼ï¿½É°Ü¹ï¿½Ì¿ï¿½ï¿½ CSI &} ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½È¤ï¿½È¯ï¿½Ô¤ï¿½ï¿½ï¿½ */
 
     if (pdev->first_page) {
         if (pdev->pjl) {
@@ -767,7 +767,7 @@ lips4v_beginpage(gx_device_vector * vdev)
         lputs(s, "41\'t");	/* GlossyFilm mode (for LBP-2160) */
     }
 
-    /* µë»æ¥â¡¼¥É */
+    /* ï¿½ï¿½ï¿½ï¿½ï¿½â¡¼ï¿½ï¿½ */
     if (pdev->ManualFeed ||
         (strcmp(pdev->mediaType, "PlainPaper") != 0
          && strcmp(pdev->mediaType, LIPS_MEDIATYPE_DEFAULT) != 0)) {
@@ -787,7 +787,7 @@ lips4v_beginpage(gx_device_vector * vdev)
 
     paper_size = lips_media_selection(width, height);
 
-    /* ÍÑ»æ¥µ¥¤¥º */
+    /* ï¿½Ñ»æ¥µï¿½ï¿½ï¿½ï¿½ */
     if (pdev->prev_paper_size != paper_size) {
         if (paper_size == USER_SIZE) {
             /* modified by shige 06/27 2003
@@ -920,7 +920,7 @@ lips4v_beginpage(gx_device_vector * vdev)
                   72);
     sputc(s, LIPS_IS2);
 
-    /* ¸¶ÅÀ°ÜÆ°Ì¿Îá */
+    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ°Ì¿ï¿½ï¿½ */
     x0 = (dev_l_margin(vdev) - 5. / MMETER_PER_INCH) * dpi;
     y0 = (dev_b_margin(vdev) - 5. / MMETER_PER_INCH) * dpi;
 
@@ -939,7 +939,7 @@ lips4v_beginpage(gx_device_vector * vdev)
     lputs(s, "*0");
     sputc(s, LIPS_IS2);
 
-    pdev->MaskState = 1;	/* ½é´ü²½: Æ©²á */
+    pdev->MaskState = 1;	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: Æ©ï¿½ï¿½ */
     pdev->linecap = 0;
     lputs(s, "}M");
     sput_lips_int(s, 3277);	/* 11 degree : 16383 * 2 / 10 */
@@ -957,7 +957,7 @@ lips4v_setlinewidth(gx_device_vector * vdev, floatp width)
     gx_device_lips4v *const pdev = (gx_device_lips4v *) vdev;
 
 #if 0
-    /* Scale ¤ò³Ý¤±¤Æ¤¤¤ë¤Î¤Ï, Ghostscript 5.10/5.50 ¤Î¥Ð¥°¤Î¤¿¤á */
+    /* Scale ï¿½ï¿½ï¿½Ý¤ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½Î¤ï¿½, Ghostscript 5.10/5.50 ï¿½Î¥Ð¥ï¿½ï¿½Î¤ï¿½ï¿½ï¿½ */
     floatp xscale, yscale;
 
     xscale = fabs(igs->ctm.xx);
@@ -1009,7 +1009,7 @@ lips4v_setlinecap(gx_device_vector * vdev, gs_line_cap cap)
         line_cap = 2;		/* square */
         break;
     }
-    /* ÀþÃ¼·Á¾õ»ØÄêÌ¿Îá */
+    /* ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
     sprintf(c, "}E%d%c", line_cap, LIPS_IS2);
     lputs(s, c);
 
@@ -1024,7 +1024,7 @@ lips4v_setlinejoin(gx_device_vector * vdev, gs_line_join join)
     stream *s = gdev_vector_stream(vdev);
     gx_device_lips4v *const pdev = (gx_device_lips4v *) vdev;
 
-/* ÀþÀÜÂ³»ØÄêÌ¿Îá */
+/* ï¿½ï¿½ï¿½ï¿½Â³ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
     char c[5];
     int lips_join = 0;
 
@@ -1118,7 +1118,7 @@ lips4v_setfillcolor(gx_device_vector * vdev, const gx_drawing_color * pdc)
             sputc(s, LIPS_IS2);
         }
 
-        /* ÅÉ¤ê¤Ä¤Ö¤·¥«¥é¡¼»ØÄêÌ¿Îá */
+        /* ï¿½É¤ï¿½ï¿½Ä¤Ö¤ï¿½ï¿½ï¿½ï¿½é¡¼ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
         /* J {color} IS2 */
         lputs(s, "J");
         if (vdev->color_info.depth == 8) {
@@ -1130,7 +1130,7 @@ lips4v_setfillcolor(gx_device_vector * vdev, const gx_drawing_color * pdc)
         }
         sputc(s, LIPS_IS2);
 
-        /* Ã±¿§¥¤¥á¡¼¥¸¡¦¥«¥é¡¼»ØÄêÌ¿Îá */
+        /* Ã±ï¿½ï¿½ï¿½ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¡¼ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
         /* }T {color} IS2 */
         lputs(s, "}T");
         if (vdev->color_info.depth == 8) {
@@ -1172,7 +1172,7 @@ lips4v_setstrokecolor(gx_device_vector * vdev, const gx_drawing_color * pdc)
             lputs(s, "&}");
             pdev->TextMode = FALSE;
         }
-        /* ¥é¥¤¥ó¥«¥é¡¼»ØÄêÌ¿Îá */
+        /* ï¿½é¥¤ï¿½ó¥«¥é¡¼ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
         /* G {color} IS2 */
         lputs(s, "G");
         if (vdev->color_info.depth == 8) {
@@ -1187,7 +1187,7 @@ lips4v_setstrokecolor(gx_device_vector * vdev, const gx_drawing_color * pdc)
     return 0;
 }
 
-/* Àþ¼ï»ØÄêÌ¿Îá */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
 static int
 lips4v_setdash(gx_device_vector * vdev, const float *pattern, uint count,
                floatp offset)
@@ -1195,7 +1195,7 @@ lips4v_setdash(gx_device_vector * vdev, const float *pattern, uint count,
     stream *s = gdev_vector_stream(vdev);
     gx_device_lips4v *const pdev = (gx_device_lips4v *) vdev;
     int i;
-    float scale, xscale, yscale;
+    // float scale, xscale, yscale;
 
     if (pdev->TextMode) {
         sputc(s, LIPS_CSI);
@@ -1203,7 +1203,7 @@ lips4v_setdash(gx_device_vector * vdev, const float *pattern, uint count,
         pdev->TextMode = FALSE;
     }
 #if 0
-    /* Scale ¤ò³Ý¤±¤Æ¤¤¤ë¤Î¤Ï, Ghostscript 5.10/5.50 ¤Î¥Ð¥°¤Î¤¿¤á */
+    /* Scale ï¿½ï¿½ï¿½Ý¤ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½Î¤ï¿½, Ghostscript 5.10/5.50 ï¿½Î¥Ð¥ï¿½ï¿½Î¤ï¿½ï¿½ï¿½ */
     xscale = fabs(igs->ctm.xx);
     yscale = fabs(igs->ctm.xy);
 
@@ -1258,7 +1258,7 @@ lips4v_setdash(gx_device_vector * vdev, const float *pattern, uint count,
     return 0;
 }
 
-/* ¥Ñ¥¹Ê¿³êÅÙ»ØÄê */
+/* ï¿½Ñ¥ï¿½Ê¿ï¿½ï¿½ï¿½Ù»ï¿½ï¿½ï¿½ */
 static int
 lips4v_setflat(gx_device_vector * vdev, floatp flatness)
 {
@@ -1306,7 +1306,7 @@ lips4v_beginpath(gx_device_vector * vdev, gx_path_type_t type)
         lputs(s, "&}");
         pdev->TextMode = FALSE;
     }
-    /* ¥Ñ¥¹¹½ÃÛ³«»ÏÌ¿Îá */
+    /* ï¿½Ñ¥ï¿½ï¿½ï¿½ï¿½Û³ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
     if (type & gx_path_type_clip) {
         lputs(s, "P(10");
         sputc(s, LIPS_IS2);
@@ -1323,7 +1323,7 @@ lips4v_moveto(gx_device_vector * vdev, floatp x0, floatp y0, floatp x,
 {
     stream *s = gdev_vector_stream(vdev);
 
-    /* ¥µ¥Ö¥Ñ¥¹³«»ÏÌ¿Îá p1 */
+    /* ï¿½ï¿½ï¿½Ö¥Ñ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ p1 */
     lputs(s, "p10");
     sput_lips_int(s, x);
     sput_lips_int(s, y);
@@ -1345,7 +1345,7 @@ lips4v_lineto(gx_device_vector * vdev, floatp x0, floatp y0, floatp x,
             x += 1;
     }
 
-    /* ¥Ñ¥¹¡¦¥Ý¥ê¥é¥¤¥óÌ¿Îá */
+    /* ï¿½Ñ¥ï¿½ï¿½ï¿½ï¿½Ý¥ï¿½ï¿½é¥¤ï¿½ï¿½Ì¿ï¿½ï¿½ */
     lputs(s, "p402");
     sput_lips_int(s, x);
     sput_lips_int(s, y);
@@ -1361,7 +1361,7 @@ lips4v_curveto(gx_device_vector * vdev, floatp x0, floatp y0,
 {
     stream *s = gdev_vector_stream(vdev);
 
-    /* ¥Ñ¥¹¡¦¥Ý¥ê¥é¥¤¥óÌ¿Îá */
+    /* ï¿½Ñ¥ï¿½ï¿½ï¿½ï¿½Ý¥ï¿½ï¿½é¥¤ï¿½ï¿½Ì¿ï¿½ï¿½ */
     lputs(s, "p404");
     sput_lips_int(s, x1);
     sput_lips_int(s, y1);
@@ -1893,7 +1893,7 @@ lips4v_copy_mono(gx_device * dev, const byte * data,
     if (zero == gx_no_color_index) {
         if (one == gx_no_color_index)
             return 0;
-        /* one ¿§¤ËÀ÷¤á¡¢Æ©²á¤Ë¤¹¤ë */
+        /* one ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¡¢Æ©ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½ï¿½ */
         if (pdev->MaskState != 1) {
             lputs(s, "}H1");
             sputc(s, LIPS_IS2);
@@ -1916,7 +1916,7 @@ lips4v_copy_mono(gx_device * dev, const byte * data,
             sputc(s, LIPS_IS2);
         }
     } else if (one == gx_no_color_index)
-        /* 1bit ¤ÏÆ©ÌÀ ¥Ó¥Ã¥ÈÈ¿Å¾¡¦zero ¿§¤ËÀ÷¤á¤ë */
+        /* 1bit ï¿½ï¿½Æ©ï¿½ï¿½ ï¿½Ó¥Ã¥ï¿½È¿Å¾ï¿½ï¿½zero ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
     {
         gx_color_index zero_color = vdev->color_info.max_gray - zero;
 
@@ -1940,7 +1940,7 @@ lips4v_copy_mono(gx_device * dev, const byte * data,
             sputc(s, LIPS_IS2);
         }
     } else if (one == vdev->white) {
-        /* ¥Ó¥Ã¥ÈÈ¿Å¾ ÇòÅÉ¤ê  zero ¿§¤ËÀ÷¤á¤ë */
+        /* ï¿½Ó¥Ã¥ï¿½È¿Å¾ ï¿½ï¿½ï¿½É¤ï¿½  zero ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
         gx_color_index zero_color = vdev->color_info.max_gray - zero;
 
         if (pdev->MaskState != 0) {
@@ -2055,8 +2055,8 @@ lips4v_copy_color(gx_device * dev,
     if (dev->color_info.depth == 8) {
         gx_drawing_color dcolor;
 
-        /* LIPS IV ¤Ç¤Ï¥°¥ì¡¼¥¹¥±¡¼¥ë¤âÃ±¿§¥¤¥á¡¼¥¸¡¦¥«¥é¡¼»ØÄêÌ¿Îá¤Ë
-           ±Æ¶Á¤µ¤ì¤ë¤Î¤Ç¹õ¿§¤ò»ØÄê¤·¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¡£ */
+        /* LIPS IV ï¿½Ç¤Ï¥ï¿½ï¿½ì¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¡¼ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ï¿½
+           ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤Ç¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤·ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½Ð¤Ê¤ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ */
         color_set_pure(&dcolor, vdev->black);
 #if GS_VERSION_MAJOR >= 8
         lips4v_setfillcolor(vdev, NULL, &dcolor);
@@ -2072,7 +2072,7 @@ lips4v_copy_color(gx_device * dev,
     }
 
     if (pdev->MaskState != 0) {
-        lputs(s, "}H0");	/* ÏÀÍýÉÁ²èÀßÄêÌ¿Îá */
+        lputs(s, "}H0");	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
         sputc(s, LIPS_IS2);
         pdev->MaskState = 0;
     }
@@ -2084,7 +2084,7 @@ lips4v_copy_color(gx_device * dev,
     sput_lips_int(s, h);
     sput_lips_int(s, w);
     sput_lips_int(s, depth / num_components);
-    sputc(s, depth < 24 ? '0' : ':');	/* 24 bit ¤Î¤È¤­ÅÀ½ç¼¡ */
+    sputc(s, depth < 24 ? '0' : ':');	/* 24 bit ï¿½Î¤È¤ï¿½ï¿½ï¿½ï¿½ç¼¡ */
     lputs(s, "0110");
     sputc(s, LIPS_IS2);
 
@@ -2151,9 +2151,9 @@ lips4v_fill_mask(gx_device * dev,
         lputs(s, "&}");
         pdev->TextMode = FALSE;
     }
-    /* ½ñ¤­¤À¤· */
+    /* ï¿½ñ¤­¤ï¿½ï¿½ï¿½ */
     if (pdev->MaskState != 1) {
-        lputs(s, "}H1");	/* ÏÀÍýÉÁ²èÀßÄêÌ¿Îá */
+        lputs(s, "}H1");	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ */
         sputc(s, LIPS_IS2);
         pdev->MaskState = 1;
     }
@@ -2245,7 +2245,7 @@ lips4v_begin_image(gx_device * dev,
                     can_do = false;
                 break;
                 case gs_color_space_index_DeviceRGB:
-                /* LIPS ¤Ç¤Ï RGB ¤òÈ¿Å¾¤¹¤ë¤³¤È¤Ï¤Ç¤­¤Ê¤¤ */
+                /* LIPS ï¿½Ç¤ï¿½ RGB ï¿½ï¿½È¿Å¾ï¿½ï¿½ï¿½ë¤³ï¿½È¤Ï¤Ç¤ï¿½ï¿½Ê¤ï¿½ */
                 if (pim->Decode[0] != 0 || pim->Decode[1] != 1 ||
                     pim->Decode[2] != 0 || pim->Decode[3] != 1 ||
                     pim->Decode[4] != 0)
@@ -2253,11 +2253,11 @@ lips4v_begin_image(gx_device * dev,
                 break;
                 default:
                 /*
-                   LIPS ¤Ç¤Ï L*a*b* ·Á¼°¤Î¥«¥é¡¼¥¹¥Ú¡¼¥¹¤¬»È¤¨¤Þ¤¹¡£
-                   CIEBasedABC ¤ò»È¤Ã¤ÆÉ½¸½¤Ç¤­¤Ê¤¤¤³¤È¤â¤Ê¤¤¤Î¤Ç¤¹¤¬¡¢
-                   Æ°ºî³ÎÇ§¤Ç¤­¤Ê¤¤¤Î¤ÇÄã¥ì¥Ù¥ë¤Î´Ø¿ô¤Ë¤Þ¤«¤»¤ë¤³¤È¤Ë
-                   ¤·¤Á¤ã¤¤¤Þ¤¹¡£
-                   ¤½¤ì¤è¤ê¤â CMYK ¤Î¥«¥é¡¼¥¹¥Ú¡¼¥¹¤¬Íß¤·¤¤...
+                   LIPS ï¿½Ç¤ï¿½ L*a*b* ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½é¡¼ï¿½ï¿½ï¿½Ú¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½
+                   CIEBasedABC ï¿½ï¿½ï¿½È¤Ã¤ï¿½É½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½Ê¤ï¿½ï¿½Î¤Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½
+                   Æ°ï¿½ï¿½ï¿½ï¿½Ç§ï¿½Ç¤ï¿½ï¿½Ê¤ï¿½ï¿½Î¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¥ï¿½ï¿½Î´Ø¿ï¿½ï¿½Ë¤Þ¤ï¿½ï¿½ï¿½ï¿½ë¤³ï¿½È¤ï¿½
+                   ï¿½ï¿½ï¿½ï¿½ï¿½ã¤¤ï¿½Þ¤ï¿½ï¿½ï¿½
+                   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ CMYK ï¿½Î¥ï¿½ï¿½é¡¼ï¿½ï¿½ï¿½Ú¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¤ï¿½ï¿½ï¿½...
                  */
                 can_do = false;
             }
@@ -2270,8 +2270,8 @@ lips4v_begin_image(gx_device * dev,
     else if (index == gs_color_space_index_DeviceGray) {
         gx_drawing_color dcolor;
 
-        /* LIPS IV ¤Ç¤Ï¥°¥ì¡¼¥¹¥±¡¼¥ë¤âÃ±¿§¥¤¥á¡¼¥¸¡¦¥«¥é¡¼»ØÄêÌ¿Îá¤Ë
-           ±Æ¶Á¤µ¤ì¤ë¤Î¤Ç¹õ¿§¤òÌÀ¼¨Åª¤Ë»ØÄê¤·¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¡£ */
+        /* LIPS IV ï¿½Ç¤Ï¥ï¿½ï¿½ì¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¡¼ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ï¿½
+           ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤Ç¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åªï¿½Ë»ï¿½ï¿½ê¤·ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½Ð¤Ê¤ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ */
         color_set_pure(&dcolor, vdev->black);
 #if GS_VERSION_MAJOR >= 8
         lips4v_setfillcolor(vdev, NULL, &dcolor);
@@ -2302,7 +2302,7 @@ lips4v_begin_image(gx_device * dev,
         gs_matrix_multiply(&imat, &ctm_only(pis), &imat);
         /*
            [xx xy yx yy tx ty]
-           LIPS ¤ÎºÂÉ¸·Ï¤ËÊÑ´¹¤ò¹Ô¤Ê¤¦¡£
+           LIPS ï¿½Îºï¿½É¸ï¿½Ï¤ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½Ô¤Ê¤ï¿½ï¿½ï¿½
 
            }U{Ax}{Ay}{Bx}{By}{Cx}{Cy}{pie->height}{pie->width}
            {pim->BitsPerComponent}{0}{0}{1} LIPS_IS2
@@ -2324,8 +2324,8 @@ lips4v_begin_image(gx_device * dev,
                  7) / 8 * num_components * pie->height;
             pdev->ncomp = 1;
             if (tbyte == 1) {
-                /* LIPS IV ¤Ç¤Ï 1 dot ¤Î¥¤¥á¡¼¥¸¤òÊÑ·Á¤¹¤ë¤ÈºÂÉ¸¤¬¶¸¤¦¥Ð¥°¤¬
-                   ¤¢¤ë¡£¤è¤Ã¤Æ 1 dot ¤Î¥¤¥á¡¼¥¸¤Ï¶ë·Á¤È¤·¤Æ½èÍý¤¹¤ë¡£ */
+                /* LIPS IV ï¿½Ç¤ï¿½ 1 dot ï¿½Î¥ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Èºï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¥ï¿½ï¿½ï¿½
+                   ï¿½ï¿½ï¿½ë¡£ï¿½ï¿½ï¿½Ã¤ï¿½ 1 dot ï¿½Î¥ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¡£ */
                 pdev->OneBitMask = true;
                 /* Draw Rectangle */
                 lputs(s, "2");
@@ -2340,7 +2340,7 @@ lips4v_begin_image(gx_device * dev,
                 sputc(s, LIPS_IS2);
                 return 0;
             } else {
-                /* ÉÁ²èÏÀÍýÀßÄêÌ¿Îá - Æ©²á */
+                /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ - Æ©ï¿½ï¿½ */
                 if (pdev->MaskState != 1) {
                     lputs(s, "}H1");
                     sputc(s, LIPS_IS2);
@@ -2348,7 +2348,7 @@ lips4v_begin_image(gx_device * dev,
                 }
             }
         } else {
-            /* ÉÁ²èÏÀÍýÀßÄêÌ¿Îá - ÇòÅÉ¤ê */
+            /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ - ï¿½ï¿½ï¿½É¤ï¿½ */
             if (pdev->MaskState != 0) {
                 lputs(s, "}H0");
                 sputc(s, LIPS_IS2);
@@ -2374,7 +2374,7 @@ lips4v_begin_image(gx_device * dev,
             else
                 interpolate = 3;
         }
-        if (pim->ImageMask) {	/* 1bit ¤Î¤È¤­ */
+        if (pim->ImageMask) {	/* 1bit ï¿½Î¤È¤ï¿½ */
             lputs(s, "0");
         } else {
             if (index == gs_color_space_index_DeviceGray)

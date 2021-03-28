@@ -16,7 +16,7 @@
 #define _pclsize_h
 
 /* Configuration management identification */
-#pragma ident "@(#)$Id: pclsize.h,v 1.7 2000/11/19 07:05:17 Martin Rel $"
+//#pragma ident "@(#)$Id: pclsize.h,v 1.7 2000/11/19 07:05:17 Martin Rel $"
 
 /*****************************************************************************/
 

@@ -438,6 +438,7 @@ gx_default_fill_trapezoid(gx_device * dev, const gs_fixed_edge * left,
     }
 }
 
+#ifdef UNUSED
 static inline void
 middle_frac31_color(frac31 *c, const frac31 *c0, const frac31 *c2, int num_components)
 {
@@ -447,6 +448,7 @@ middle_frac31_color(frac31 *c, const frac31 *c0, const frac31 *c2, int num_compo
     for (i = 0; i < num_components; i++)
         c[i] = (int32_t)(((uint32_t)c0[i] + (uint32_t)c2[i]) >> 1);
 }
+#endif
 
 static inline int
 fill_linear_color_trapezoid_nocheck(gx_device *dev, const gs_fill_attributes *fa,

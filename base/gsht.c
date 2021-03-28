@@ -32,6 +32,7 @@
 #define TRANSFER_IN_THRESHOLDS 0
 
 /* Used in threshold from tiles construction */
+#ifdef UNUSED
 static const uint32_t bit_order[32]={
 #if arch_is_big_endian
         0x80000000, 0x40000000, 0x20000000, 0x10000000, 0x08000000, 0x04000000, 0x02000000, 0x01000000,
@@ -45,6 +46,7 @@ static const uint32_t bit_order[32]={
         0x80000000, 0x40000000, 0x20000000, 0x10000000, 0x08000000, 0x04000000, 0x02000000, 0x01000000
 #endif
     };
+#endif
 
 /* Forward declarations */
 void gx_set_effective_transfer(gs_state *);
@@ -1447,7 +1449,7 @@ gx_ht_construct_threshold( gx_ht_order *d_order, gx_device *dev,
     int row_kk, col_kk, kk;
 
     /* We can have simple or complete orders.  Simple ones tile the threshold
-       with shifts.   To handle those we simply loop over the number of 
+       with shifts.   To handle those we simply loop over the number of
        repeats making sure to shift columns when we set our threshold values */
     num_repeat = d_order->full_height / d_order->height;
     shift = d_order->shift;

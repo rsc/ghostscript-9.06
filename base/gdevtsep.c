@@ -2144,7 +2144,7 @@ tiffsep1_print_page(gx_device_printer * pdev, FILE * file)
 
 
     {   /* Get the expanded contone line, halftone and write out the dithered separations */
-        int raster = gdev_prn_raster(pdev);
+        // int raster = gdev_prn_raster(pdev);
         byte *planes[GS_CLIENT_COLOR_MAX_COMPONENTS];
         int width = tfdev->width;
         int raster_plane = bitmap_raster(width * 8);

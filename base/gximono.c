@@ -76,9 +76,9 @@ gs_image_class_3_mono(gx_image_enum * penum)
     int num_des_comps;
     cmm_dev_profile_t *dev_profile;
     bool dev_color_ok = false;
-    bool is_planar_dev = dev_proc(penum->dev, dev_spec_op)(penum->dev,
-                                 gxdso_is_native_planar, NULL, 0);
-            
+    //bool is_planar_dev = dev_proc(penum->dev, dev_spec_op)(penum->dev,
+    //                             gxdso_is_native_planar, NULL, 0);
+
     if (penum->spp == 1) {
         /* At this point in time, only use the ht approach if our device
            uses halftoning, and our source image is a reasonable size.  We
@@ -139,7 +139,7 @@ gs_image_class_3_mono(gx_image_enum * penum)
             penum->icc_setup.must_halftone = gx_device_must_halftone(penum->dev);
             /* The effective transfer is built into the threshold array and
                need require a special lookup to decode it */
-            penum->icc_setup.has_transfer = 
+            penum->icc_setup.has_transfer =
                 gx_has_transfer(penum->pis, num_des_comps);
             if (penum->icc_setup.is_lab) penum->icc_setup.need_decode = false;
             if (penum->icc_link == NULL) {
@@ -209,6 +209,7 @@ not_fast_halftoning:
 
 #define USE_SET_GRAY_FUNCTION 0
 /* Temporary function to make it easier to debug the uber-macro below */
+#ifdef UNUSED
 static inline int
 image_set_gray(byte sample_value, const bool masked, uint mask_base,
                 uint mask_limit, gx_device_color **ppdevc, gs_client_color *cc,
@@ -249,6 +250,7 @@ image_set_gray(byte sample_value, const bool masked, uint mask_base,
     }
     return(0);
 }
+#endif
 
 /*
  * Rendering procedure for general mono-component images, dealing with
@@ -850,7 +852,7 @@ image_render_mono_ht(gx_image_enum * penum_orig, const byte * buffer, int data_x
                Can't do this earlier as GC may move the buffers.
              */
             vdi = penum->wci;
-            contone_stride = penum->line_size;  
+            contone_stride = penum->line_size;
             dest_width = fixed2int_var_rounded(any_abs(penum->y_extent.x));
             dest_height = fixed2int_var_rounded(any_abs(penum->x_extent.y));
             data_length = dest_height;
@@ -897,7 +899,7 @@ image_render_mono_ht(gx_image_enum * penum_orig, const byte * buffer, int data_x
     /* Get the pointers to our buffers */
     for (k = 0; k < spp_out; k++) {
         if (posture == image_portrait) {
-            devc_contone[k] = penum->line + contone_stride * k + 
+            devc_contone[k] = penum->line + contone_stride * k +
                               offset_contone[k];
         } else {
             devc_contone[k] = penum->line + offset_contone[k] +
@@ -911,7 +913,7 @@ image_render_mono_ht(gx_image_enum * penum_orig, const byte * buffer, int data_x
     if (penum->color_cache == NULL) {
         /* No look-up in the cache to fill the source buffer. Still need to
            have the data at device resolution.  Do these in quick small
-           loops.  This likely could be a vectorized function.  Note that 
+           loops.  This likely could be a vectorized function.  Note that
            since the color_cache is NULL we must be in a case where we
            are going to a monochrome device. */
         switch (posture) {
@@ -1027,7 +1029,7 @@ image_render_mono_ht(gx_image_enum * penum_orig, const byte * buffer, int data_x
                             for (j = 0; j < spp_out; j++) {
                                 *(devc_contone[j])-- = dev_value[j];
                             }
-                            dda_next(dda_ht); 
+                            dda_next(dda_ht);
                         }
                     }
                 }
@@ -1049,7 +1051,7 @@ image_render_mono_ht(gx_image_enum * penum_orig, const byte * buffer, int data_x
                     } else {
                         for (k = 0; k < data_length; k++) {
                             for (j = 0; j < spp_out; j++) {
-                                *(devc_contone[j] + position) = 
+                                *(devc_contone[j] + position) =
                                     color_cache[psrc[dda_ht.state.Q] * spp_out + j];
                             }
                             position -= LAND_BITS;
@@ -1061,7 +1063,7 @@ image_render_mono_ht(gx_image_enum * penum_orig, const byte * buffer, int data_x
                     /* use dda */
                     if (spp_out == 1) {
                         for (k = 0; k < data_length; k++) {
-                            devc_contone_gray[position] = 
+                            devc_contone_gray[position] =
                                 color_cache[psrc[dda_ht.state.Q]];
                             position += LAND_BITS;
                             dda_next(dda_ht);
@@ -1075,7 +1077,7 @@ image_render_mono_ht(gx_image_enum * penum_orig, const byte * buffer, int data_x
                         for (k = 0; k < data_length; k++) {
                             /* Is it better to unwind this?  We know it is 4 */
                             for (j = 0; j < spp_out; j++) {
-                                *(devc_contone[j]) = 
+                                *(devc_contone[j]) =
                                     color_cache[psrc[dda_ht.state.Q] * spp_out + j];
                                 devc_contone[j] += LAND_BITS;
                             }

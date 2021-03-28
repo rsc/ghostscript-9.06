@@ -2087,6 +2087,7 @@ print_c2plane(FILE *prn_stream, char plane_code, int plane_size,
  *
  *  Outputs a plane with no compression.
  */
+#ifdef UNUSED
 static void
 print_c0plane(FILE *prn_stream, char plane_code, int plane_size,
               const byte *curr, byte *out_data)
@@ -2095,6 +2096,7 @@ print_c0plane(FILE *prn_stream, char plane_code, int plane_size,
   if (plane_size > 0)
     fwrite(curr, sizeof(byte), plane_size, prn_stream);
 }
+#endif
 
 /* Printing non-blank lines */
 static void
@@ -2309,6 +2311,7 @@ do_floyd_steinberg(int scan, int cscan, int plane_size,
     return;
 }
 
+#ifdef UNUSED
 /* here we do our own gamma-correction */
 static void
 do_gamma(float mastergamma, float gammaval, byte values[256])
@@ -2330,6 +2333,7 @@ do_gamma(float mastergamma, float gammaval, byte values[256])
 
     return;
 }
+#endif
 
 /* here we calculate a lookup-table which is used to compensate the
    relative loss of color due to undercolor-removal */
@@ -2413,12 +2417,12 @@ do_gcr(int bytecount, byte * inbyte, const byte kvalues[256],
        const byte yvalues[256], const int kcorrect[256],
        word * inword)
 {
-  int i, ucr, kadd, is_color = 0;
-  float uca_fac;
+  int i, ucr, is_color = 0;
+  // float uca_fac;
   byte *black, *cyan, *magenta, *yellow;
   word last_color_value = 0;
   word *last_color;
-  char output[255], out2[128];
+  // char output[255], out2[128];
 
   /* initialise *last_color with a dummmy value */
   last_color = &last_color_value;
@@ -3321,7 +3325,7 @@ cdnj500_start_raster_mode(gx_device_printer * pdev, int paper_size,
 {
     /* x,y resolution for color planes, assume x=y */
     int xres = cdj850->x_pixels_per_inch;
-    int yres = cdj850->y_pixels_per_inch;
+    // int yres = cdj850->y_pixels_per_inch;
     float x = pdev->width  / pdev->x_pixels_per_inch * 10;
     float y = pdev->height / pdev->y_pixels_per_inch * 10;
 

@@ -201,11 +201,13 @@ TIFFCheckpointDirectory(TIFF* tif)
 	return rc;
 }
 
+#ifdef UNUSED
 static int
 TIFFWriteCustomDirectory(TIFF* tif, uint64* pdiroff)
 {
 	return TIFFWriteDirectorySec(tif,FALSE,FALSE,pdiroff);
 }
+#endif
 
 /*
  * Similar to TIFFWriteDirectory(), but if the directory has already

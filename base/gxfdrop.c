@@ -212,9 +212,11 @@ static int store_margin(line_list * ll, margin_set * set, int ii0, int ii1)
     return 0;
 }
 
+#ifdef UNUSED
 static inline int to_interval(int x, int l, int u)
 {   return x < l ? l : x > u ? u : x;
 }
+#endif
 
 static inline fixed Y_AT_X(active_line *alp, fixed xp)
 {   return alp->start.y + fixed_mult_quo(xp - alp->start.x,  alp->diff.y, alp->diff.x);

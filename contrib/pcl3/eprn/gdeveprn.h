@@ -174,7 +174,7 @@
 #define _gdeveprn_h
 
 /* Configuration management identification */
-#pragma ident "@(#)$Id: gdeveprn.h,v 1.23 2001/04/30 05:15:51 Martin Rel $"
+// #pragma ident "@(#)$Id: gdeveprn.h,v 1.23 2001/04/30 05:15:51 Martin Rel $"
 
 /*****************************************************************************/
 

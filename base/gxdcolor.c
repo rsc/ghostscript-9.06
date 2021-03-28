@@ -415,7 +415,7 @@ static void
 gx_dc_devn_save_dc(const gx_device_color * pdevc, gx_device_color_saved * psdc)
 {
     psdc->type = pdevc->type;
-    memcpy(&(psdc->colors.devn.values[0]), &(pdevc->colors.devn.values[0]), 
+    memcpy(&(psdc->colors.devn.values[0]), &(pdevc->colors.devn.values[0]),
            GX_DEVICE_COLOR_MAX_COMPONENTS*sizeof(ushort));
 }
 
@@ -429,8 +429,8 @@ gx_dc_devn_load(gx_device_color * pdevc, const gs_imager_state * ignore_pis,
 /* Fill a rectangle with a devicen color. */
 static int
 gx_dc_devn_fill_rectangle(const gx_device_color * pdevc, int x, int y,
-                          int w, int h, gx_device * dev, 
-                          gs_logical_operation_t lop, 
+                          int w, int h, gx_device * dev,
+                          gs_logical_operation_t lop,
                           const gx_rop_source_t * source)
 {
     gs_fixed_rect rect;
@@ -443,8 +443,8 @@ gx_dc_devn_fill_rectangle(const gx_device_color * pdevc, int x, int y,
 }
 
 /* Fill a mask with a DeviceN color. */
-/* Note that there is no source in this case: the mask is the source. 
-   I would like to add a device proc that was fill_masked_hl for 
+/* Note that there is no source in this case: the mask is the source.
+   I would like to add a device proc that was fill_masked_hl for
    handling this instead of breaking this down to hl rect fills */
 int
 gx_dc_devn_fill_masked(const gx_device_color * pdevc, const byte * data,
@@ -536,8 +536,8 @@ gx_dc_devn_equal(const gx_device_color * pdevc1, const gx_device_color * pdevc2)
 
 /*
  * Utility to write a devn color into the clist.   We should only be here
- * if the device can handle these colors (e.g. a separation device like 
- * tiffsep).  TODO:  Reduce the size of this by removing leading zeros in 
+ * if the device can handle these colors (e.g. a separation device like
+ * tiffsep).  TODO:  Reduce the size of this by removing leading zeros in
  * the mask.
  *
  */
@@ -624,7 +624,7 @@ gx_dc_devn_write(
     byte *                          pdata,
     uint *                          psize )
 {
-    int k;
+    //int k;
 
     /* Due to the fact that the devn color type can vary
        being cmd_opv_ext_put_drawing_color, cmd_opv_ext_put_tile_devn_color0,
@@ -688,7 +688,7 @@ gx_devn_read_color(
             values[i] = 0;
         }
         mask >>= 1;
-    } 
+    }
     return num_bytes;
 }
 
@@ -736,7 +736,7 @@ gx_dc_devn_read(
     return gx_devn_read_color(&(pdevc->colors.devn.values[0]), dev, pdata, size);
 }
 
-/* Remember these are 16 bit values.   Also here we return the number of 
+/* Remember these are 16 bit values.   Also here we return the number of
    nonzero entries so we can figure out the size for the clist more
    easily.   Hopefully that does not cause any confusion in overprint
    situations where is where this operation is also used. */

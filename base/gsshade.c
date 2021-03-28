@@ -38,7 +38,7 @@
 
 /* GC descriptors */
 private_st_shading();
-private_st_shading_mesh();
+// private_st_shading_mesh();
 
 static
 ENUM_PTRS_WITH(shading_mesh_enum_ptrs, gs_shading_mesh_t *psm)

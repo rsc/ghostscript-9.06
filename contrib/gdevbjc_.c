@@ -1,7 +1,7 @@
 /* BJC-210/240/250/265/1000 Bubble Jet Printer driver for GhostScript
  * main subroutines for GS
  *
- * Copyright 2000, 2001, 2002 Gergely Szász (Gergely Sza'sz)
+ * Copyright 2000, 2001, 2002 Gergely Szï¿½sz (Gergely Sza'sz)
  * mailto://szaszg@hu.inter.net http://bjc250gs.sourceforge.net
  *
  *   This program may be distributed and/or modified under the terms of
@@ -46,7 +46,7 @@
 #include "gdevbjc_.h"
 
 /* ------ The device descriptors ------ */
-static dev_proc_print_page(bjc_print_page);
+//static dev_proc_print_page(bjc_print_page);
 static dev_proc_print_page(bjc_print_page_mono);
 static dev_proc_print_page(bjc_print_page_gray);
 static dev_proc_print_page(bjc_print_page_cmyk);

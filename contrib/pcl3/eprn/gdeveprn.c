@@ -35,8 +35,10 @@
 
 /* Configuration management identification */
 #ifndef lint
+#ifdef UNUSED
 static const char
   cm_id[] = "@(#)$Id: gdeveprn.c,v 1.25 2001/04/30 05:15:51 Martin Rel $";
+#endif
 #endif
 
 /*****************************************************************************/
